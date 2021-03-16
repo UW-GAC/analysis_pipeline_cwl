@@ -103,47 +103,74 @@ hints:
 - class: sbg:SaveLogs
   value: subset_gds.config
 id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/subset-gds/1/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/subset_gds/9/raw/
 sbg:appVersion:
 - v1.1
 sbg:content_hash: a6ec7a58ea70f2b69d7e82f13f113bf5a67a3a86afbeecc3d8365d53a4de60a90
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1615931583
-sbg:id: smgogarten/genesis-relatedness/subset-gds/1
+sbg:createdOn: 1601921410
+sbg:id: smgogarten/genesis-relatedness/subset_gds/9
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 9
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615931962
+sbg:modifiedOn: 1615933368
 sbg:project: smgogarten/genesis-relatedness
 sbg:projectName: GENESIS relatedness
 sbg:publisher: sbg
-sbg:revision: 1
+sbg:revision: 9
 sbg:revisionNotes: |-
   Uploaded using sbpack v2020.10.05. 
   Source: 
   repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+  file: subset_gds.cwl
+  commit: 730ce42
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931583
+  sbg:modifiedOn: 1601921410
   sbg:revision: 0
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/subset_gds/4
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931962
+  sbg:modifiedOn: 1606254989
   sbg:revision: 1
+  sbg:revisionNotes: update subset_gds
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606267367
+  sbg:revision: 2
+  sbg:revisionNotes: only one variant include file as input
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606285396
+  sbg:revision: 3
+  sbg:revisionNotes: set output type to gds
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606334858
+  sbg:revision: 4
+  sbg:revisionNotes: set .gds as output extension
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606335219
+  sbg:revision: 5
+  sbg:revisionNotes: update test values
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606335263
+  sbg:revision: 6
+  sbg:revisionNotes: remove extraneous code
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606336200
+  sbg:revision: 7
+  sbg:revisionNotes: simplify file names
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449495
+  sbg:revision: 8
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615933368
+  sbg:revision: 9
   sbg:revisionNotes: |-
     Uploaded using sbpack v2020.10.05. 
     Source: 
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+    file: subset_gds.cwl
+    commit: 730ce42
 sbg:sbgMaintained: false
 sbg:validationErrors: []

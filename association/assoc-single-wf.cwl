@@ -8,11 +8,13 @@ doc: |-
 
   When testing a binary outcome, the saddlepoint approximation (SPA) for p-values [1][2] can be used by specifying **Test type** = ‘score.spa’; this is generally recommended. SPA will provide better calibrated p-values, particularly for rarer variants in samples with case-control imbalance. 
 
+  When testing a binary outcome, the BinomiRare test is also available[3]. This is a “carriers only” exact test that compares the observed number of variant carriers who are cases to the expected number based on the probability of being a case under the null hypothesis of no association between outcome and variant. This test may be useful when testing association of very rare variants with rare outcomes.
+
   If your genotype data has sporadic missing values, they are mean imputed using the allele frequency observed in the sample.
 
   On the X chromosome, males have genotype values coded as 0/2 (females as 0/1/2).
 
-  This workflow utilizes the *assocTestSingle* function from the GENESIS software [3].
+  This workflow utilizes the *assocTestSingle* function from the GENESIS software [4].
 
   ### Common Use Cases
 
@@ -34,7 +36,7 @@ doc: |-
   In the following table you can find estimates of running time and cost. 
           
 
-  | Samples &nbsp; &nbsp; |    | Rel. Matrix &nbsp; &nbsp;|Parallel instances &nbsp; &nbsp; | Instance type  &nbsp; &nbsp; &nbsp; &nbsp;| Spot/On Dem. &nbsp; &nbsp; |CPU &nbsp; &nbsp; | RAM &nbsp; &nbsp; | Time  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Cost &nbsp; &nbsp; &nbsp; &nbsp; |
+  | Samples &nbsp; &nbsp; |    | Rel. Matrix &nbsp; &nbsp;|Parallel instances &nbsp; &nbsp; | Instance type  &nbsp; &nbsp; &nbsp; &nbsp;| Spot/On Dem. &nbsp; &nbsp; |CPU &nbsp; &nbsp; | RAM &nbsp; &nbsp; | Time  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Cost |
   |--------------------|---------------|----------------|------------------------|--------------------|--------------------|--------|--------|---------|-------|
   | 2.5k   |                 |   w/o          | 8                           |  r4.8xlarge | Spot     |1  | 2   | 1 h, 8 min   | $5  |
   | 2.5k   |               |   Dense     | 8                           |  r4.8xlarge | Spot     |1  | 2   | 1 h, 8 min   | $5  |
@@ -98,7 +100,8 @@ doc: |-
   ### References
   [1] [SaddlePoint Approximation (SPA)](https://doi.org/10.1016/j.ajhg.2017.05.014)  
   [2] [SPA - additional reference](https://doi.org/10.1038/s41588-018-0184-y)  
-  [3] [GENESIS toolkit](doi.org/10.1093/bioinformatics/btz567)
+  [3] [BinomiRare](https://pubmed.ncbi.nlm.nih.gov/28393384/)  
+  [4] [GENESIS toolkit](doi.org/10.1093/bioinformatics/btz567)
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -147,7 +150,7 @@ inputs:
 - id: test_type
   label: Test type
   doc: |-
-    Type of association test to perform. “Score” performs a score test and can be used with any null model. “Score.spa” uses the saddle point approximation (SPA) to provide more accurate p-values, especially for rare variants, in samples with unbalanced case:control ratios; “score.spa” can only be used if the null model family is “binomial”.
+    Type of association test to perform. “Score” performs a score test and can be used with any null model. “Score.spa” uses the saddle point approximation (SPA) to provide more accurate p-values, especially for rare variants, in samples with unbalanced case:control ratios; “score.spa” can only be used if the null model family is “binomial”. “BinomiRare” is a carriers only exact test that may perform better when testing very rare variants with rare outcomes; “BinomiRare” can only be used if the null model family is “binomial”.
   type:
   - 'null'
   - name: test_type
@@ -155,6 +158,7 @@ inputs:
     symbols:
     - score
     - score.spa
+    - BinomiRare
   sbg:toolDefaultValue: score
   sbg:x: -50
   sbg:y: 93
@@ -248,14 +252,6 @@ inputs:
   sbg:toolDefaultValue: '10000'
   sbg:x: 934.3193359375
   sbg:y: 234
-- id: variant_include_files
-  label: Variant Include Files
-  doc: |-
-    RData file(s) with a vector of variant.id to include. Files may be separated by chromosome with ‘chr##’ string corresponding to each GDS file. If not provided, all variants in the GDS file will be included in the analysis.
-  type: File[]?
-  sbg:fileTypes: RDATA
-  sbg:x: -111.23163604736328
-  sbg:y: -407.8232727050781
 - id: out_prefix
   label: Output prefix
   doc: Prefix that will be included in all output files.
@@ -283,13 +279,20 @@ inputs:
   type: int?
   sbg:x: 1044.307861328125
   sbg:y: 560.8524169921875
+- id: variant_include_files
+  label: Variant Include Files
+  doc: RData file containing ids of variants to be included.
+  type: File[]?
+  sbg:fileTypes: RData
+  sbg:x: 13.8739652633667
+  sbg:y: -437.260498046875
 
 outputs:
 - id: assoc_combined
   label: Association test results
   doc: |-
     RData file with data.frame of association test results (test statistic, p-value, etc.) See the documentation of the GENESIS R package for detailed description of output.
-  type: File?
+  type: File[]?
   outputSource:
   - assoc_combine_r/assoc_combined
   sbg:fileTypes: RDATA
@@ -325,7 +328,10 @@ steps:
   label: Association Testing Single
   in:
   - id: gds_file
-    source: sbg_prepare_segments/gds_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/gds_output
+    linkMerge: merge_flattened
   - id: null_model_file
     source: null_model_file
   - id: phenotype_file
@@ -337,13 +343,22 @@ steps:
   - id: pass_only
     source: pass_only
   - id: segment_file
-    source: define_segments_r/define_segments_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - define_segments_r/define_segments_output
+    linkMerge: merge_flattened
   - id: test_type
     source: test_type
   - id: variant_include_file
-    source: sbg_prepare_segments/variant_include_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/variant_include_output
+    linkMerge: merge_flattened
   - id: segment
-    source: sbg_prepare_segments/segments
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/segments
+    linkMerge: merge_flattened
   - id: memory_gb
     default: 80
     source: memory_gb
@@ -370,12 +385,15 @@ steps:
   label: Association Combine
   in:
   - id: chromosome
-    source: sbg_group_segments/chromosome
+    valueFrom: '$(self ? [].concat(self) : self)'
+    source:
+    - sbg_group_segments_1/chromosome
   - id: assoc_type
     default: single
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
-    - sbg_group_segments/grouped_assoc_files
+    - sbg_group_segments_1/grouped_assoc_files
   - id: memory_gb
     default: 8
   - id: cpu
@@ -394,8 +412,10 @@ steps:
   label: Association Plots
   in:
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
     - assoc_combine_r/assoc_combined
+    linkMerge: merge_flattened
   - id: assoc_type
     default: single
   - id: plots_prefix
@@ -416,39 +436,9 @@ steps:
   out:
   - id: assoc_plots
   - id: configs
+  - id: Lambdas
   sbg:x: 1367
   sbg:y: 306
-- id: sbg_prepare_segments
-  label: SBG Prepare Segments
-  in:
-  - id: input_gds_files
-    source:
-    - sbg_gds_renamer/renamed_variants
-  - id: segments_file
-    source: define_segments_r/define_segments_output
-  - id: variant_include_files
-    source:
-    - variant_include_files
-  run: assoc-single-wf.cwl.steps/sbg_prepare_segments.cwl
-  out:
-  - id: gds_output
-  - id: segments
-  - id: aggregate_output
-  - id: variant_include_output
-  sbg:x: 94
-  sbg:y: -118
-- id: sbg_group_segments
-  label: SBG Group Segments
-  in:
-  - id: assoc_files
-    source:
-    - sbg_flatten_lists/output_list
-  run: assoc-single-wf.cwl.steps/sbg_group_segments.cwl
-  out:
-  - id: grouped_assoc_files
-  - id: chromosome
-  sbg:x: 876
-  sbg:y: 112
 - id: sbg_gds_renamer
   label: SBG GDS renamer
   in:
@@ -465,6 +455,8 @@ steps:
   label: SBG FlattenLists
   in:
   - id: input_list
+    valueFrom: |-
+      ${     var out = [];     for (var i = 0; i<self.length; i++){         if (self[i])    out.push(self[i])     }     return out }
     source:
     - assoc_single_r/assoc_single
   run: assoc-single-wf.cwl.steps/sbg_flatten_lists.cwl
@@ -472,26 +464,56 @@ steps:
   - id: output_list
   sbg:x: 684.666015625
   sbg:y: 128.0019073486328
+- id: sbg_prepare_segments_1
+  label: SBG Prepare Segments
+  in:
+  - id: input_gds_files
+    source:
+    - sbg_gds_renamer/renamed_variants
+  - id: segments_file
+    source: define_segments_r/define_segments_output
+  - id: variant_include_files
+    source:
+    - variant_include_files
+  run: assoc-single-wf.cwl.steps/sbg_prepare_segments_1.cwl
+  out:
+  - id: gds_output
+  - id: segments
+  - id: aggregate_output
+  - id: variant_include_output
+  sbg:x: 76.38661193847656
+  sbg:y: -183.02523803710938
+- id: sbg_group_segments_1
+  label: SBG Group Segments
+  in:
+  - id: assoc_files
+    source:
+    - sbg_flatten_lists/output_list
+  run: assoc-single-wf.cwl.steps/sbg_group_segments_1.cwl
+  out:
+  - id: grouped_assoc_files
+  - id: chromosome
+  sbg:x: 855.9915771484375
+  sbg:y: 119.47896575927734
 
 hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
 sbg:appVersion:
 - v1.1
-- v1.0
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a549f652bd7faf45ddadd5e08da2931d16ad0fc38b7087e09e56770502c0d934a
+sbg:content_hash: a779487b2aeb97311196b11a6c99fa6f26bfb80e981ac1113e328ba9b4706c6f9
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727843
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/single-variant-association-testing/21
+sbg:id: admin/sbg-public-data/single-variant-association-testing/25
 sbg:image_url:
-sbg:latestRevision: 21
+sbg:latestRevision: 25
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -505,14 +527,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1604053019
+sbg:modifiedOn: 1617276240
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/21/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/25/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 21
-sbg:revisionNotes: Config cleaning
+sbg:revision: 25
+sbg:revisionNotes: Plot update
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727843
@@ -602,6 +624,22 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1604053019
   sbg:revision: 21
   sbg:revisionNotes: Config cleaning
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 22
+  sbg:revisionNotes: CWLtool compatible
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276240
+  sbg:revision: 23
+  sbg:revisionNotes: BinomiRare option added to test_type
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276240
+  sbg:revision: 24
+  sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276240
+  sbg:revision: 25
+  sbg:revisionNotes: Plot update
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

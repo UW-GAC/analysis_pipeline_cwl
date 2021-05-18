@@ -7,19 +7,19 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: define_segments.config
     writable: false
     entry: |-
       ${
-          var arguments = []
-          arguments.push('out_file "segments.txt"')
+          var argument = [];
+          argument.push('out_file "segments.txt"')
           if(inputs.genome_build){
-               arguments.push('genome_build "' + inputs.genome_build + '"')
+               argument.push('genome_build "' + inputs.genome_build + '"')
           }
-          return arguments.join('\n')
+          return argument.join('\n')
       }
 - class: InlineJavascriptRequirement
 
@@ -96,25 +96,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/define-segments-r/4
+id: boris_majic/genesis-toolkit-demo/define-segments-r/6
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a5ca10832ac7c3e2a1e1ea1d3e212d6f1393b67c1be830f50e48bf22f4a8bdfb9
+sbg:content_hash: abcb7884a4e9f96eab06afefcfd6ac9a971605d3a26b810578009f05e0f63455d
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360777
-sbg:id: h-c9656355/h-cd5fc1c7/h-aa46cedb/0
+sbg:id: h-9dc45b95/h-4b27e281/h-56800f17/0
 sbg:image_url:
-sbg:latestRevision: 4
+sbg:latestRevision: 6
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603798568
+sbg:modifiedOn: 1616077263
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 4
-sbg:revisionNotes: BDC import
+sbg:revision: 6
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360777
@@ -136,5 +136,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603798568
   sbg:revision: 4
   sbg:revisionNotes: BDC import
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907204
+  sbg:revision: 5
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077263
+  sbg:revision: 6
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

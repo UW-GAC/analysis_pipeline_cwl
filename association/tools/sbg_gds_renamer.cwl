@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.1
 class: CommandLineTool
 label: SBG GDS renamer
 doc: |-
@@ -10,7 +10,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: ubuntu:16.04
+  dockerPull: uwgac/topmed-master:2.8.1
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -31,7 +31,7 @@ outputs:
   sbg:fileTypes: GDS
 
 baseCommand:
-- mv
+- cp
 arguments:
 - prefix: ''
   position: 0
@@ -68,24 +68,32 @@ arguments:
       
     }
   shellQuote: false
-id: sevenbridges/sbgtools-cwl1-0-demo/sbg-gds-renamer/2
+- prefix: ''
+  position: 100
+  valueFrom: "${\n    return ' >> job.out.log'   \n}"
+  shellQuote: false
+
+hints:
+- class: sbg:SaveLogs
+  value: job.out.log
+id: sevenbridges/sbgtools-cwl1-0-demo/sbg-gds-renamer/3
 sbg:appVersion:
-- v1.0
-sbg:content_hash: a34d3f6db559b26121d232f8bea272ddea3d4e150764868954d286b5b6e47c198
+- v1.1
+sbg:content_hash: ab721cbd39c33d272c5c42693fb02e02e43d95a3f421f40615cbf79ed023c35cc
 sbg:contributors:
 - dajana_panovic
 sbg:createdBy: dajana_panovic
 sbg:createdOn: 1584358811
-sbg:id: h-710eb1bb/h-7a66752c/h-bc6782bc/0
+sbg:id: h-e2286bfc/h-823701fa/h-b24dce06/0
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 3
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1584359010
+sbg:modifiedOn: 1608907259
 sbg:project: sevenbridges/sbgtools-cwl1-0-demo
 sbg:projectName: SBGTools - CWL1.0 - Demo
 sbg:publisher: sbg
-sbg:revision: 2
-sbg:revisionNotes: Description updated
+sbg:revision: 3
+sbg:revisionNotes: CWLtool prep
 sbg:revisionsInfo:
 - sbg:modifiedBy: dajana_panovic
   sbg:modifiedOn: 1584358811
@@ -99,5 +107,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1584359010
   sbg:revision: 2
   sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907259
+  sbg:revision: 3
+  sbg:revisionNotes: CWLtool prep
 sbg:sbgMaintained: false
 sbg:validationErrors: []

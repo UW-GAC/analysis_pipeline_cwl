@@ -55,44 +55,33 @@ inputs:
   label: Phenotype file
   doc: |-
     RData file with data.frame or AnnotatedDataFrame of phenotypes. Used for color-coding PCA plots by group.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: n_pairs
   label: Number of PCs
   doc: Number of PCs to include in the pairs plot.
-  type:
-  - 'null'
-  - int
+  type: int?
   sbg:category: Input Options
   sbg:toolDefaultValue: '6'
 - id: group
   label: Group
   doc: |-
     Name of column in phenotype_file containing group variable for color-coding plots.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
   sbg:toolDefaultValue: NA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 
 outputs:
 - id: pca_plots
   label: PC plots
   doc: PC plots
-  type:
-  - 'null'
-  - type: array
-    items: File
+  type: File[]?
   outputBinding:
     glob: '*.p*'
 stdout: job.out.log
@@ -114,64 +103,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pca_plots.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pca-plots/6/raw/
+id: smgogarten/genesis-relatedness-pre-build/pca-plots/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a646fcb270f0f29782798216695abecb5ac192022d6cd57c2e221857bed030d66
+sbg:content_hash: a48a2522630b7b500b1b4695b5fa1e5f90e3f0c26b63868e1b5c7a0fd94f2d324
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1604988656
-sbg:id: smgogarten/genesis-relatedness/pca-plots/6
+sbg:createdOn: 1609451714
+sbg:id: smgogarten/genesis-relatedness-pre-build/pca-plots/1
 sbg:image_url:
-sbg:latestRevision: 6
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615936347
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451734
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 6
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1604988656
+  sbg:modifiedOn: 1609451714
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pca-plots/0
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605574521
+  sbg:modifiedOn: 1609451734
   sbg:revision: 1
-  sbg:revisionNotes: update to new format
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605576107
-  sbg:revision: 2
-  sbg:revisionNotes: specify docker version
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606356113
-  sbg:revision: 3
-  sbg:revisionNotes: update input and output labels
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609370862
-  sbg:revision: 4
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609449160
-  sbg:revision: 5
-  sbg:revisionNotes: use devel docker image to allow data.frame input for phenotype
-    file
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615936347
-  sbg:revision: 6
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

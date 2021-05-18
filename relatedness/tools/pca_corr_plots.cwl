@@ -70,36 +70,28 @@ inputs:
 - id: n_pcs_plot
   label: Number of PCs to plot
   doc: Number of PCs to plot.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 20
   sbg:category: Input Options
   sbg:toolDefaultValue: '20'
 - id: corr_file
   label: PC correlation file
   doc: PC correlation file
-  type:
-    type: array
-    items: File
+  type: File[]
   sbg:category: Input File
   sbg:fileTypes: GDS
 - id: n_perpage
   label: Number of plots per page
   doc: |-
     Number of PC-variant correlation plots to stack in a single page. The number of png files generated will be ceiling(n_pcs_plot/n_perpage).
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 4
   sbg:category: Input Options
   sbg:toolDefaultValue: '4'
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
   sbg:toolDefaultValue: pca_corr
 
@@ -107,10 +99,7 @@ outputs:
 - id: pca_corr_plots
   label: PC-variant correlation plots
   doc: PC-variant correlation plots
-  type:
-  - 'null'
-  - type: array
-    items: File
+  type: File[]?
   outputBinding:
     glob: '*.png'
   sbg:fileTypes: PNG
@@ -147,75 +136,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pca_corr_plots.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pca-corr-plots/9/raw/
+id: smgogarten/genesis-relatedness-pre-build/pca-corr-plots/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: ad8c42ab0717ada2380237dd4b05b4c5976e35f0134387f0ed17c01d9462086ce
+sbg:content_hash: ab94339bf97354f8f2d877738fcd44424d2ea9a03b948e858583c112a80c13b7c
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1604988665
-sbg:id: smgogarten/genesis-relatedness/pca-corr-plots/9
+sbg:createdOn: 1609451592
+sbg:id: smgogarten/genesis-relatedness-pre-build/pca-corr-plots/1
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615936369
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451617
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 9
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1604988665
+  sbg:modifiedOn: 1609451592
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pca-corr-plots/0
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605730277
+  sbg:modifiedOn: 1609451617
   sbg:revision: 1
-  sbg:revisionNotes: initial update
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605765307
-  sbg:revision: 2
-  sbg:revisionNotes: copy config javascript from assoc_plots tool
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606334463
-  sbg:revision: 3
-  sbg:revisionNotes: update javascript for config file
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606340439
-  sbg:revision: 4
-  sbg:revisionNotes: fix filenames in config
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606355355
-  sbg:revision: 5
-  sbg:revisionNotes: update input and output labels
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606780666
-  sbg:revision: 6
-  sbg:revisionNotes: use basename instead of path.split
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609370845
-  sbg:revision: 7
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448682
-  sbg:revision: 8
-  sbg:revisionNotes: upate descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615936369
-  sbg:revision: 9
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

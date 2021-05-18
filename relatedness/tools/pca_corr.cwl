@@ -62,9 +62,7 @@ inputs:
   label: Variant include file
   doc: |-
     RData file with vector of variant.id to include. If not provided, all variants in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: pca_file
@@ -75,25 +73,19 @@ inputs:
 - id: n_pcs_corr
   label: Number of PCs
   doc: Number of PCs (Principal Components) to use for PC-variant correlation
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 32
   sbg:category: Input Options
   sbg:toolDefaultValue: '32'
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 - id: chromosome
   label: Chromosome
   doc: Run on this chromosome only. 23=X, 24=Y
-  type:
-  - 'null'
-  - int
+  type: int?
   inputBinding:
     prefix: --chromosome
     position: 3
@@ -104,9 +96,7 @@ outputs:
 - id: pca_corr_gds
   label: PC-SNP correlation
   doc: GDS file with PC-SNP correlation results
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.gds'
   sbg:fileTypes: GDS
@@ -129,95 +119,32 @@ hints:
   value: pca_corr.config
 - class: sbg:SaveLogs
   value: job.out.log
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pca-corr/14/raw/
+id: smgogarten/genesis-relatedness-pre-build/pca-corr/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: afe7fada8fd3c36928664ebb513ccf58f229b6b88af1724dd418209b359c6e30b
+sbg:content_hash: adeba999825f60a27e84f462d8bbdca811b1a3e939009ef65ef5b127a5926ae5b
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1604988662
-sbg:id: smgogarten/genesis-relatedness/pca-corr/14
+sbg:createdOn: 1609451536
+sbg:id: smgogarten/genesis-relatedness-pre-build/pca-corr/1
 sbg:image_url:
-sbg:latestRevision: 14
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615936349
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451561
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 14
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1604988662
+  sbg:modifiedOn: 1609451536
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pca-corr/0
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605577131
+  sbg:modifiedOn: 1609451561
   sbg:revision: 1
-  sbg:revisionNotes: save complete R output
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605639828
-  sbg:revision: 2
-  sbg:revisionNotes: add NSLOTS for parallelization
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605640837
-  sbg:revision: 3
-  sbg:revisionNotes: set default n_pcs to 32
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605726814
-  sbg:revision: 4
-  sbg:revisionNotes: use runtime.cores to set NSLOTS
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605729508
-  sbg:revision: 5
-  sbg:revisionNotes: try checking the multi-thread box
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605730462
-  sbg:revision: 6
-  sbg:revisionNotes: try setting min CPUs
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606335780
-  sbg:revision: 7
-  sbg:revisionNotes: put chromosome number in output file name
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606341005
-  sbg:revision: 8
-  sbg:revisionNotes: fix output file name
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606355536
-  sbg:revision: 9
-  sbg:revisionNotes: update input and output labels
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606356416
-  sbg:revision: 10
-  sbg:revisionNotes: update labels
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608672691
-  sbg:revision: 11
-  sbg:revisionNotes: fix position of chromosome argument
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609370838
-  sbg:revision: 12
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448619
-  sbg:revision: 13
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615936349
-  sbg:revision: 14
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

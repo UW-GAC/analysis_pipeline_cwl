@@ -52,25 +52,19 @@ inputs:
   label: Variant include file
   doc: |-
     RData file with vector of variant.id to include. These variants will be added to the set of randomly selected variants. It is recommended to provide the set of pruned variants used for PCA.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 - id: n_corr_vars
   label: Number of variants to select
   doc: |-
     Randomly select this number of variants distributed across the entire genome to use for PC-variant correlation. If running on a single chromosome, the variants returned will be scaled by the proportion of that chromosome in the genome.
-  type:
-  - 'null'
-  - int
+  type: int?
   sbg:category: Input Options
   sbg:toolDefaultValue: '10e6'
 - id: chromosome
@@ -88,9 +82,7 @@ outputs:
   label: Variants to use for PC correlation
   doc: |-
     RData file with a randomly selected set of variant.ids distributed across the genome, plus any variants from variant_include_file.
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.RData'
   sbg:fileTypes: RDATA
@@ -113,63 +105,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pca_corr_vars.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pca-corr-vars/6/raw/
+id: smgogarten/genesis-relatedness-pre-build/pca-corr-vars/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a05d0a2f6cceb0e7893373293d17cfadfabfacc36410a0faa142ac0897564f297
+sbg:content_hash: ab0e48902f7e291646881779a41ad7255a7603e8fe265f717087229295ef229b0
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1608671560
-sbg:id: smgogarten/genesis-relatedness/pca-corr-vars/6
+sbg:createdOn: 1609451641
+sbg:id: smgogarten/genesis-relatedness-pre-build/pca-corr-vars/1
 sbg:image_url:
-sbg:latestRevision: 6
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615936348
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451669
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 6
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608671560
+  sbg:modifiedOn: 1609451641
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608672869
+  sbg:modifiedOn: 1609451669
   sbg:revision: 1
-  sbg:revisionNotes: tool for selecting variant for pc correlation
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608674522
-  sbg:revision: 2
-  sbg:revisionNotes: add newline in config, chromosome arg is required
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608681003
-  sbg:revision: 3
-  sbg:revisionNotes: need blank space for chromosome number
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609370853
-  sbg:revision: 4
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448724
-  sbg:revision: 5
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615936348
-  sbg:revision: 6
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

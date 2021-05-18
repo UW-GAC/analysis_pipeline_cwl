@@ -43,18 +43,14 @@ inputs:
 - id: pcrelate_block_files
   label: PCRelate files for all sample blocks
   doc: PCRelate files for all sample blocks
-  type:
-    type: array
-    items: File
+  type: File[]
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: sparse_threshold
   label: Sparse threshold
   doc: |-
     Threshold for making the output kinship matrix sparse. A block diagonal matrix will be created such that any pair of samples with a kinship estimate greater than the threshold is in the same block; all pairwise estimates within a block are kept, and pairwise estimates between blocks are set to 0.
-  type:
-  - 'null'
-  - float
+  type: float?
   default: 0.02209709
   sbg:category: Input Options
   sbg:toolDefaultValue: 2^(-11/2) (~0.022, 4th degree)
@@ -63,9 +59,7 @@ outputs:
 - id: pcrelate_output
   label: PC-Relate output file
   doc: PC-Relate output file with all samples
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*_pcrelate.RData'
   sbg:fileTypes: RDATA
@@ -73,9 +67,7 @@ outputs:
   label: Kinship matrix
   doc: |-
     A block diagonal matrix of pairwise kinship estimates with sparsity set by sparse_threshold. Samples are clustered into blocks of relatives based on `sparse_threshold`; all kinship estimates within a block are kept, and kinship estimates between blocks are set to 0. When `sparse_threshold` is 0, this is a dense matrix with all pairwise kinship estimates.
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*_pcrelate_Matrix.RData'
   sbg:fileTypes: RDATA
@@ -113,68 +105,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pcrelate_correct.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pcrelate-correct/7/raw/
+id: smgogarten/genesis-relatedness-pre-build/pcrelate-correct/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a08841b337573a2de979b257729c2932e95c5fd44a0574ec9e22b5a4b1670368a
+sbg:content_hash: a191a333641b3cf2f1ab599592eb5e005f929375e1ca0e376850d2d551f9cd06b
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1606778864
-sbg:id: smgogarten/genesis-relatedness/pcrelate-correct/7
+sbg:createdOn: 1609451869
+sbg:id: smgogarten/genesis-relatedness-pre-build/pcrelate-correct/1
 sbg:image_url:
-sbg:latestRevision: 7
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615937214
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451892
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 7
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606778864
+  sbg:modifiedOn: 1609451869
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606780923
+  sbg:modifiedOn: 1609451892
   sbg:revision: 1
-  sbg:revisionNotes: wrap pcrelate_correct script
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606781401
-  sbg:revision: 2
-  sbg:revisionNotes: add outputs and sparse threshold
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606798474
-  sbg:revision: 3
-  sbg:revisionNotes: fix name of R script
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606839731
-  sbg:revision: 4
-  sbg:revisionNotes: don't repeat '_pcrelate' in output file names
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606939015
-  sbg:revision: 5
-  sbg:revisionNotes: pcrelate_prefix must match input file names, so can't change
-    output string
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609374238
-  sbg:revision: 6
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615937214
-  sbg:revision: 7
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

@@ -195,15 +195,15 @@ sbg:categories:
 - GWAS
 - VCF Processing
 - CWL1.0
-sbg:content_hash: abf83bd78702e81eb0811951c54e2b90cd60ec57a54269c96467ad12d0d44f4e7
+sbg:content_hash: ac6f6dfa6c1b82cb662c261eaf2e4fc65c733bc5f76b7135d0493e7e6a63d66dd
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727847
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/vcf-to-gds/14
+sbg:id: admin/sbg-public-data/vcf-to-gds/15
 sbg:image_url:
-sbg:latestRevision: 14
+sbg:latestRevision: 15
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -217,14 +217,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1612797368
+sbg:modifiedOn: 1617276237
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/14/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/15/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 14
-sbg:revisionNotes: GENESIS VCF to GDS renamed to VCF to GDS converter
+sbg:revision: 15
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727847
@@ -286,6 +286,10 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1612797368
   sbg:revision: 14
   sbg:revisionNotes: GENESIS VCF to GDS renamed to VCF to GDS converter
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276237
+  sbg:revision: 15
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

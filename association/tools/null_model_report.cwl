@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: null_model_report.config
@@ -31,7 +31,7 @@ requirements:
           }
           else
           {
-              config += "out_prefix \"null_model\"";
+              config += "out_prefix \"null_model\"" + "\n";
           }
           
           if(inputs.n_categories_boxplot){
@@ -40,6 +40,22 @@ requirements:
           }
           return config
       }
+  - writable: true
+    entry: "${\n    return inputs.null_model_params\n}"
+  - writable: true
+    entry: "${\n    return inputs.phenotype_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.sample_include_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.pca_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.relatedness_matrix_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.null_model_files\n}"
+  - writable: true
+    entry: "${\n    return inputs.conditional_variant_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.gds_files\n}"
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -139,6 +155,12 @@ outputs:
   outputBinding:
     glob: '*.Rmd'
   sbg:fileTypes: Rmd
+- id: null_model_report_config
+  label: Null model report config
+  doc: Null model report config
+  type: File?
+  outputBinding:
+    glob: '*config'
 
 baseCommand: []
 arguments:
@@ -150,28 +172,6 @@ arguments:
     }
   shellQuote: false
 - prefix: ''
-  position: 0
-  valueFrom: |-
-    ${
-        var command = "cp ";
-        command += inputs.null_model_params.path;
-        command += " . && ";
-        return command;
-    }
-  shellQuote: false
-- prefix: ''
-  position: 1
-  valueFrom: |-
-    ${
-        var command = "";
-        for(var i=0; i<inputs.null_model_files.length; i++)
-        {
-            command += "cp " + inputs.null_model_files[i].path + " . && "
-        }
-        return command
-    }
-  shellQuote: false
-- prefix: ''
   position: 100
   valueFrom: "${\n    return ' >> job.out.log'\n}"
   shellQuote: false
@@ -179,25 +179,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/null-model-report/5
+id: boris_majic/genesis-toolkit-demo/null-model-report/7
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a5398cb9eb3ad13333e76c48914f3c0631ae07e49f75383f678b4c502c5f6e4d3
+sbg:content_hash: a50b396a1895f88f2ab57b95903db3710b39e88c9789447c03220746cff82936f
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577361077
-sbg:id: h-4928060e/h-c868c70f/h-e22bce23/0
+sbg:id: h-54f5ef5f/h-1d7c63f3/h-4f4d6889/0
 sbg:image_url:
-sbg:latestRevision: 5
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603797749
+sbg:modifiedOn: 1616077454
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 5
-sbg:revisionNotes: BDC import
+sbg:revision: 7
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577361077
@@ -223,5 +223,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603797749
   sbg:revision: 5
   sbg:revisionNotes: BDC import
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608904240
+  sbg:revision: 6
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077454
+  sbg:revision: 7
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

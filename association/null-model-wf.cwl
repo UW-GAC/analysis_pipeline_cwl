@@ -1,6 +1,6 @@
 cwlVersion: v1.1
 class: Workflow
-label: GENESIS Null Model
+label: Null Model
 doc: |-
   **Null Model** workflow fits the regression or mixed effects model under the null hypothesis of no genotype effects. i.e., The outcome variable is regressed on the specified fixed effect covariates and random effects. The output of this null model is then used in the association tests.
 
@@ -334,6 +334,7 @@ steps:
   out:
   - id: html_reports
   - id: rmd_files
+  - id: null_model_report_config
   sbg:x: 537
   sbg:y: -212.5
 sbg:appVersion:
@@ -342,16 +343,15 @@ sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a0ee3e47fb2127f277f84287abd53e315129ff99c8a8e2d411dcd2965feff6eb3
+sbg:content_hash: a081c8ee3c4336ff6498bbf5de5af17527809806ed75c8e937c93cc31fa774b0d
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727845
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/null-model/17
-sbg:image_url: |-
-  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/admin/sbg-public-data/null-model/17.png
-sbg:latestRevision: 17
+sbg:id: admin/sbg-public-data/null-model/20
+sbg:image_url:
+sbg:latestRevision: 20
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -364,14 +364,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1604053018
+sbg:modifiedOn: 1617276239
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/null-model/17/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/null-model/20/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 17
-sbg:revisionNotes: Config cleaning
+sbg:revision: 20
+sbg:revisionNotes: Name updated
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727845
@@ -445,6 +445,18 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1604053018
   sbg:revision: 17
   sbg:revisionNotes: Config cleaning
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 18
+  sbg:revisionNotes: CWLtool compatible
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 19
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 20
+  sbg:revisionNotes: Name updated
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

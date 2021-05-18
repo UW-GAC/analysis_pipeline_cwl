@@ -17,7 +17,7 @@ requirements:
         }
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: null_model.config
@@ -25,19 +25,19 @@ requirements:
     entry: |-
       ${  
 
-          var arguments = [];
+          var arg = [];
           if(inputs.output_prefix){
               var filename = inputs.output_prefix + "_null_model";
-              arguments.push('out_prefix \"' + filename + '\"');
+              arg.push('out_prefix \"' + filename + '\"');
               var phenotype_filename = inputs.output_prefix + "_phenotypes.RData";
-              arguments.push('out_phenotype_file \"' + phenotype_filename + '\"');
+              arg.push('out_phenotype_file \"' + phenotype_filename + '\"');
           }
           else{
-              arguments.push('out_prefix "null_model"');
-              arguments.push('out_phenotype_file "phenotypes.RData"');
+              arg.push('out_prefix "null_model"');
+              arg.push('out_phenotype_file "phenotypes.RData"');
           }
-          arguments.push('outcome ' + inputs.outcome);
-          arguments.push('phenotype_file "' + inputs.phenotype_file.path + '"');
+          arg.push('outcome ' + inputs.outcome);
+          arg.push('phenotype_file "' + inputs.phenotype_file.basename + '"');
           if(inputs.gds_files){
               
              function isNumeric(s) {
@@ -51,53 +51,65 @@ requirements:
              if(isNumeric(parseInt(right.charAt(1)))) chr.push(right.substr(0,2))
              else chr.push(right.substr(0,1))
              
-              arguments.push('gds_file "' + inputs.gds_files[0].path.split("chr")[0] + "chr "+gds.split("chr"+chr)[1] +'"')
+              arg.push('gds_file "' + inputs.gds_files[0].basename.split("chr")[0] + "chr "+gds.split("chr"+chr)[1] +'"')
               
               
           }
           if(inputs.pca_file){
-              arguments.push('pca_file "' + inputs.pca_file.path + '"')
+              arg.push('pca_file "' + inputs.pca_file.basename + '"')
           }
           if(inputs.relatedness_matrix_file){
-              arguments.push('relatedness_matrix_file "' + inputs.relatedness_matrix_file.path + '"')
+              arg.push('relatedness_matrix_file "' + inputs.relatedness_matrix_file.basename + '"')
           }
           if(inputs.family){
-              arguments.push('family ' + inputs.family)
+              arg.push('family ' + inputs.family)
           }
           if(inputs.conditional_variant_file){
-              arguments.push('conditional_variant_file "' + inputs.conditional_variant_file.path + '"')
+              arg.push('conditional_variant_file "' + inputs.conditional_variant_file.basename + '"')
           }
           if(inputs.covars){
-              temp = []
+              var temp = [];
               for(var i=0; i<inputs.covars.length; i++){
                   temp.push(inputs.covars[i])
               }
-              arguments.push('covars "' + temp.join(' ') + '"')
+              arg.push('covars "' + temp.join(' ') + '"')
           }
           if(inputs.group_var){
-              arguments.push('group_var "' + inputs.group_var + '"')
+              arg.push('group_var "' + inputs.group_var + '"')
           }
           if(inputs.inverse_normal){
-              arguments.push('inverse_normal ' + inputs.inverse_normal)
+              arg.push('inverse_normal ' + inputs.inverse_normal)
           }
           if(inputs.n_pcs){
               if(inputs.n_pcs > 0)
-                  arguments.push('n_pcs ' + inputs.n_pcs)
+                  arg.push('n_pcs ' + inputs.n_pcs)
           }
           if(inputs.rescale_variance){
-              arguments.push('rescale_variance "' + inputs.rescale_variance + '"')
+              arg.push('rescale_variance "' + inputs.rescale_variance + '"')
           }
           if(inputs.resid_covars){
-              arguments.push('resid_covars ' + inputs.resid_covars)
+              arg.push('resid_covars ' + inputs.resid_covars)
           }
           if(inputs.sample_include_file){
-              arguments.push('sample_include_file "' + inputs.sample_include_file.path + '"')
+              arg.push('sample_include_file "' + inputs.sample_include_file.basename + '"')
           }
           if(inputs.norm_bygroup){
-              arguments.push('norm_bygroup ' + inputs.norm_bygroup)
+              arg.push('norm_bygroup ' + inputs.norm_bygroup)
           }
-          return arguments.join('\n')
+          return arg.join('\n')
       }
+  - writable: true
+    entry: "${\n    return inputs.phenotype_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.gds_files\n}"
+  - writable: true
+    entry: "${\n    return inputs.pca_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.relatedness_matrix_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.conditional_variant_file\n}"
+  - writable: true
+    entry: "${\n    return inputs.sample_include_file\n}"
 - class: InlineJavascriptRequirement
   expressionLib:
   - |2-
@@ -393,25 +405,25 @@ hints:
   value: r4.8xlarge;ebs-gp2;500
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/null-model-r/7
+id: boris_majic/genesis-toolkit-demo/null-model-r/9
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a06c84e348ecf04184048d4afae479a1743e31c3cf51d9484ffaed4a33954de5f
+sbg:content_hash: a29ebdb2dd77dd3a1b21a60950dc736723d2cd50f33c9702ef7ea9b21de79e471
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577361146
-sbg:id: h-b012330e/h-70b5ec8e/h-b5527538/0
+sbg:id: h-2e1ffaa6/h-23c7dac1/h-31aca52f/0
 sbg:image_url:
-sbg:latestRevision: 7
+sbg:latestRevision: 9
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603284245
+sbg:modifiedOn: 1616077473
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 7
-sbg:revisionNotes: Family correct
+sbg:revision: 9
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577361146
@@ -445,5 +457,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603284245
   sbg:revision: 7
   sbg:revisionNotes: Family correct
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608904208
+  sbg:revision: 8
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077473
+  sbg:revision: 9
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

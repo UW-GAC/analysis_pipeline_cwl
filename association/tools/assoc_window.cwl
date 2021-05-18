@@ -22,14 +22,14 @@ requirements:
             return 8*1024
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: assoc_window.config
     writable: false
     entry: |-
       ${
-          config = ""
+          var config = "";
 
           function isNumeric(s) {
               return !isNaN(s - parseFloat(s));
@@ -293,7 +293,7 @@ arguments:
   position: 1
   valueFrom: |-
     ${
-        cmd_line = "Rscript /usr/local/analysis_pipeline/R/assoc_window.R assoc_window.config "
+        var cmd_line = "Rscript /usr/local/analysis_pipeline/R/assoc_window.R assoc_window.config ";
 
         function isNumeric(s) {
 
@@ -302,8 +302,8 @@ arguments:
 
         function find_chromosome(file){
 
-            chr_array = []
-            chrom_num = file.split("/").pop()
+            var chr_array = [];
+            var chrom_num = file.split("/").pop();
             chrom_num = chrom_num.split(".")[0]
             
             if(isNumeric(chrom_num.charAt(chrom_num.length-2)))
@@ -342,25 +342,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-window/5
+id: boris_majic/genesis-toolkit-demo/assoc-window/7
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a6dd4882ae3507fe69bcca0c1ad2fcbd0e30a8122637ca9e3c3fad4581edeec9f
+sbg:content_hash: a64ffb4f2b1318342e08905d4453005cc62f87acfd70472b14cd055521970cce4
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360721
-sbg:id: h-1e04d6fd/h-fb3f59a0/h-4138f111/0
+sbg:id: h-b0b07cad/h-2c6f5804/h-b0f1b398/0
 sbg:image_url:
-sbg:latestRevision: 5
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603797805
+sbg:modifiedOn: 1616077334
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 5
-sbg:revisionNotes: BDC import
+sbg:revision: 7
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360721
@@ -386,5 +386,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603797805
   sbg:revision: 5
   sbg:revisionNotes: BDC import
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907057
+  sbg:revision: 6
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077334
+  sbg:revision: 7
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

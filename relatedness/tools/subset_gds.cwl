@@ -54,17 +54,13 @@ inputs:
   label: Sample include file
   doc: |-
     RData file with vector of sample.id to include. All samples in the GDS file are included when not provided.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Inputs
   sbg:fileTypes: RDATA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
 - id: variant_include_file
   label: Variant include file
   doc: |-
@@ -77,9 +73,7 @@ outputs:
 - id: output
   label: Subset file
   doc: GDS file with subset of variants from original file
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.gds'
   sbg:fileTypes: GDS
@@ -102,75 +96,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: subset_gds.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/subset_gds/9/raw/
+id: smgogarten/genesis-relatedness-pre-build/subset-gds/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a6ec7a58ea70f2b69d7e82f13f113bf5a67a3a86afbeecc3d8365d53a4de60a90
+sbg:content_hash: aa0b2aa6abf1310455123a9118831711d341a8574919b64b8816b37251094c092
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1601921410
-sbg:id: smgogarten/genesis-relatedness/subset_gds/9
+sbg:createdOn: 1609452021
+sbg:id: smgogarten/genesis-relatedness-pre-build/subset-gds/1
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615933368
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609452067
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 9
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: subset_gds.cwl
-  commit: 730ce42
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1601921410
+  sbg:modifiedOn: 1609452021
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/subset_gds/4
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606254989
+  sbg:modifiedOn: 1609452067
   sbg:revision: 1
-  sbg:revisionNotes: update subset_gds
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606267367
-  sbg:revision: 2
-  sbg:revisionNotes: only one variant include file as input
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606285396
-  sbg:revision: 3
-  sbg:revisionNotes: set output type to gds
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606334858
-  sbg:revision: 4
-  sbg:revisionNotes: set .gds as output extension
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606335219
-  sbg:revision: 5
-  sbg:revisionNotes: update test values
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606335263
-  sbg:revision: 6
-  sbg:revisionNotes: remove extraneous code
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606336200
-  sbg:revision: 7
-  sbg:revisionNotes: simplify file names
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609449495
-  sbg:revision: 8
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615933368
-  sbg:revision: 9
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: subset_gds.cwl
-    commit: 730ce42
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

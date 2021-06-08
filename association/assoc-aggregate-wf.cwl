@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: GENESIS Aggregate Association Testing
 doc: |-
@@ -609,23 +609,26 @@ steps:
 
 hints:
 - class: sbg:AWSInstanceType
-  value: m4.16xlarge;ebs-gp2;700
+  value: c5.2xlarge;ebs-gp2;1024
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
+- class: sbg:AzureInstanceType
+  value: Standard_D8s_v4;StandardSSD;1024
 sbg:appVersion:
+- v1.2
 - v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
-sbg:content_hash: a895f579dbacc2ad6c290998fb10bd29a8b981e42e763e80152423161d935a419
+sbg:content_hash: ab28d9b5c570f33566a7bca935171b1011ceda973c55a941c3c0474975e0f51b5
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727846
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/aggregate-association-testing/25
+sbg:id: admin/sbg-public-data/aggregate-association-testing/27
 sbg:image_url:
-sbg:latestRevision: 25
+sbg:latestRevision: 27
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -639,14 +642,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1617276239
+sbg:modifiedOn: 1621514962
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/25/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/27/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 25
-sbg:revisionNotes: Plot update
+sbg:revision: 27
+sbg:revisionNotes: Azure instance hint added
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727846
@@ -752,6 +755,14 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1617276239
   sbg:revision: 25
   sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514962
+  sbg:revision: 26
+  sbg:revisionNotes: Assoc plot labels updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514962
+  sbg:revision: 27
+  sbg:revisionNotes: Azure instance hint added
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

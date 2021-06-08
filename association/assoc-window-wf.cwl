@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: GENESIS Sliding Window Association Testing
 doc: |-
@@ -572,24 +572,27 @@ steps:
 
 hints:
 - class: sbg:AWSInstanceType
-  value: r5.12xlarge;ebs-gp2;1024
+  value: r5.2xlarge;ebs-gp2;1024
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
+- class: sbg:AzureInstanceType
+  value: Standard_D8s_v4;StandardSSD;1024
 sbg:appVersion:
+- v1.2
 - v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a8fb6450529f52ff73c36cfaaa48898630eda71205316f38824a78375dcb2d5bc
+sbg:content_hash: abbc5c4c459cc573bb7f42fe14a7f6a1639edcd9508b8e6e228da59a051c5563d
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727849
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/sliding-window-association-testing/22
+sbg:id: admin/sbg-public-data/sliding-window-association-testing/24
 sbg:image_url:
-sbg:latestRevision: 22
+sbg:latestRevision: 24
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -603,14 +606,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1617276239
+sbg:modifiedOn: 1621514961
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/22/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/24/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 22
-sbg:revisionNotes: Plot update
+sbg:revision: 24
+sbg:revisionNotes: Azure instance hint added
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727849
@@ -704,6 +707,14 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1617276239
   sbg:revision: 22
   sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514961
+  sbg:revision: 23
+  sbg:revisionNotes: Assoc plot labels updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514961
+  sbg:revision: 24
+  sbg:revisionNotes: Azure instance hint added
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

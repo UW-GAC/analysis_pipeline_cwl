@@ -1,10 +1,10 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
-label: GENESIS Association Results Plotting
+label: GENESIS Association results plotting
 doc: |-
   ### Description
 
-  The UW-GAC Assoc_plots standalone app creates Manhattan and QQ plots from GENESIS association test results with additional filtering and stratification options available. This app is run automatically with default options set by the GENESIS Association Testing Workflows. Users can fine-tune the Manhattan and QQ plots by running this app separately, after one of the association testing workflows. The available options are:
+  The UW-GAC GENESIS Association Result Plotting standalone app creates Manhattan and QQ plots from GENESIS association test results with additional filtering and stratification options available. This app is run automatically with default options set by the GENESIS Association Testing Workflows. Users can fine-tune the Manhattan and QQ plots by running this app separately, after one of the association testing workflows. The available options are:
    - Create QQ plots by chromosome.
    - Include a user-specified subset of the results in the plots.
    - Filter results to only those with MAC or MAF greater than a specified threshold.
@@ -12,6 +12,14 @@ doc: |-
    - Specify the significance type and level.
    - Create QQ plots stratified by MAC or MAF.
    - Specify a maximum p-value to display on the plots.
+
+  ### Common use cases
+
+  The UW-GAC GENESIS Association Result Plotting standalone app creates Manhattan and QQ plots from GENESIS association test results with additional filtering and stratification options available.
+
+  ### Changes introduced by Seven Bridges
+
+  No changes introduced by Seven Bridges.
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -213,19 +221,18 @@ inputs:
   doc: Truncate pval threshold.
   type: float?
 - id: plot_qq_by_chrom
-  label: Logical indicator for whether to generate QQ plots faceted by chromosome
+  label: Plot qq by chromosome
   doc: Logical indicator for whether to generate QQ plots faceted by chromosome.
   type: boolean?
   sbg:toolDefaultValue: 'FALSE'
 - id: plot_include_file
-  label: RData file with vector of ids to include
+  label: Plot include file
   doc: |-
     RData file with vector of ids to include. See `TopmedPipeline::assocFilterByFile` for format requirements.
   type: File?
   sbg:fileTypes: RDATA
 - id: signif_type
-  label: |-
-    Character string for how to calculate the significance threshold. Default is `fixed` for single variant analysis and `bonferroni` for other analysis types.
+  label: Significance type
   doc: |-
     `fixed`, `bonferroni`, or `none`; character string for how to calculate the significance threshold. Default is `fixed` for single variant analysis and `bonferroni` for other analysis types.
   type:
@@ -237,44 +244,39 @@ inputs:
     - bonferroni
     - none
 - id: signif_line_fixed
-  label: P-value for the significance line. Only used if `signif_type = fixed`
+  label: Significance line
   doc: P-value for the significance line. Only used if `signif_type = fixed`.
   type: float?
   sbg:toolDefaultValue: '5e-9'
 - id: qq_mac_bins
-  label: |-
-    Space separated string of integers (e.g., `"5 20 50"`). If set, generate a QQ plot binned by the specified MAC thresholds. 0 and Infinity will automatically be added.
+  label: QQ MAC bins
   doc: |-
     Space separated string of integers (e.g., `"5 20 50"`). If set, generate a QQ plot binned by the specified MAC thresholds. 0 and Infinity will automatically be added.
   type: string?
 - id: qq_maf_bins
-  label: |-
-    Space separated string of minor allele frequencies (e.g., "0.01 0.05 0.1"). If set, generate a QQ plot binned by the specified minor allele frequencies. 0 and Infinity will automatically be added. Single variant tests only.
+  label: QQ MAF bins
   doc: |-
     Space separated string of minor allele frequencies (e.g., "0.01 0.05 0.1"). If set, generate a QQ plot binned by the specified minor allele frequencies. 0 and Infinity will automatically be added. Single variant tests only.
   type: string?
 - id: lambda_quantiles
-  label: |-
-    Space separated string of quantiles at which to calculate lambda (e.g., “0.25 0.5 0.75”). If set, create a text file with lambda calculated at the specified quantiles stored in `out_file_lambdas`.
+  label: Lambda quantiles
   doc: |-
     Space separated string of quantiles at which to calculate genomic inflation lambda (e.g., “0.25 0.5 0.75”). If set, create a text file with lambda calculated at the specified quantiles stored in `out_file_lambdas`.
   type: string?
 - id: out_file_lambdas
-  label: File name of file to store lambda calculated at different quantiles
+  label: Lambda outfile name
   doc: |-
     File name of file to store lambda calculated at different quantiles. The default is `lambda.txt`.
   type: string?
   sbg:toolDefaultValue: lambda.txt
 - id: plot_max_p
-  label: |-
-    Maximum p-value to plot in QQ and Manhattan plots. Expected QQ values are still calculated using the full set of p-values.
+  label: Plot max p
   doc: |-
     Maximum p-value to plot in QQ and Manhattan plots. Expected QQ values are still calculated using the full set of p-values.
   type: float?
   sbg:toolDefaultValue: '1'
 - id: plot_maf_threshold
-  label: |-
-    Minimum minor allele frequency for variants to include in plots. Ignored if `plot_mac_threshold` is specified. Single variant association tests only.
+  label: Plot MAF threshold
   doc: |-
     Minimum minor allele frequency for variants to include in plots. Ignored if `plot_mac_threshold` is specified. Single variant association tests only.
   type: float?
@@ -332,25 +334,26 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-plots-r/10
+id: boris_majic/genesis-toolkit-demo/assoc-plots-r/20
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a5d8dc74db1119dc51408377c30dcdd5c785f05ca28302d3bd25ba23f291d750c
+- v1.2
+sbg:content_hash: a82da30efa86852cf30f8281fb890d35b617b19188930e4ef3028caeededad0d3
 sbg:contributors:
 - dajana_panovic
 - boris_majic
+- milan.domazet
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360892
-sbg:id: h-a9525236/h-5d12ed1f/h-38de0709/0
+sbg:id: h-8479d2e5/h-9146a23b/h-deedbeef/0
 sbg:image_url:
-sbg:latestRevision: 10
+sbg:latestRevision: 20
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1617267791
+sbg:modifiedOn: 1620727319
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 10
-sbg:revisionNotes: Name update
+sbg:revision: 20
+sbg:revisionNotes: Labels update
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360892
@@ -396,5 +399,45 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1617267791
   sbg:revision: 10
   sbg:revisionNotes: Name update
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617282860
+  sbg:revision: 11
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617282904
+  sbg:revision: 12
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617976100
+  sbg:revision: 13
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617976150
+  sbg:revision: 14
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617976183
+  sbg:revision: 15
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617976234
+  sbg:revision: 16
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617978175
+  sbg:revision: 17
+  sbg:revisionNotes: Description update
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1617985142
+  sbg:revision: 18
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: milan.domazet
+  sbg:modifiedOn: 1617986285
+  sbg:revision: 19
+  sbg:revisionNotes: Description update
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1620727319
+  sbg:revision: 20
+  sbg:revisionNotes: Labels update
 sbg:sbgMaintained: false
 sbg:validationErrors: []

@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: GENESIS Single Variant Association Testing
 doc: |-
@@ -9,6 +9,8 @@ doc: |-
   When testing a binary outcome, the saddlepoint approximation (SPA) for p-values [1][2] can be used by specifying **Test type** = ‘score.spa’; this is generally recommended. SPA will provide better calibrated p-values, particularly for rarer variants in samples with case-control imbalance. 
 
   When testing a binary outcome, the BinomiRare test is also available[3]. This is a “carriers only” exact test that compares the observed number of variant carriers who are cases to the expected number based on the probability of being a case under the null hypothesis of no association between outcome and variant. This test may be useful when testing association of very rare variants with rare outcomes.
+
+  When using the test_type ‘score‘ or ‘score.spa‘, the fast approximation to the score standard error (SE) implemented by Zhou et al. (2018) in their SAIGE software [5] is available by using a null_model_file prepared with the Update Null Model for Fast Score Test workflow. This approximation may be much faster than computing the true score SE in large samples, as it replaces the full covariance matrix in the calculation with the product of a diagonal matrix and a scalar correction factor (se.correction) in the updated null model output.
 
   If your genotype data has sporadic missing values, they are mean imputed using the allele frequency observed in the sample.
 
@@ -98,10 +100,11 @@ doc: |-
 
 
   ### References
-  [1] [SaddlePoint Approximation (SPA)](https://doi.org/10.1016/j.ajhg.2017.05.014)  
-  [2] [SPA - additional reference](https://doi.org/10.1038/s41588-018-0184-y)  
-  [3] [BinomiRare](https://pubmed.ncbi.nlm.nih.gov/28393384/)  
-  [4] [GENESIS toolkit](doi.org/10.1093/bioinformatics/btz567)
+   - [1] [SaddlePoint Approximation (SPA)](https://doi.org/10.1016/j.ajhg.2017.05.014)  
+   - [2] [SPA - additional reference](https://doi.org/10.1038/s41588-018-0184-y)  
+   - [3] [BinomiRare](https://pubmed.ncbi.nlm.nih.gov/28393384/)  
+   - [4] [GENESIS toolkit](doi.org/10.1093/bioinformatics/btz567/) 
+   - [5] [Efficiently controlling for case-control imbalance and sample relatedness in large-scale genetic association studies](https://www.nature.com/articles/s41588-018-0184-y)
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -187,7 +190,7 @@ inputs:
 - id: null_model_file
   label: Null model file
   doc: |-
-    RData file containing a null model object. Run the GENESIS Null Model app to create this file.
+    RData file containing a null model object. Run the GENESIS Null Model app to create this file. A null model object created with the GENESIS Update Null Model for Fast Score Test app can also be used.
   type: File
   sbg:fileTypes: RDATA
   sbg:x: 60
@@ -499,21 +502,27 @@ steps:
 hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
+- class: sbg:AWSInstanceType
+  value: c5.2xlarge;ebs-gp2;1024
+- class: sbg:AzureInstanceType
+  value: Standard_D8s_v4;StandardSSD;1024
 sbg:appVersion:
+- v1.2
 - v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a779487b2aeb97311196b11a6c99fa6f26bfb80e981ac1113e328ba9b4706c6f9
+sbg:content_hash: a3da4ba17d9d322883300bab38c792198f39585158bd7415d672d4c9bac332153
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727843
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/single-variant-association-testing/25
-sbg:image_url:
-sbg:latestRevision: 25
+sbg:id: admin/sbg-public-data/single-variant-association-testing/28
+sbg:image_url: |-
+  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/admin/sbg-public-data/single-variant-association-testing/28.png
+sbg:latestRevision: 28
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -527,14 +536,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1617276240
+sbg:modifiedOn: 1621514816
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/25/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/28/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 25
-sbg:revisionNotes: Plot update
+sbg:revision: 28
+sbg:revisionNotes: Azure instance hint added
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727843
@@ -640,6 +649,18 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1617276240
   sbg:revision: 25
   sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514815
+  sbg:revision: 26
+  sbg:revisionNotes: Assoc plot labels updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514816
+  sbg:revision: 27
+  sbg:revisionNotes: Description updated with fast score information
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514816
+  sbg:revision: 28
+  sbg:revisionNotes: Azure instance hint added
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

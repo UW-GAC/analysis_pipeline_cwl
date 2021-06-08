@@ -12,19 +12,14 @@ inputs:
   label: Number of sample blocks
   doc: |-
     Number of blocks to divide samples into for parallel computation. Adjust depending on computer memory and number of samples in the analysis.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 1
   sbg:category: Input Options
   sbg:toolDefaultValue: '1'
 
 outputs:
 - id: segments
-  type:
-  - 'null'
-  - type: array
-    items: int
+  type: int[]?
   outputBinding:
     outputEval: |-
       ${ 
@@ -44,47 +39,32 @@ outputs:
       }
 
 baseCommand: []
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/sample-blocks-to-segments/2/raw/
+id: smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a8cb0d01cf74173f4ee31b49c0437036e085380effb76b5db0bbbfc610c917773
+sbg:content_hash: af7325b6f64510e4d102db9ba5fde34bdc69604e198b648ba451a5bd9557974ae
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1606935317
-sbg:id: smgogarten/genesis-relatedness/sample-blocks-to-segments/2
+sbg:createdOn: 1609451972
+sbg:id: smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments/1
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615937211
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451996
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 2
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606935317
+  sbg:modifiedOn: 1609451972
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606936254
+  sbg:modifiedOn: 1609451996
   sbg:revision: 1
-  sbg:revisionNotes: tool to convert number of sample blocks to segments
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615937211
-  sbg:revision: 2
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

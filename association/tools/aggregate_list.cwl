@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: aggregate_list.config
@@ -17,7 +17,7 @@ requirements:
           function find_chromosome(file){
               var chr_array = [];
               var chrom_num = file.split("/").pop();
-              var chrom_num = file.split("chr")[1];
+              chrom_num = file.split("chr")[1]
               
               if(isNumeric(chrom_num.charAt(1)))
               {
@@ -27,55 +27,56 @@ requirements:
               {
                   chr_array.push(chrom_num.substr(0,1))
               }
-              return chr_array.toString()
+              return chr_array.toString();
           }
           
           function isNumeric(s) {
               return !isNaN(s - parseFloat(s));
           }
           
-          var arguments = [];
+          var argument = [];
           
           
           if (inputs.variant_group_file.basename.includes('chr'))
           {   
               var chr = find_chromosome(inputs.variant_group_file.path);
               var chromosomes_basename = inputs.variant_group_file.path.slice(0,-6).replace(/\/.+\//g,"");
-              
+               
+              var i; 
               for(i = chromosomes_basename.length - 1; i > 0; i--)
                   if(chromosomes_basename[i] != 'X' && chromosomes_basename[i] != "Y" && isNaN(chromosomes_basename[i]))
-                      break
+                      break;
               chromosomes_basename = inputs.variant_group_file.basename.split('chr'+chr)[0]+"chr "+ inputs.variant_group_file.basename.split('chr'+chr)[1]
               
-              arguments.push('variant_group_file "' + chromosomes_basename + '"')
+              argument.push('variant_group_file "' + chromosomes_basename + '"')
           }
           else
           {
-              arguments.push('variant_group_file "' + inputs.variant_group_file.basename + '"')
+              argument.push('variant_group_file "' + inputs.variant_group_file.basename + '"')
           }
           
           if(inputs.out_file)
               if (inputs.variant_group_file.basename.includes('chr')){
                   
-                  arguments.push('out_file "' + inputs.out_file + ' .RData"')}
+                  argument.push('out_file "' + inputs.out_file + ' .RData"')}
               else
-                  arguments.push('out_file "' + inputs.out_file + '.RData"')
+                  argument.push('out_file "' + inputs.out_file + '.RData"')
           else
           {
               if (inputs.variant_group_file.basename.includes('chr'))
-                  arguments.push('out_file "aggregate_list_chr .RData"')
+                  argument.push('out_file "aggregate_list_chr .RData"')
               else
-                  arguments.push('out_file aggregate_list.RData')
+                  argument.push('out_file aggregate_list.RData')
           }
               
 
           if(inputs.aggregate_type)
-              arguments.push('aggregate_type "' + inputs.aggregate_type + '"')
+              argument.push('aggregate_type "' + inputs.aggregate_type + '"')
           
           if(inputs.group_id)
-              arguments.push('group_id "' + inputs.group_id + '"')
+              argument.push('group_id "' + inputs.group_id + '"')
           
-          return arguments.join('\n') + '\n'
+          return argument.join('\n') + '\n'
 
       }
 - class: InlineJavascriptRequirement
@@ -120,6 +121,8 @@ outputs:
   outputBinding:
     glob: |-
       ${
+          var comm;
+          
           if (!inputs.variant_group_file.basename.includes('chr'))
           {
               return '*RData'
@@ -144,7 +147,8 @@ arguments:
 - prefix: ''
   position: 0
   valueFrom: |-
-    ${
+    ${  
+        var cmd_line;
         if (inputs.variant_group_file)
         {
             cmd_line = "cp " + inputs.variant_group_file.path + " " + inputs.variant_group_file.basename
@@ -161,7 +165,7 @@ arguments:
   position: 0
   valueFrom: |-
     ${
-        cmd_line = "";
+        var cmd_line = "";
         if (inputs.variant_group_file)
         {
             cmd_line = "&& Rscript /usr/local/analysis_pipeline/R/aggregate_list.R aggregate_list.config "
@@ -186,6 +190,8 @@ arguments:
             return !isNaN(s - parseFloat(s));
         }
         
+        var chromosome;
+        
         if (inputs.variant_group_file.basename.includes('chr'))
         {
     	    chromosome = find_chromosome(inputs.variant_group_file.path)
@@ -205,25 +211,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/aggregate-list/4
+id: boris_majic/genesis-toolkit-demo/aggregate-list/6
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a69fe7f64e607824bcce08036f9f626ea9f64d3c1b12dd0f46accc5e450e28b28
+sbg:content_hash: af4437d8ee5d6c1a9ea398abbfd0aedc04573ae93290c94d5be44b1ab3615c39a
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360995
-sbg:id: h-2ea8af7b/h-bae3dbed/h-3e2358c1/0
+sbg:id: h-31970cff/h-5f1d6e27/h-d3893cf8/0
 sbg:image_url:
-sbg:latestRevision: 4
+sbg:latestRevision: 6
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1602155556
+sbg:modifiedOn: 1616077425
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 4
-sbg:revisionNotes: Import from BDC 2.8.1 version
+sbg:revision: 6
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360995
@@ -245,5 +251,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1602155556
   sbg:revision: 4
   sbg:revisionNotes: Import from BDC 2.8.1 version
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608906991
+  sbg:revision: 5
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077425
+  sbg:revision: 6
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

@@ -69,69 +69,53 @@ inputs:
 - id: ld_r_threshold
   label: LD |r| threshold
   doc: '|r| threshold for LD pruning.'
-  type:
-  - 'null'
-  - float
+  type: float?
   sbg:category: Input Options
   sbg:toolDefaultValue: 0.32 (r^2 = 0.1)
 - id: ld_win_size
   label: LD window size
   doc: Sliding window size in Mb for LD pruning.
-  type:
-  - 'null'
-  - float
+  type: float?
   sbg:category: Input options
   sbg:toolDefaultValue: '10'
 - id: maf_threshold
   label: MAF threshold
   doc: |-
     Minimum MAF for variants used in LD pruning. Variants below this threshold are removed.
-  type:
-  - 'null'
-  - float
+  type: float?
   sbg:category: Input options
   sbg:toolDefaultValue: '0.01'
 - id: missing_threshold
   label: Missing call rate threshold
   doc: |-
     Maximum missing call rate for variants used in LD pruning. Variants above this threshold are removed.
-  type:
-  - 'null'
-  - float
+  type: float?
   sbg:category: Input options
   sbg:toolDefaultValue: '0.01'
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 - id: sample_include_file
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: variant_include_file
   label: Variant Include file
   doc: |-
     RData file with vector of variant.id to consider for LD pruning. If not provided, all variants in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: exclude_pca_corr
   label: Exclude PCA corr
   doc: |-
     Exclude variants in genomic regions known to result in high PC-variant correlations when included (HLA, LCT, inversions).
-  type:
-  - 'null'
-  - boolean
+  type: boolean?
   sbg:category: Input options
   sbg:toolDefaultValue: 'true'
 - id: genome_build
@@ -152,9 +136,7 @@ inputs:
 - id: chromosome
   label: Chromosome
   doc: Chromosome range of gds file (1-24 or X,Y).
-  type:
-  - 'null'
-  - string
+  type: string?
   inputBinding:
     prefix: --chromosome
     position: 20
@@ -165,9 +147,7 @@ outputs:
 - id: ld_pruning_output
   label: Pruned output file
   doc: RData file with variant.id of pruned variants.
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.RData'
   sbg:fileTypes: RDATA
@@ -190,80 +170,32 @@ hints:
   value: ld_pruning.config
 - class: sbg:SaveLogs
   value: job.out.log
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/ld-pruning/9/raw/
+id: smgogarten/genesis-relatedness-pre-build/ld-pruning/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: ac8a7a3f89600a672b6bfccee670eb30dd01ab56001c4ce5d51bcf025e75caf5c
+sbg:content_hash: a94009640f3ecb8fb54da42d25f80f0d167b25bed1275d365a10fb1dd75fe0161
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1601921404
-sbg:id: smgogarten/genesis-relatedness/ld-pruning/9
+sbg:createdOn: 1609451377
+sbg:id: smgogarten/genesis-relatedness-pre-build/ld-pruning/1
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615931959
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451394
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 9
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1601921404
+  sbg:modifiedOn: 1609451377
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/ld-pruning/8
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606254528
+  sbg:modifiedOn: 1609451394
   sbg:revision: 1
-  sbg:revisionNotes: revise ld pruning
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606257249
-  sbg:revision: 2
-  sbg:revisionNotes: revise output file names
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607925789
-  sbg:revision: 3
-  sbg:revisionNotes: add missing call rate threshold
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608144336
-  sbg:revision: 4
-  sbg:revisionNotes: update documentation
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609294635
-  sbg:revision: 5
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609307564
-  sbg:revision: 6
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448349
-  sbg:revision: 7
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931568
-  sbg:revision: 8
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931959
-  sbg:revision: 9
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

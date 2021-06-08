@@ -57,43 +57,33 @@ inputs:
 - id: n_pcs
   label: Number of PCs
   doc: Number of PCs (Principal Components) to use in adjusting for ancestry.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 3
   sbg:category: Input Options
   sbg:toolDefaultValue: '3'
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 - id: sample_include_file
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: variant_include_file
   label: Variant include file
   doc: |-
     RData file with vector of variant.id to include. If not provided, all variants in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: variant_block_size
   label: Variant block size
   doc: Number of variants to read in a single block.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 1024
   sbg:category: Input Options
   sbg:toolDefaultValue: '1024'
@@ -102,9 +92,7 @@ outputs:
 - id: beta
   label: ISAF beta values
   doc: RData file with ISAF beta values
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.RData'
   sbg:fileTypes: RDATA
@@ -127,59 +115,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pcrelate_beta.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pcrelate-beta/5/raw/
+id: smgogarten/genesis-relatedness-pre-build/pcrelate-beta/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: af9ca028190cac4c70860686db3dfef3c14958c64f4a0b3dac87669f68df1506b
+sbg:content_hash: acd95b0f59be2f0c20d7b4559096ba900a17baf5f94865419cec46ce48cbeddb6
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1606765290
-sbg:id: smgogarten/genesis-relatedness/pcrelate-beta/5
+sbg:createdOn: 1609451825
+sbg:id: smgogarten/genesis-relatedness-pre-build/pcrelate-beta/1
 sbg:image_url:
-sbg:latestRevision: 5
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615937210
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451844
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 5
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606765290
+  sbg:modifiedOn: 1609451825
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606766179
+  sbg:modifiedOn: 1609451844
   sbg:revision: 1
-  sbg:revisionNotes: start tool for pcrelate betas
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606770739
-  sbg:revision: 2
-  sbg:revisionNotes: add config file
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606773311
-  sbg:revision: 3
-  sbg:revisionNotes: always use pcrelate_beta in output prefix
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609449371
-  sbg:revision: 4
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615937210
-  sbg:revision: 5
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

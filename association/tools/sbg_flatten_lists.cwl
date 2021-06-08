@@ -1,4 +1,4 @@
-cwlVersion: v1.0
+cwlVersion: v1.1
 class: CommandLineTool
 label: SBG FlattenLists
 doc: |-
@@ -26,7 +26,7 @@ requirements:
   coresMin: 1
   ramMin: 1000
 - class: DockerRequirement
-  dockerPull: alpine
+  dockerPull: uwgac/topmed-master:2.8.1
 - class: InitialWorkDirRequirement
   listing:
   - $(inputs.input_list)
@@ -137,7 +137,7 @@ outputs:
     outputEval: |-
       ${
           function flatten(files) {
-              var a = []
+              var a = [];
               for (var i = 0; i < files.length; i++) {
                   if (files[i]) {
                       if (files[i].constructor == Array) a = a.concat(flatten(files[i]))
@@ -149,8 +149,8 @@ outputs:
 
           {
               if (inputs.input_list) {
-                  arr = [].concat(inputs.input_list)
-                  return_array = []
+                  var arr = [].concat(inputs.input_list);
+                  var return_array = [];
                   return_array = flatten(arr)
                   return return_array
               }
@@ -162,51 +162,49 @@ baseCommand:
 arguments:
 - position: 0
   valueFrom: '"Output'
-  separate: false
   shellQuote: false
 - position: 1
   valueFrom: is
-  separate: false
   shellQuote: false
 - position: 2
   valueFrom: now
-  separate: false
   shellQuote: false
 - position: 3
   valueFrom: a
-  separate: false
   shellQuote: false
 - position: 4
   valueFrom: single
-  separate: false
   shellQuote: false
 - position: 5
   valueFrom: list"
-  separate: false
   shellQuote: false
-id: sevenbridges/sbgtools-cwl1-0-demo/sbg-flatten-lists/2
+
+hints:
+- class: sbg:SaveLogs
+  value: job.out.log
+id: sevenbridges/sbgtools-cwl1-0-demo/sbg-flatten-lists/3
 sbg:appVersion:
-- v1.0
+- v1.1
 sbg:categories:
 - Other
 sbg:cmdPreview: echo "Output is now a single list"
-sbg:content_hash: a5410f6199ee230e184a245db75a9f66fd63c38164b59b7a78693b914505820f2
+sbg:content_hash: a8ab04a2a11a3f02f5cb29025dbeebbe3bb71cc8f1eb7caafb6e2140373cc62f3
 sbg:contributors:
-- nens
 - dajana_panovic
+- nens
 sbg:createdBy: nens
 sbg:createdOn: 1566552375
-sbg:id: h-e38fb01c/h-1988ffed/h-0424bd97/0
+sbg:id: h-c3d007fe/h-f8cf5a79/h-31ac1af0/0
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 3
 sbg:license: Apache License 2.0
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1588599015
+sbg:modifiedOn: 1608907303
 sbg:project: sevenbridges/sbgtools-cwl1-0-demo
 sbg:projectName: SBGTools - CWL1.0 - Demo
 sbg:publisher: sbg
-sbg:revision: 2
-sbg:revisionNotes: Updated to CWL1.0
+sbg:revision: 3
+sbg:revisionNotes: CWLtool prep
 sbg:revisionsInfo:
 - sbg:modifiedBy: nens
   sbg:modifiedOn: 1566552375
@@ -220,6 +218,10 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1588599015
   sbg:revision: 2
   sbg:revisionNotes: Updated to CWL1.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907303
+  sbg:revision: 3
+  sbg:revisionNotes: CWLtool prep
 sbg:sbgMaintained: false
 sbg:toolAuthor: Seven Bridges
 sbg:toolkit: SBGTools

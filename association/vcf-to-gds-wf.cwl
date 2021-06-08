@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: VCF to GDS converter
 doc: |-
@@ -189,21 +189,24 @@ hints:
   value: c5.18xlarge;ebs-gp2;700
 - class: sbg:maxNumberOfParallelInstances
   value: '5'
+- class: sbg:AzureInstanceType
+  value: Standard_F64s_v2;StandardSSD;1024
 sbg:appVersion:
+- v1.2
 - v1.1
 sbg:categories:
 - GWAS
 - VCF Processing
 - CWL1.0
-sbg:content_hash: abf83bd78702e81eb0811951c54e2b90cd60ec57a54269c96467ad12d0d44f4e7
+sbg:content_hash: afa1b913ac482d8b2dc7283c5c00ebca8ab4c3836eeb8e2a6219077bdb646f53f
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727847
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/vcf-to-gds/14
+sbg:id: admin/sbg-public-data/vcf-to-gds/17
 sbg:image_url:
-sbg:latestRevision: 14
+sbg:latestRevision: 17
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -217,14 +220,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1612797368
+sbg:modifiedOn: 1621514961
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/14/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/17/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 14
-sbg:revisionNotes: GENESIS VCF to GDS renamed to VCF to GDS converter
+sbg:revision: 17
+sbg:revisionNotes: Azure instance hint added
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727847
@@ -286,6 +289,18 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1612797368
   sbg:revision: 14
   sbg:revisionNotes: GENESIS VCF to GDS renamed to VCF to GDS converter
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276237
+  sbg:revision: 15
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514961
+  sbg:revision: 16
+  sbg:revisionNotes: Check GDS job memory updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1621514961
+  sbg:revision: 17
+  sbg:revisionNotes: Azure instance hint added
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

@@ -17,7 +17,7 @@ requirements:
             return 8*1024
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: assoc_single.config
@@ -44,49 +44,49 @@ requirements:
               
           var chr = find_chromosome(inputs.gds_file.path)
           
-          var arguments = [];
+          var argument = [];
           if(!inputs.is_unrel)
           {   
               if(inputs.out_prefix){
-                  arguments.push("out_prefix \"" + inputs.out_prefix + "_chr"+chr + "\"");
+                  argument.push("out_prefix \"" + inputs.out_prefix + "_chr"+chr + "\"");
               }
               if(!inputs.out_prefix){
               var data_prefix = inputs.gds_file.basename.split('chr');
               var data_prefix2 = inputs.gds_file.basename.split('.chr');
               if(data_prefix.length == data_prefix2.length)
-                  arguments.push('out_prefix "' + data_prefix2[0] + '_single_chr' + chr + inputs.gds_file.basename.split('chr'+chr)[1].split('.gds')[0] +'"');
+                  argument.push('out_prefix "' + data_prefix2[0] + '_single_chr' + chr + inputs.gds_file.basename.split('chr'+chr)[1].split('.gds')[0] +'"');
               else
-                  arguments.push('out_prefix "' + data_prefix[0] + 'single_chr' + chr +inputs.gds_file.basename.split('chr'+chr)[1].split('.gds')[0]+'"');}
-              arguments.push('gds_file "' + inputs.gds_file.path +'"');
-              arguments.push('null_model_file "' + inputs.null_model_file.path + '"');
-              arguments.push('phenotype_file "' + inputs.phenotype_file.path + '"');
+                  argument.push('out_prefix "' + data_prefix[0] + 'single_chr' + chr +inputs.gds_file.basename.split('chr'+chr)[1].split('.gds')[0]+'"');}
+              argument.push('gds_file "' + inputs.gds_file.path +'"');
+              argument.push('null_model_file "' + inputs.null_model_file.path + '"');
+              argument.push('phenotype_file "' + inputs.phenotype_file.path + '"');
               if(inputs.mac_threshold){
-                  arguments.push('mac_threshold ' + inputs.mac_threshold);
+                  argument.push('mac_threshold ' + inputs.mac_threshold);
               }
               if(inputs.maf_threshold){
-                  arguments.push('maf_threshold ' + inputs.maf_threshold);
+                  argument.push('maf_threshold ' + inputs.maf_threshold);
               }
               if(inputs.pass_only){
-                  arguments.push('pass_only ' + inputs.pass_only);
+                  argument.push('pass_only ' + inputs.pass_only);
               }
               if(inputs.segment_file){
-                  arguments.push('segment_file "' + inputs.segment_file.path + '"');
+                  argument.push('segment_file "' + inputs.segment_file.path + '"');
               }
               if(inputs.test_type){
-                  arguments.push('test_type "' + inputs.test_type + '"') ;
+                  argument.push('test_type "' + inputs.test_type + '"') ;
               }
               if(inputs.variant_include_file){
-                  arguments.push('variant_include_file "' + inputs.variant_include_file.path + '"');
+                  argument.push('variant_include_file "' + inputs.variant_include_file.path + '"');
               }
               if(inputs.variant_block_size){
-                  arguments.push('variant_block_size ' + inputs.variant_block_size);
+                  argument.push('variant_block_size ' + inputs.variant_block_size);
               }
               if(inputs.genome_build){
-                  arguments.push('genome_build ' + inputs.genome_build);
+                  argument.push('genome_build ' + inputs.genome_build);
               }
               
-              arguments.push('');
-              return arguments.join('\n');
+              argument.push('');
+              return argument.join('\n');
           }
       }
 - class: InlineJavascriptRequirement
@@ -193,6 +193,7 @@ inputs:
     symbols:
     - score
     - score.spa
+    - BinomiRare
   sbg:category: Configs
   sbg:toolDefaultValue: score
 - id: variant_include_file
@@ -326,25 +327,25 @@ hints:
   value: r4.8xlarge;ebs-gp2;500
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-single-r/7
+id: boris_majic/genesis-toolkit-demo/assoc-single-r/9
 sbg:appVersion:
 - v1.1
-sbg:content_hash: aa8de9c39625887199513e13309e0b619c26af82ebb717b3f3bc9dbfa4ba3a68f
+sbg:content_hash: a94935ca3d553186c6d4ba57c35b4ad86ea00b2a2aeda3c3d3186763f473f4aa8
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360947
-sbg:id: h-ed77bd05/h-98077d07/h-a38529dd/0
+sbg:id: h-6f665fd1/h-0a2fb995/h-cea5fc50/0
 sbg:image_url:
-sbg:latestRevision: 7
+sbg:latestRevision: 9
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603797707
+sbg:modifiedOn: 1616077397
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 7
-sbg:revisionNotes: BDC import
+sbg:revision: 9
+sbg:revisionNotes: Docker updated to v2.10.0 and BinomiRare test added
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360947
@@ -378,5 +379,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603797707
   sbg:revision: 7
   sbg:revisionNotes: BDC import
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907021
+  sbg:revision: 8
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077397
+  sbg:revision: 9
+  sbg:revisionNotes: Docker updated to v2.10.0 and BinomiRare test added
 sbg:sbgMaintained: false
 sbg:validationErrors: []

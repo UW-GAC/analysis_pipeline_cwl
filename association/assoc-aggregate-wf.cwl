@@ -42,7 +42,7 @@ doc: |-
   | 50K     |         | Sparse               | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 9        | 2 h, 11 min | 43$  |
   | 50K     |         | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 4 h, 47 min | 208$ |
   | 50K     |         | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 4 h, 30 min | 218$ |
-  | 50K     |         | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 9 h         | 218$ |
+  | 50K     |         | Dense                | Burden | 8                     | On Dm            | r5.12xlarge   | 8   | 70       | 9 h         | 218$ |
   | 10K     |         | w/o                  | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 1 h, 55 min | 16$  |
   | 10K     |         | Sparse               | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 2 h         | 17$  |
   | 10K     |         | Dense                | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 2 h, 40 min | 16$  |
@@ -62,7 +62,7 @@ doc: |-
   | 50K |  | Sparse | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 2 h, 23 min | 44$  |
   | 50K |  | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 13 | 100 | 11 h, 2 min | 500$ |
   | 50K |  | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 9 h         | 435$ |
-  | 50K |  | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 18 h        | 435$ |
+  | 50K |  | Dense  | SKAT | 8 | On Dm | r5.12xlarge   | 12 | 90  | 18 h        | 435$ |
   | 10K |  | w/o    | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h, 50 min | 17$  |
   | 10K |  | Sparse | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h         | 16$  |
   | 10K |  | Dense  | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 50 min | 17$  |
@@ -83,7 +83,7 @@ doc: |-
   | 50K |  | Sparse | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 2 h, 47 min  | 44$  |
   | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 13 | 100 | 11 h, 30 min | 500$ |
   | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 9 h          | 435$ |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 18 h         | 435$ |
+  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.12xlarge   | 12 | 90  | 18 h         | 435$ |
   | 10K |  | w/o    | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h 30 min   | 15$  |
   | 10K |  | Sparse | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h          | 16$  |
   | 10K |  | Dense  | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 50 min  | 17$  |
@@ -213,14 +213,6 @@ inputs:
   sbg:toolDefaultValue: allele
   sbg:x: -281
   sbg:y: 269
-- id: variant_include_files
-  label: Variant Include Files
-  doc: |-
-    RData file(s) with a vector of variant.id to include. Files may be separated by chromosome with ‘chr##’ string corresponding to each GDS file. If not provided, all variants in the GDS file will be included in the analysis.
-  type: File[]?
-  sbg:fileTypes: RDATA
-  sbg:x: -115.52787780761719
-  sbg:y: -348.9559631347656
 - id: weight_user
   label: Weight user
   doc: |-
@@ -370,13 +362,20 @@ inputs:
   type: int?
   sbg:x: 976.2490234375
   sbg:y: 719.1896362304688
+- id: variant_include_files
+  label: Variant Include Files
+  doc: RData file containing ids of variants to be included.
+  type: File[]?
+  sbg:fileTypes: RData
+  sbg:x: -105.97315979003906
+  sbg:y: -521.52490234375
 
 outputs:
 - id: assoc_combined
   label: Association test results
   doc: |-
     RData file with data.frame of association test results (test statistic, p-value, etc.) See the documentation of the GENESIS R package for detailed description of output.
-  type: File?
+  type: File[]?
   outputSource:
   - assoc_combine_r/assoc_combined
   sbg:fileTypes: RDATA
@@ -429,28 +428,43 @@ steps:
   label: Association Testing Aggregate
   in:
   - id: gds_file
-    source: sbg_prepare_segments/gds_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/gds_output
+    linkMerge: merge_flattened
   - id: null_model_file
     source: null_model_file
   - id: phenotype_file
     source: phenotype_file
   - id: aggregate_variant_file
-    source: sbg_prepare_segments/aggregate_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/aggregate_output
+    linkMerge: merge_flattened
   - id: out_prefix
     source: out_prefix
   - id: rho
     source:
     - rho
   - id: segment_file
-    source: define_segments_r/define_segments_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - define_segments_r/define_segments_output
+    linkMerge: merge_flattened
   - id: test
     source: test
   - id: variant_include_file
-    source: sbg_prepare_segments/variant_include_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/variant_include_output
+    linkMerge: merge_flattened
   - id: weight_beta
     source: weight_beta
   - id: segment
-    source: sbg_prepare_segments/segments
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/segments
+    linkMerge: merge_flattened
   - id: aggregate_type
     source: aggregate_type
   - id: alt_freq_max
@@ -483,12 +497,15 @@ steps:
   label: Association Combine
   in:
   - id: chromosome
-    source: sbg_group_segments/chromosome
+    valueFrom: '$(self ? [].concat(self) : self)'
+    source:
+    - sbg_group_segments_1/chromosome
   - id: assoc_type
     default: aggregate
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
-    - sbg_group_segments/grouped_assoc_files
+    - sbg_group_segments_1/grouped_assoc_files
   scatter:
   - chromosome
   - assoc_files
@@ -503,8 +520,10 @@ steps:
   label: Association test plots
   in:
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
     - assoc_combine_r/assoc_combined
+    linkMerge: merge_flattened
   - id: assoc_type
     default: aggregate
   - id: plots_prefix
@@ -525,42 +544,9 @@ steps:
   out:
   - id: assoc_plots
   - id: configs
+  - id: Lambdas
   sbg:x: 1462.4285888671875
   sbg:y: 357.4285583496094
-- id: sbg_prepare_segments
-  label: SBG Prepare Segments
-  in:
-  - id: input_gds_files
-    source:
-    - sbg_gds_renamer/renamed_variants
-  - id: segments_file
-    source: define_segments_r/define_segments_output
-  - id: aggregate_files
-    source:
-    - aggregate_list/aggregate_list
-  - id: variant_include_files
-    source:
-    - variant_include_files
-  run: assoc-aggregate-wf.cwl.steps/sbg_prepare_segments.cwl
-  out:
-  - id: gds_output
-  - id: segments
-  - id: aggregate_output
-  - id: variant_include_output
-  sbg:x: 150
-  sbg:y: -87
-- id: sbg_group_segments
-  label: SBG Group Segments
-  in:
-  - id: assoc_files
-    source:
-    - sbg_flatten_lists/output_list
-  run: assoc-aggregate-wf.cwl.steps/sbg_group_segments.cwl
-  out:
-  - id: grouped_assoc_files
-  - id: chromosome
-  sbg:x: 1075.857177734375
-  sbg:y: 180.2857208251953
 - id: sbg_gds_renamer
   label: SBG GDS renamer
   in:
@@ -577,6 +563,8 @@ steps:
   label: SBG FlattenLists
   in:
   - id: input_list
+    valueFrom: |-
+      ${     var out = [];     for (var i = 0; i<self.length; i++){         if (self[i])    out.push(self[i])     }     return out }
     source:
     - assoc_aggregate/assoc_aggregate
   run: assoc-aggregate-wf.cwl.steps/sbg_flatten_lists.cwl
@@ -584,6 +572,40 @@ steps:
   - id: output_list
   sbg:x: 915.6107788085938
   sbg:y: 182.4495849609375
+- id: sbg_group_segments_1
+  label: SBG Group Segments
+  in:
+  - id: assoc_files
+    source:
+    - sbg_flatten_lists/output_list
+  run: assoc-aggregate-wf.cwl.steps/sbg_group_segments_1.cwl
+  out:
+  - id: grouped_assoc_files
+  - id: chromosome
+  sbg:x: 1075.814208984375
+  sbg:y: 178.85438537597656
+- id: sbg_prepare_segments_1
+  label: SBG Prepare Segments
+  in:
+  - id: input_gds_files
+    source:
+    - sbg_gds_renamer/renamed_variants
+  - id: segments_file
+    source: define_segments_r/define_segments_output
+  - id: aggregate_files
+    source:
+    - aggregate_list/aggregate_list
+  - id: variant_include_files
+    source:
+    - variant_include_files
+  run: assoc-aggregate-wf.cwl.steps/sbg_prepare_segments_1.cwl
+  out:
+  - id: gds_output
+  - id: segments
+  - id: aggregate_output
+  - id: variant_include_output
+  sbg:x: 95.99354553222656
+  sbg:y: -143.77420043945312
 
 hints:
 - class: sbg:AWSInstanceType
@@ -592,19 +614,18 @@ hints:
   value: '8'
 sbg:appVersion:
 - v1.1
-- v1.0
 sbg:categories:
 - GWAS
 - CWL1.0
-sbg:content_hash: aa1fb740a13e050ebbc0433953ab831adcbc4addea3ed4caa7161977d9e4b277b
+sbg:content_hash: a895f579dbacc2ad6c290998fb10bd29a8b981e42e763e80152423161d935a419
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727846
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/aggregate-association-testing/19
+sbg:id: admin/sbg-public-data/aggregate-association-testing/25
 sbg:image_url:
-sbg:latestRevision: 19
+sbg:latestRevision: 25
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -618,14 +639,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1604053019
+sbg:modifiedOn: 1617276239
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/19/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/25/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 19
-sbg:revisionNotes: Config cleaning
+sbg:revision: 25
+sbg:revisionNotes: Plot update
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727846
@@ -707,6 +728,30 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1604053019
   sbg:revision: 19
   sbg:revisionNotes: Config cleaning
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1616425668
+  sbg:revision: 20
+  sbg:revisionNotes: CWLtool compatible
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1616425668
+  sbg:revision: 21
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1616425668
+  sbg:revision: 22
+  sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1616425668
+  sbg:revision: 23
+  sbg:revisionNotes: Benchmarking table updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 24
+  sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 25
+  sbg:revisionNotes: Plot update
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

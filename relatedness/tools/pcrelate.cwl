@@ -67,33 +67,25 @@ inputs:
 - id: n_pcs
   label: Number of PCs
   doc: Number of PCs to use in adjusting for ancestry.
-  type:
-  - 'null'
-  - int
+  type: int?
   sbg:category: Input Options
   sbg:toolDefaultValue: '3'
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
   sbg:toolDefaultValue: pcrelate
 - id: variant_include_file
   label: Variant include file
   doc: |-
     RData file with vector of variant.id to include. If not provided, all variants in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
 - id: variant_block_size
   label: Variant block size
   doc: Number of variants to read in a single block.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 1024
   sbg:category: Input Options
   sbg:toolDefaultValue: '1024'
@@ -101,18 +93,14 @@ inputs:
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: n_sample_blocks
   label: Number of sample blocks
   doc: |-
     Number of blocks to divide samples into for parallel computation. Adjust depending on computer memory and number of samples in the analysis.
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 1
   sbg:category: Input Options
   sbg:toolDefaultValue: '1'
@@ -120,9 +108,7 @@ inputs:
   label: Sample block combination
   doc: |-
     If number of sample blocks is > 1, run on this combination of sample blocks. Allowed values are 1:N where N is the number of possible combinations of sample blocks [i, j].
-  type:
-  - 'null'
-  - int
+  type: int?
   default: 1
   sbg:category: Input Options
   sbg:toolDefaultValue: '1'
@@ -131,9 +117,7 @@ outputs:
 - id: pcrelate
   label: PC-Relate results
   doc: RData files with PC-Relate results for each sample block.
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.RData'
   sbg:fileTypes: RDATA
@@ -160,84 +144,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: pcrelate.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pcrelate/11/raw/
+id: smgogarten/genesis-relatedness-pre-build/pcrelate/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: abdc0dd3f77e307c558db08211832266965eb373e1886f5dbace136bb5c8f85bb
+sbg:content_hash: a9161ebd2883ca32ce39699d9d51727aece9d4ff6d64e60d00e0e87a6f7169d4d
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1604988697
-sbg:id: smgogarten/genesis-relatedness/pcrelate/11
+sbg:createdOn: 1609451776
+sbg:id: smgogarten/genesis-relatedness-pre-build/pcrelate/1
 sbg:image_url:
-sbg:latestRevision: 11
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615937212
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451801
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 11
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1604988697
+  sbg:modifiedOn: 1609451776
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pcrelate/0
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606774319
+  sbg:modifiedOn: 1609451801
   sbg:revision: 1
-  sbg:revisionNotes: use R instead of Rscript
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606775205
-  sbg:revision: 2
-  sbg:revisionNotes: update inputs and outputs
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606776132
-  sbg:revision: 3
-  sbg:revisionNotes: add beta file as input
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606776342
-  sbg:revision: 4
-  sbg:revisionNotes: add beta file to config
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606777434
-  sbg:revision: 5
-  sbg:revisionNotes: add sample blocks to config
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606778422
-  sbg:revision: 6
-  sbg:revisionNotes: add sample block to run on
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606800735
-  sbg:revision: 7
-  sbg:revisionNotes: change sample_block to segment as it is a combination of blocks
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606801726
-  sbg:revision: 8
-  sbg:revisionNotes: change sample_block to segment
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606938941
-  sbg:revision: 9
-  sbg:revisionNotes: |-
-    don't add "_pcrelate" string to output filenames, as this gets added in pcrelate_correct
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609449265
-  sbg:revision: 10
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615937212
-  sbg:revision: 11
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

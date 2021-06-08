@@ -186,14 +186,6 @@ inputs:
   sbg:toolDefaultValue: hg38
   sbg:x: -329
   sbg:y: 74
-- id: variant_include_files
-  label: Variant Include Files
-  doc: |-
-    RData file(s) with a vector of variant.id to include. Files may be separated by chromosome with ‘chr##’ string corresponding to each GDS file. If not provided, all variants in the GDS file will be included in the analysis.
-  type: File[]?
-  sbg:fileTypes: RDATA
-  sbg:x: -106
-  sbg:y: -325
 - id: window_step
   label: Window step
   doc: Step size of sliding window in kb.
@@ -357,13 +349,20 @@ inputs:
   type: int?
   sbg:x: 865.5167846679688
   sbg:y: 719.1002197265625
+- id: variant_include_files
+  label: Variant Include Files
+  doc: RData file containing ids of variants to be included.
+  type: File[]?
+  sbg:fileTypes: RData
+  sbg:x: -67.34032440185547
+  sbg:y: -340.61676025390625
 
 outputs:
 - id: assoc_combined
   label: Association test results
   doc: |-
     RData file with data.frame of association test results (test statistic, p-value, etc.) See the documentation of the GENESIS R package for detailed description of output.
-  type: File?
+  type: File[]?
   outputSource:
   - assoc_combine_r/assoc_combined
   sbg:fileTypes: RDATA
@@ -376,8 +375,8 @@ outputs:
   outputSource:
   - assoc_plots_r/assoc_plots
   sbg:fileTypes: PNG
-  sbg:x: 1625
-  sbg:y: 395
+  sbg:x: 1714.2301025390625
+  sbg:y: 456.1864013671875
 
 steps:
 - id: define_segments_r
@@ -399,7 +398,10 @@ steps:
   label: Association Testing Window
   in:
   - id: gds_file
-    source: sbg_prepare_segments/gds_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/gds_output
+    linkMerge: merge_flattened
   - id: null_model_file
     source: null_model_file
   - id: phenotype_file
@@ -410,15 +412,24 @@ steps:
     source:
     - rho
   - id: segment_file
-    source: define_segments_r/define_segments_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - define_segments_r/define_segments_output
+    linkMerge: merge_flattened
   - id: test
     source: test
   - id: variant_include_file
-    source: sbg_prepare_segments/variant_include_output
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/variant_include_output
+    linkMerge: merge_flattened
   - id: weight_beta
     source: weight_beta
   - id: segment
-    source: sbg_prepare_segments/segments
+    valueFrom: '$(self ? [].concat(self)[0] : self)'
+    source:
+    - sbg_prepare_segments_1/segments
+    linkMerge: merge_flattened
   - id: pass_only
     source: pass_only
   - id: window_size
@@ -446,14 +457,16 @@ steps:
   out:
   - id: assoc_window
   - id: config_file
-  sbg:x: 536
-  sbg:y: 191
+  sbg:x: 655.7789306640625
+  sbg:y: -43.699947357177734
 - id: assoc_plots_r
   label: Association Plots
   in:
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
     - assoc_combine_r/assoc_combined
+    linkMerge: merge_flattened
   - id: assoc_type
     default: window
   - id: plots_prefix
@@ -474,49 +487,22 @@ steps:
   out:
   - id: assoc_plots
   - id: configs
+  - id: Lambdas
   sbg:x: 1434.0654296875
   sbg:y: 427.8849182128906
-- id: sbg_prepare_segments
-  label: SBG Prepare Segments
-  in:
-  - id: input_gds_files
-    source:
-    - sbg_gds_renamer/renamed_variants
-  - id: segments_file
-    source: define_segments_r/define_segments_output
-  - id: variant_include_files
-    source:
-    - variant_include_files
-  run: assoc-window-wf.cwl.steps/sbg_prepare_segments.cwl
-  out:
-  - id: gds_output
-  - id: segments
-  - id: aggregate_output
-  - id: variant_include_output
-  sbg:x: 126
-  sbg:y: -32
-- id: sbg_group_segments
-  label: SBG Group Segments
-  in:
-  - id: assoc_files
-    source:
-    - sbg_flatten_lists/output_list
-  run: assoc-window-wf.cwl.steps/sbg_group_segments.cwl
-  out:
-  - id: grouped_assoc_files
-  - id: chromosome
-  sbg:x: 1002
-  sbg:y: 252
 - id: assoc_combine_r
   label: Association Combine
   in:
   - id: chromosome
-    source: sbg_group_segments/chromosome
+    valueFrom: '$(self ? [].concat(self) : self)'
+    source:
+    - sbg_group_segments_1/chromosome
   - id: assoc_type
     default: window
   - id: assoc_files
+    valueFrom: '$(self ? [].concat(self) : self)'
     source:
-    - sbg_group_segments/grouped_assoc_files
+    - sbg_group_segments_1/grouped_assoc_files
   scatter:
   - chromosome
   - assoc_files
@@ -543,6 +529,8 @@ steps:
   label: SBG FlattenLists
   in:
   - id: input_list
+    valueFrom: |-
+      ${     var out = [];     for (var i = 0; i<self.length; i++){         if (self[i])    out.push(self[i])     }     return out }
     source:
     - assoc_window/assoc_window
   run: assoc-window-wf.cwl.steps/sbg_flatten_lists.cwl
@@ -550,6 +538,37 @@ steps:
   - id: output_list
   sbg:x: 832.23046875
   sbg:y: 252.8946990966797
+- id: sbg_group_segments_1
+  label: SBG Group Segments
+  in:
+  - id: assoc_files
+    source:
+    - sbg_flatten_lists/output_list
+  run: assoc-window-wf.cwl.steps/sbg_group_segments_1.cwl
+  out:
+  - id: grouped_assoc_files
+  - id: chromosome
+  sbg:x: 1011.0945434570312
+  sbg:y: 234.52940368652344
+- id: sbg_prepare_segments_1
+  label: SBG Prepare Segments
+  in:
+  - id: input_gds_files
+    source:
+    - sbg_gds_renamer/renamed_variants
+  - id: segments_file
+    source: define_segments_r/define_segments_output
+  - id: variant_include_files
+    source:
+    - variant_include_files
+  run: assoc-window-wf.cwl.steps/sbg_prepare_segments_1.cwl
+  out:
+  - id: gds_output
+  - id: segments
+  - id: aggregate_output
+  - id: variant_include_output
+  sbg:x: 167.8256378173828
+  sbg:y: -154.29832458496094
 
 hints:
 - class: sbg:AWSInstanceType
@@ -558,20 +577,19 @@ hints:
   value: '8'
 sbg:appVersion:
 - v1.1
-- v1.0
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a548e86c8c7597ad7a7065caf33247c2b72d3fa8f4c221fc90896a81ed8de14ac
+sbg:content_hash: a8fb6450529f52ff73c36cfaaa48898630eda71205316f38824a78375dcb2d5bc
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727849
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/sliding-window-association-testing/17
+sbg:id: admin/sbg-public-data/sliding-window-association-testing/22
 sbg:image_url:
-sbg:latestRevision: 17
+sbg:latestRevision: 22
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -585,14 +603,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1604053019
+sbg:modifiedOn: 1617276239
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/17/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/22/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 17
-sbg:revisionNotes: Config cleaning
+sbg:revision: 22
+sbg:revisionNotes: Plot update
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727849
@@ -666,6 +684,26 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1604053019
   sbg:revision: 17
   sbg:revisionNotes: Config cleaning
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 18
+  sbg:revisionNotes: CWLtool compatible
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 19
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 20
+  sbg:revisionNotes: Plot updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 21
+  sbg:revisionNotes: Plot update
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1617276239
+  sbg:revision: 22
+  sbg:revisionNotes: Plot update
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

@@ -17,33 +17,33 @@ requirements:
             return 4*1024
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: assoc_combine.config
     writable: false
     entry: |-
       ${
-          var arguments = [];
-          arguments.push('assoc_type "'+ inputs.assoc_type + '"');
+          var argument = [];
+          argument.push('assoc_type "'+ inputs.assoc_type + '"');
           var data_prefix = inputs.assoc_files[0].basename.split('_chr')[0];
           if (inputs.out_prefix)
           {
-              arguments.push('out_prefix "' + inputs.out_prefix+ '"');
+              argument.push('out_prefix "' + inputs.out_prefix+ '"');
           }
           else
           {
-              arguments.push('out_prefix "' + data_prefix+ '"');
+              argument.push('out_prefix "' + data_prefix+ '"');
           }
           
           if(inputs.conditional_variant_file){
-              arguments.push('conditional_variant_file "' + inputs.conditional_variant_file.path + '"');
+              argument.push('conditional_variant_file "' + inputs.conditional_variant_file.path + '"');
           }
           //if(inputs.assoc_files)
           //{
           //    arguments.push('assoc_files "' + inputs.assoc_files[0].path + '"')
           //}
-          return arguments.join('\n') + '\n'
+          return argument.join('\n') + '\n'
       }
 - class: InlineJavascriptRequirement
   expressionLib:
@@ -91,7 +91,7 @@ inputs:
 - id: chromosome
   label: Chromosome
   doc: Chromosome (1-24 or X,Y).
-  type: string?
+  type: string[]?
   inputBinding:
     prefix: --chromosome
     position: 10
@@ -179,7 +179,8 @@ arguments:
   position: 1
   valueFrom: |-
     ${
-        command = ''
+        var command = '';
+        var i;
         for(i=0; i<inputs.assoc_files.length; i++)
             command += "ln -s " + inputs.assoc_files[i].path + " " + inputs.assoc_files[i].path.split("/").pop() + " && "
         
@@ -194,25 +195,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-combine-r/5
+id: boris_majic/genesis-toolkit-demo/assoc-combine-r/7
 sbg:appVersion:
 - v1.1
-sbg:content_hash: ab1c6d8275246be1a2493784cbec2422b7f190901c93ab2d6d5772119fff08458
+sbg:content_hash: a9441836c8bc986fc185a4d0cacafb79eee2380bb33c56e1b49de6a4cabdbf4b8
 sbg:contributors:
 - dajana_panovic
 - boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360839
-sbg:id: h-243a68c9/h-8b780e0d/h-d6238406/0
+sbg:id: h-c99b4268/h-7abe2ed7/h-df8924a2/0
 sbg:image_url:
-sbg:latestRevision: 5
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1603797891
+sbg:modifiedOn: 1616077298
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 5
-sbg:revisionNotes: BDC import
+sbg:revision: 7
+sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360839
@@ -238,5 +239,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1603797891
   sbg:revision: 5
   sbg:revisionNotes: BDC import
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1608907124
+  sbg:revision: 6
+  sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1616077298
+  sbg:revision: 7
+  sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

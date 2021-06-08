@@ -54,26 +54,20 @@ inputs:
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
 - id: sample_include_file
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: variant_include_file
   label: Variant Include file
   doc: |-
     RData file with vector of variant.id to use for kinship estimation. If not provided, all variants in the GDS file are included.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 
@@ -81,9 +75,7 @@ outputs:
 - id: king_robust_output
   label: KING robust output
   doc: GDS file with matrix of pairwise kinship estimates.
-  type:
-  - 'null'
-  - File
+  type: File?
   outputBinding:
     glob: '*.gds'
   sbg:fileTypes: GDS
@@ -106,67 +98,32 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: ibd_king.config
-id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/king-robust/7/raw/
+id: smgogarten/genesis-relatedness-pre-build/king-robust/1
 sbg:appVersion:
 - v1.1
-sbg:content_hash: a3fbe060f9fdb4be76f99d7fb9255f5ac121900f6bf034caa4108231bd1f6a006
+sbg:content_hash: a645a531431a1dbd2fc0fbc57ca294a64d0598a5992d5273af2cf3dfec0024b0b
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1607973177
-sbg:id: smgogarten/genesis-relatedness/king-robust/7
+sbg:createdOn: 1609451180
+sbg:id: smgogarten/genesis-relatedness-pre-build/king-robust/1
 sbg:image_url:
-sbg:latestRevision: 7
+sbg:latestRevision: 1
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615933723
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1609451204
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 7
-sbg:revisionNotes: |-
-  Uploaded using sbpack v2020.10.05. 
-  Source: 
-  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-  file: 
-  commit: (uncommitted file)
+sbg:revision: 1
+sbg:revisionNotes: import to pre-build project
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607973177
+  sbg:modifiedOn: 1609451180
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607974376
+  sbg:modifiedOn: 1609451204
   sbg:revision: 1
-  sbg:revisionNotes: wrapper for king robust R script
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607974624
-  sbg:revision: 2
-  sbg:revisionNotes: add resource requirements for parallel computation
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607974812
-  sbg:revision: 3
-  sbg:revisionNotes: 'bug fix: switched prefix and value'
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607974863
-  sbg:revision: 4
-  sbg:revisionNotes: fix command line order
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609307856
-  sbg:revision: 5
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448005
-  sbg:revision: 6
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615933723
-  sbg:revision: 7
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+  sbg:revisionNotes: import to pre-build project
 sbg:sbgMaintained: false
 sbg:validationErrors: []

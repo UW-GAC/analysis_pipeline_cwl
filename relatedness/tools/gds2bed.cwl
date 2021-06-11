@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: gds2bed
 doc: For larger files, increase memory requirement to 32 GBs.
@@ -8,7 +8,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: gds2bed.config
@@ -48,20 +48,26 @@ inputs:
 - id: bed_file
   label: BED file prefix
   doc: BED file prefix. If not provided, will be set to GDS file prefix.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input files
 - id: sample_include_file
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: variant_include_file
   label: Variant Include File
   doc: |-
     RData file with vector of variant.id to include. If not provided, all variants in the GDS file are included.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 
@@ -97,24 +103,30 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: gds2bed.config
-id: smgogarten/genesis-relatedness-pre-build/gds2bed/1
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/gds2bed/4/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a2938daa9bf2a987595f8e39c2d9237c83edad65827b5854561a50aaede5b525c
+- v1.2
+sbg:content_hash: a3fae5d47ec40471588fecbda09301b3cf9d55d22822cc7dc09d339c7b9e3ae78
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609451033
-sbg:id: smgogarten/genesis-relatedness-pre-build/gds2bed/1
+sbg:id: smgogarten/genesis-relatedness-pre-build/gds2bed/4
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 4
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609451062
+sbg:modifiedOn: 1623450740
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
+sbg:revision: 4
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: c9c8b8d
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609451033
@@ -124,5 +136,32 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1609451062
   sbg:revision: 1
   sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444722
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445036
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450740
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
 sbg:sbgMaintained: false
 sbg:validationErrors: []

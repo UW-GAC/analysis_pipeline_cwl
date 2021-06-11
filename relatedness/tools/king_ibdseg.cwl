@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: king_ibdseg
 $namespaces:
@@ -20,7 +20,7 @@ requirements:
         
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -98,78 +98,64 @@ hints:
 - class: sbg:SaveLogs
   value: job.out.log
 id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/king_ibdseg/10/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/king-ibdseg/4/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a6b16ce8c6986076067867fe20674336aa11a8c9f335eb1c854859370a9cd4e63
+- v1.2
+sbg:content_hash: af4e54ea60112079238f41d4aad7712f302851f67c82bfa0b313f6ea5660e23d5
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1601922394
-sbg:id: smgogarten/genesis-relatedness/king_ibdseg/10
+sbg:createdOn: 1609451092
+sbg:id: smgogarten/genesis-relatedness-pre-build/king-ibdseg/4
 sbg:image_url:
-sbg:latestRevision: 10
+sbg:latestRevision: 4
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615934590
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1623450742
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 10
+sbg:revision: 4
 sbg:revisionNotes: |-
   Uploaded using sbpack v2020.10.05. 
   Source: 
   repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
   file: 
-  commit: (uncommitted file)
+  commit: c9c8b8d
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1601922394
+  sbg:modifiedOn: 1609451092
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/king_ibdseg/7
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1603229404
+  sbg:modifiedOn: 1609451124
   sbg:revision: 1
-  sbg:revisionNotes: new docker image
+  sbg:revisionNotes: import to pre-build project
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1603255368
+  sbg:modifiedOn: 1623444724
   sbg:revision: 2
-  sbg:revisionNotes: remove requirement for .nosex file
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1603299014
-  sbg:revision: 3
-  sbg:revisionNotes: remove instance hint
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1603484717
-  sbg:revision: 4
-  sbg:revisionNotes: save stdout as log file
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1603485141
-  sbg:revision: 5
-  sbg:revisionNotes: specify KING output format
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1605574936
-  sbg:revision: 6
-  sbg:revisionNotes: use base command
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608073210
-  sbg:revision: 7
-  sbg:revisionNotes: add default CPU value
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609309145
-  sbg:revision: 8
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609364902
-  sbg:revision: 9
-  sbg:revisionNotes: update description
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615934590
-  sbg:revision: 10
   sbg:revisionNotes: |-
     Uploaded using sbpack v2020.10.05. 
     Source: 
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
     file: 
-    commit: (uncommitted file)
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445039
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450742
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
 sbg:sbgMaintained: false
 sbg:validationErrors: []

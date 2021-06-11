@@ -142,7 +142,7 @@ hints:
 - class: sbg:SaveLogs
   value: kinship_plots.config
 id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/kinship-plots/2/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/kinship-plots/5/raw/
 sbg:appVersion:
 - v1.2
 sbg:content_hash: a586cdf67e8e0be1aeaeab6ed15ecfb56784ef6a8d036943890fd8032e98f8744
@@ -150,21 +150,21 @@ sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609451320
-sbg:id: smgogarten/genesis-relatedness-pre-build/kinship-plots/2
+sbg:id: smgogarten/genesis-relatedness-pre-build/kinship-plots/5
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 5
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1623444403
+sbg:modifiedOn: 1623450748
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 2
+sbg:revision: 5
 sbg:revisionNotes: |-
   Uploaded using sbpack v2020.10.05. 
   Source: 
   repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
   file: 
-  commit: 878723c
+  commit: c9c8b8d
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609451320
@@ -183,5 +183,32 @@ sbg:revisionsInfo:
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
     file: 
     commit: 878723c
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444726
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445046
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450748
+  sbg:revision: 5
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
 sbg:sbgMaintained: false
 sbg:validationErrors: []

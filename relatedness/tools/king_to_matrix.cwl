@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: king_to_matrix
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: king_to_matrix.config
@@ -98,21 +98,27 @@ inputs:
   label: Sample include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the KING file are included.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: sparse_threshold
   label: Sparse threshold
   doc: |-
     Threshold for making the output kinship matrix sparse. A block diagonal matrix will be created such that any pair of samples with a kinship estimate greater than the threshold is in the same block; all pairwise estimates within a block are kept, and pairwise estimates between blocks are set to 0.
-  type: float?
+  type:
+  - 'null'
+  - float
   default: 0.02209709
   sbg:category: Input Options
   sbg:toolDefaultValue: 2^(-11/2) (~0.022, 4th degree)
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input Options
 - id: kinship_method
   label: Kinship method
@@ -130,7 +136,9 @@ outputs:
   label: Kinship matrix
   doc: |-
     A block-diagonal matrix of pairwise kinship estimates. Samples are clustered into blocks of relatives based on `sparse_threshold`; all kinship estimates within a block are kept, and kinship estimates between blocks are set to 0.
-  type: File?
+  type:
+  - 'null'
+  - File
   outputBinding:
     glob: '*.RData'
     outputEval: $(inheritMetadata(self, inputs.king_file))
@@ -154,24 +162,30 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: king_to_matrix.config
-id: smgogarten/genesis-relatedness-pre-build/king-to-matrix/1
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/king-to-matrix/4/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a51c2d26ce6bc189f19979261d562f1c400c3476682ccc5bc017ce16e1ffd3f59
+- v1.2
+sbg:content_hash: aea95a431b122216fc3721cd1745b2c393f83fd6ac206e7491f05bb487d07781f
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609451229
-sbg:id: smgogarten/genesis-relatedness-pre-build/king-to-matrix/1
+sbg:id: smgogarten/genesis-relatedness-pre-build/king-to-matrix/4
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 4
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609451268
+sbg:modifiedOn: 1623450743
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
+sbg:revision: 4
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: c9c8b8d
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609451229
@@ -181,5 +195,32 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1609451268
   sbg:revision: 1
   sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444725
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445040
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450743
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
 sbg:sbgMaintained: false
 sbg:validationErrors: []

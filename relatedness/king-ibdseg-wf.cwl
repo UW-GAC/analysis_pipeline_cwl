@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: KING IBDseg
 doc: |-
@@ -48,16 +48,12 @@ inputs:
   sbg:fileTypes: RDATA
   sbg:x: 128.62420654296875
   sbg:y: -225.0599365234375
-- id: cpu
-  label: Number of CPUs
-  doc: Number of CPUs to use.
-  type: int?
-  sbg:exposed: true
 - id: kinship_plot_threshold
   label: Kinship plotting threshold
   doc: Minimum kinship for a pair to be included in the plot.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: group
   label: Group column name
   doc: |-
@@ -70,6 +66,13 @@ inputs:
     Threshold for making the output kinship matrix sparse. A block diagonal matrix will be created such that any pair of samples with a kinship estimate greater than the threshold is in the same block; all pairwise estimates within a block are kept, and pairwise estimates between blocks are set to 0.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: 2^(-11/2) (~0.022, 4th degree)
+- id: cpu
+  label: Number of CPUs
+  doc: Number of CPUs to use.
+  type: int?
+  sbg:exposed: true
+  sbg:toolDefaultValue: '4'
 
 outputs:
 - id: king_ibdseg_matrix
@@ -158,7 +161,7 @@ steps:
     default: 0.01104854
     source: sparse_threshold
   - id: out_prefix
-    valueFrom: "${ \n    return inputs.out_prefix + \"_king_matrix\"\n}"
+    valueFrom: "${ \n    return inputs.out_prefix + \"_king_ibdseg_matrix\"\n}"
     source: out_prefix
   - id: kinship_method
     default: king_ibdseg
@@ -183,7 +186,7 @@ steps:
   - id: sample_include_file
     source: sample_include_file
   - id: out_prefix
-    valueFrom: ${ return inputs.out_prefix + "_king" }
+    valueFrom: ${ return inputs.out_prefix + "_king_ibdseg" }
     source: out_prefix
   run: king-ibdseg-wf.cwl.steps/kinship_plots.cwl
   out:
@@ -191,41 +194,163 @@ steps:
   sbg:x: 337.3957824707031
   sbg:y: -168.27590942382812
 sbg:appVersion:
-- v1.1
+- v1.2
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: ac5a19d8d8c1a5755e5a06934c82183215f8f49d31d9460bf4d39e9a33848069e
+sbg:content_hash: ac4421e0278f471efcc695bb067a2d910adb245932183f934be9e9e44598613dd
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1609462902
-sbg:id: smgogarten/uw-gac-commit/king-ibdseg/2
-sbg:image_url: |-
-  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/smgogarten/uw-gac-commit/king-ibdseg/2.png
-sbg:latestRevision: 2
+sbg:createdOn: 1583955734
+sbg:id: smgogarten/genesis-relatedness/king-pipeline/31
+sbg:image_url:
+sbg:latestRevision: 31
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1612396152
+sbg:modifiedOn: 1623276406
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/uw-gac-commit/king-ibdseg/2/raw/
-sbg:project: smgogarten/uw-gac-commit
-sbg:projectName: UW GAC - Commit
-sbg:publisher: UWGAC
-sbg:revision: 2
-sbg:revisionNotes: add categories and toolkit
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/king-pipeline/31/raw/
+sbg:project: smgogarten/genesis-relatedness
+sbg:projectName: GENESIS relatedness
+sbg:publisher: sbg
+sbg:revision: 31
+sbg:revisionNotes: add ibdseg string to matrix output filename
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462902
+  sbg:modifiedOn: 1583955734
   sbg:revision: 0
-  sbg:revisionNotes:
+  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/king-pipeline/2
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462933
+  sbg:modifiedOn: 1588634638
   sbg:revision: 1
-  sbg:revisionNotes: import from pre-build project
+  sbg:revisionNotes: remove king_related, only run king_ibdseg
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1612396152
+  sbg:modifiedOn: 1588807142
   sbg:revision: 2
-  sbg:revisionNotes: add categories and toolkit
+  sbg:revisionNotes: revise inputs and outputs
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1601930483
+  sbg:revision: 3
+  sbg:revisionNotes: new version of gds2bed
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1601944311
+  sbg:revision: 4
+  sbg:revisionNotes: new version of plink_make-bed
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1601964691
+  sbg:revision: 5
+  sbg:revisionNotes: updated plink_make-bed
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1603229838
+  sbg:revision: 6
+  sbg:revisionNotes: use current tools from this project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1603254161
+  sbg:revision: 7
+  sbg:revisionNotes: use revised plink_make_bed with suffix
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1603479524
+  sbg:revision: 8
+  sbg:revisionNotes: new tool versions, output prefix
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1603485667
+  sbg:revision: 9
+  sbg:revisionNotes: fix .seg output mapping
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1603491626
+  sbg:revision: 10
+  sbg:revisionNotes: add phenotype file as an input
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1604986255
+  sbg:revision: 11
+  sbg:revisionNotes: add suffixes to output_prefix, include ibdseg results in workflow
+    output
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1605577182
+  sbg:revision: 12
+  sbg:revisionNotes: update all tools
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608074003
+  sbg:revision: 13
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608600161
+  sbg:revision: 14
+  sbg:revisionNotes: add app description
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608619419
+  sbg:revision: 15
+  sbg:revisionNotes: expose threshold for plotting kinship
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609311199
+  sbg:revision: 16
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609311243
+  sbg:revision: 17
+  sbg:revisionNotes: remove _1 suffix for steps
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609311494
+  sbg:revision: 18
+  sbg:revisionNotes: set defaults
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609311762
+  sbg:revision: 19
+  sbg:revisionNotes: add _1 suffix to kinship_plots to address "workflow contains
+    a cycle"
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609312623
+  sbg:revision: 20
+  sbg:revisionNotes: updated tool
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609367777
+  sbg:revision: 21
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609367832
+  sbg:revision: 22
+  sbg:revisionNotes: fix broken connection
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609371288
+  sbg:revision: 23
+  sbg:revisionNotes: expose plotting parameters
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609371562
+  sbg:revision: 24
+  sbg:revisionNotes: show tool default
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609374452
+  sbg:revision: 25
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449636
+  sbg:revision: 26
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609450034
+  sbg:revision: 27
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615934680
+  sbg:revision: 28
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623274735
+  sbg:revision: 29
+  sbg:revisionNotes: update tools and label descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623276248
+  sbg:revision: 30
+  sbg:revisionNotes: add king_ibdseg string to output plot filename
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623276406
+  sbg:revision: 31
+  sbg:revisionNotes: add ibdseg string to matrix output filename
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

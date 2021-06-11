@@ -39,32 +39,3 @@ outputs:
       }
 
 baseCommand: []
-id: smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments/1
-sbg:appVersion:
-- v1.1
-sbg:content_hash: af7325b6f64510e4d102db9ba5fde34bdc69604e198b648ba451a5bd9557974ae
-sbg:contributors:
-- smgogarten
-sbg:createdBy: smgogarten
-sbg:createdOn: 1609451972
-sbg:id: smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments/1
-sbg:image_url:
-sbg:latestRevision: 1
-sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609451996
-sbg:project: smgogarten/genesis-relatedness-pre-build
-sbg:projectName: GENESIS relatedness - Pre-build
-sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
-sbg:revisionsInfo:
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609451972
-  sbg:revision: 0
-  sbg:revisionNotes:
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609451996
-  sbg:revision: 1
-  sbg:revisionNotes: import to pre-build project
-sbg:sbgMaintained: false
-sbg:validationErrors: []

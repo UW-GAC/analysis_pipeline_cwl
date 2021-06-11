@@ -11,18 +11,18 @@ sbpack bdc smgogarten/genesis-relatedness-pre-build/pcrelate-correct pc-relate-w
 sbpack bdc smgogarten/genesis-relatedness-pre-build/kinship-plots pc-relate-wf.cwl.steps/kinship_plots.cwl
 
 # pull tools with new app ids from pre-build
-sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate-beta pcrelate_beta.cwl
-sbpull bdc smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments sample_blocks_to_segments.cwl
-sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate pcrelate.cwl
-sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate-correct pcrelate_correct.cwl
-sbpull bdc smgogarten/genesis-relatedness-pre-build/kinship-plots kinship_plots.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate-beta tools/pcrelate_beta.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/sample-blocks-to-segments tools/sample_blocks_to_segments.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate tools/pcrelate.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/pcrelate-correct tools/pcrelate_correct.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/kinship-plots tools/kinship_plots.cwl
 
 # copy tools to workflow steps
-cp pcrelate_beta.cwl pc-relate-wf.cwl.steps/pcrelate_beta.cwl
-cp sample_blocks_to_segments.cwl pc-relate-wf.cwl.steps/sample_blocks_to_segments.cwl
-cp pcrelate.cwl pc-relate-wf.cwl.steps/pcrelate.cwl
-cp pcrelate_correct.cwl pc-relate-wf.cwl.steps/pcrelate_correct.cwl
-cp kinship_plots.cwl pc-relate-wf.cwl.steps/kinship_plots.cwl
+cp tools/pcrelate_beta.cwl pc-relate-wf.cwl.steps/pcrelate_beta.cwl
+cp tools/sample_blocks_to_segments.cwl pc-relate-wf.cwl.steps/sample_blocks_to_segments.cwl
+cp tools/pcrelate.cwl pc-relate-wf.cwl.steps/pcrelate.cwl
+cp tools/pcrelate_correct.cwl pc-relate-wf.cwl.steps/pcrelate_correct.cwl
+cp tools/kinship_plots.cwl pc-relate-wf.cwl.steps/kinship_plots.cwl
 
 # push workflow to pre-build
 sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-relate pc-relate-wf.cwl

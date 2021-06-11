@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: kinship_plots
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-devel:latest
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: kinship_plots.config
@@ -70,33 +70,43 @@ inputs:
 - id: kinship_plot_threshold
   label: Kinship plotting threshold
   doc: Minimum kinship for a pair to be included in the plot.
-  type: float?
+  type:
+  - 'null'
+  - float
   sbg:category: Input Options
   sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: phenotype_file
   label: Phenotype File
   doc: |-
     RData file with data.frame or AnnotatedDataFrame of phenotypes. Used for plotting kinship estimates separately by group.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: group
   label: Group column name
   doc: |-
     Name of column in phenotype_file containing group variable (e.g., study) for plotting.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input Options
   sbg:toolDefaultValue: NA
 - id: sample_include_file
   label: Sample Include File
   doc: RData file with vector of sample.id to include.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input Options
   sbg:toolDefaultValue: kinship
 
@@ -105,7 +115,10 @@ outputs:
   label: Kinship plots
   doc: |-
     Hexbin plots of estimated kinship coefficients vs. IBS0. If "group" is provided, additional plots will be generated within each group and across groups.
-  type: File[]?
+  type:
+  - 'null'
+  - type: array
+    items: File
   outputBinding:
     glob: '*.pdf'
   sbg:fileTypes: PDF
@@ -128,24 +141,30 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: kinship_plots.config
-id: smgogarten/genesis-relatedness-pre-build/kinship-plots/1
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/kinship-plots/2/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: ac7e17bf831fd6ad85b96b3f951fc53bd3bfdda6a05443d1d5dc68698283b4cf4
+- v1.2
+sbg:content_hash: a586cdf67e8e0be1aeaeab6ed15ecfb56784ef6a8d036943890fd8032e98f8744
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609451320
-sbg:id: smgogarten/genesis-relatedness-pre-build/kinship-plots/1
+sbg:id: smgogarten/genesis-relatedness-pre-build/kinship-plots/2
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 2
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609451341
+sbg:modifiedOn: 1623444403
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
+sbg:revision: 2
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: 878723c
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609451320
@@ -155,5 +174,14 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1609451341
   sbg:revision: 1
   sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444403
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: 878723c
 sbg:sbgMaintained: false
 sbg:validationErrors: []

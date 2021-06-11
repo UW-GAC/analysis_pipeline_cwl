@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: KING robust
 doc: |-
@@ -53,6 +53,7 @@ inputs:
   doc: Minimum kinship for a pair to be included in the plot.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: group
   label: Group column name
   doc: |-
@@ -114,6 +115,7 @@ steps:
   - id: sample_include_file
     source: sample_include_file
   - id: out_prefix
+    valueFrom: ${ return inputs.out_prefix + "_king_robust" }
     source: out_prefix
   run: king-robust-wf.cwl.steps/kinship_plots.cwl
   out:
@@ -121,41 +123,98 @@ steps:
   sbg:x: 30
   sbg:y: -9
 sbg:appVersion:
-- v1.1
+- v1.2
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: a7ac209ffcca13996ce609b928175e576b00bfb4f8d2acb1b66dcd00c4da7d6ac
+sbg:content_hash: aad147fea0d772425fb64f8179bea8eeaf88c235411a9972377fac0a0cce7d5d2
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1609462848
-sbg:id: smgogarten/uw-gac-commit/king-robust/2
-sbg:image_url: |-
-  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/smgogarten/uw-gac-commit/king-robust/2.png
-sbg:latestRevision: 2
+sbg:createdOn: 1607987330
+sbg:id: smgogarten/genesis-relatedness/king-robust-1/15
+sbg:image_url:
+sbg:latestRevision: 15
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1612396124
+sbg:modifiedOn: 1623276236
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/uw-gac-commit/king-robust/2/raw/
-sbg:project: smgogarten/uw-gac-commit
-sbg:projectName: UW GAC - Commit
-sbg:publisher: UWGAC
-sbg:revision: 2
-sbg:revisionNotes: add categories and toolkit
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/king-robust-1/15/raw/
+sbg:project: smgogarten/genesis-relatedness
+sbg:projectName: GENESIS relatedness
+sbg:publisher: sbg
+sbg:revision: 15
+sbg:revisionNotes: add king_robust string to output plot filename
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462848
+  sbg:modifiedOn: 1607987330
   sbg:revision: 0
   sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462875
+  sbg:modifiedOn: 1607987754
   sbg:revision: 1
-  sbg:revisionNotes: import from pre-build project
+  sbg:revisionNotes: workflow for KING robust
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1612396124
+  sbg:modifiedOn: 1607990759
   sbg:revision: 2
-  sbg:revisionNotes: add categories and toolkit
+  sbg:revisionNotes: add tool default value
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608620931
+  sbg:revision: 3
+  sbg:revisionNotes: add description
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609308491
+  sbg:revision: 4
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609312024
+  sbg:revision: 5
+  sbg:revisionNotes: kinship_plots must have "_1" suffix to avoid "workflow contains
+    a cycle"
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609367217
+  sbg:revision: 6
+  sbg:revisionNotes: update description
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609371355
+  sbg:revision: 7
+  sbg:revisionNotes: expose kinship plot options
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609371550
+  sbg:revision: 8
+  sbg:revisionNotes: show tool default
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609374403
+  sbg:revision: 9
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449603
+  sbg:revision: 10
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449990
+  sbg:revision: 11
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615933755
+  sbg:revision: 12
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623197220
+  sbg:revision: 13
+  sbg:revisionNotes: update tools
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623201163
+  sbg:revision: 14
+  sbg:revisionNotes: display default value
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623276236
+  sbg:revision: 15
+  sbg:revisionNotes: add king_robust string to output plot filename
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

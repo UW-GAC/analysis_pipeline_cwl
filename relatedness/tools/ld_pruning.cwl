@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: ld_pruning
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: ld_pruning.config
@@ -19,8 +19,10 @@ requirements:
           
           if(inputs.gds_file)
               cmd_line += "gds_file \"" + inputs.gds_file.path + "\"\n"
-          if(inputs.exclude_pca_corr)
-              cmd_line += "exclude_pca_corr " + inputs.exclude_pca_corr + "\n"
+          if(!inputs.exclude_pca_corr)
+              cmd_line += "exclude_pca_corr FALSE" + "\n"
+          if(!inputs.autosome_only)
+              cmd_line += "autosome_only FALSE" + "\n"
           if(inputs.genome_build)
               cmd_line += "genome_build \"" + inputs.genome_build + "\"\n"
           if(inputs.ld_r_threshold)
@@ -160,6 +162,14 @@ inputs:
     position: 20
     shellQuote: false
   sbg:category: Input Options
+- id: autosome_only
+  label: Autosomes only
+  doc: Only include variants on the autosomes.
+  type:
+  - 'null'
+  - boolean
+  sbg:category: Input options
+  sbg:toolDefaultValue: 'true'
 
 outputs:
 - id: ld_pruning_output
@@ -191,79 +201,55 @@ hints:
 - class: sbg:SaveLogs
   value: job.out.log
 id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/ld-pruning/9/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/ld-pruning/3/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: ac8a7a3f89600a672b6bfccee670eb30dd01ab56001c4ce5d51bcf025e75caf5c
+- v1.2
+sbg:content_hash: a3c7dddbcff09a51cb205ce21ea0b3c20fe719b5bc5df2bef55fe26425c762a16
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1601921404
-sbg:id: smgogarten/genesis-relatedness/ld-pruning/9
+sbg:createdOn: 1609451377
+sbg:id: smgogarten/genesis-relatedness-pre-build/ld-pruning/3
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 3
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615931959
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1623437535
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 9
+sbg:revision: 3
 sbg:revisionNotes: |-
   Uploaded using sbpack v2020.10.05. 
   Source: 
   repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
   file: 
-  commit: (uncommitted file)
+  commit: c68ac3f
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1601921404
+  sbg:modifiedOn: 1609451377
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/ld-pruning/8
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606254528
+  sbg:modifiedOn: 1609451394
   sbg:revision: 1
-  sbg:revisionNotes: revise ld pruning
+  sbg:revisionNotes: import to pre-build project
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606257249
+  sbg:modifiedOn: 1615931141
   sbg:revision: 2
-  sbg:revisionNotes: revise output file names
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1607925789
+  sbg:modifiedOn: 1623437535
   sbg:revision: 3
-  sbg:revisionNotes: add missing call rate threshold
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608144336
-  sbg:revision: 4
-  sbg:revisionNotes: update documentation
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609294635
-  sbg:revision: 5
-  sbg:revisionNotes: ''
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609307564
-  sbg:revision: 6
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609448349
-  sbg:revision: 7
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931568
-  sbg:revision: 8
   sbg:revisionNotes: |-
     Uploaded using sbpack v2020.10.05. 
     Source: 
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
     file: 
-    commit: (uncommitted file)
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931959
-  sbg:revision: 9
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+    commit: c68ac3f
 sbg:sbgMaintained: false
 sbg:validationErrors: []

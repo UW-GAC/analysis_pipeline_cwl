@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: check_merged_gds
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: check_merged_gds.config
@@ -73,59 +73,55 @@ hints:
 - class: sbg:SaveLogs
   value: check_merged_gds.config
 id: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/check-merged-gds/4/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/check-merged-gds/3/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a43d50c93312f68a5066485ef9af71011f01f9c239b0b51e4b299a2aa1f64ead8
+- v1.2
+sbg:content_hash: ad1147ef291d589e2f0cf884a4a4589582922017bf94b69cfbfffd6b6c43778ec
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1601922349
-sbg:id: smgogarten/genesis-relatedness/check-merged-gds/4
+sbg:createdOn: 1609450408
+sbg:id: smgogarten/genesis-relatedness-pre-build/check-merged-gds/3
 sbg:image_url:
-sbg:latestRevision: 4
+sbg:latestRevision: 3
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1615931958
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
+sbg:modifiedOn: 1623437534
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 4
+sbg:revision: 3
 sbg:revisionNotes: |-
   Uploaded using sbpack v2020.10.05. 
   Source: 
   repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
   file: 
-  commit: (uncommitted file)
+  commit: c68ac3f
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1601922349
+  sbg:modifiedOn: 1609450408
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/check_merged_gds/15
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606256250
+  sbg:modifiedOn: 1609450694
   sbg:revision: 1
-  sbg:revisionNotes: revise check_merged_gds
+  sbg:revisionNotes: import to pre-build project
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606269035
+  sbg:modifiedOn: 1615931140
   sbg:revision: 2
-  sbg:revisionNotes: gds_file input is a single file, not an array
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931560
+  sbg:modifiedOn: 1623437534
   sbg:revision: 3
   sbg:revisionNotes: |-
     Uploaded using sbpack v2020.10.05. 
     Source: 
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
     file: 
-    commit: (uncommitted file)
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615931958
-  sbg:revision: 4
-  sbg:revisionNotes: |-
-    Uploaded using sbpack v2020.10.05. 
-    Source: 
-    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+    commit: c68ac3f
 sbg:sbgMaintained: false
 sbg:validationErrors: []

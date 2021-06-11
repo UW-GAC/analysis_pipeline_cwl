@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: LD Pruning
 doc: |-
@@ -54,29 +54,34 @@ inputs:
   doc: '|r| threshold for LD pruning.'
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: 0.32 (r^2 = 0.1)
 - id: ld_win_size
   label: LD window size
   doc: Sliding window size in Mb for LD pruning.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: '10'
 - id: maf_threshold
   label: MAF threshold
   doc: |-
     Minimum MAF for variants used in LD pruning. Variants below this threshold are removed.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: '0.01'
 - id: missing_threshold
   label: Missing call rate threshold
   doc: |-
     Maximum missing call rate for variants used in LD pruning. Variants above this threshold are removed.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: '0.01'
 - id: exclude_pca_corr
   label: Exclude PCA corr
   doc: |-
     Exclude variants in genomic regions known to result in high PC-variant correlations when included (HLA, LCT, inversions).
   type: boolean?
   sbg:exposed: true
+  sbg:toolDefaultValue: 'TRUE'
 - id: genome_build
   label: Genome build
   doc: |-
@@ -90,6 +95,13 @@ inputs:
     - hg19
     - hg38
   sbg:exposed: true
+  sbg:toolDefaultValue: hg38
+- id: autosome_only
+  label: Autosomes only
+  doc: Only include variants on the autosomes.
+  type: boolean?
+  sbg:exposed: true
+  sbg:toolDefaultValue: 'TRUE'
 
 outputs:
 - id: pruned_gds_output
@@ -136,6 +148,8 @@ steps:
     source: exclude_pca_corr
   - id: genome_build
     source: genome_build
+  - id: autosome_only
+    source: autosome_only
   scatter:
   - gds_file
   run: ld-pruning-wf.cwl.steps/ld_pruning.cwl
@@ -188,40 +202,176 @@ steps:
   sbg:x: 419.7127380371094
   sbg:y: -23.686861038208008
 sbg:appVersion:
-- v1.1
+- v1.2
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: a41283ea1d0f289437710d8711dfe933fbd9556d73ceda0c27958c71cb9a23783
+sbg:content_hash: a1067e6aa7635b9e07dbf4dad5a8791ae5352c4b3c9ecaacc707e0da14ef47ee6
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1609462720
-sbg:id: smgogarten/uw-gac-commit/ld-pruning/2
+sbg:createdOn: 1583955707
+sbg:id: smgogarten/genesis-relatedness/ld-pruning-pipeline/32
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 32
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1612396010
+sbg:modifiedOn: 1623282603
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/uw-gac-commit/ld-pruning/2/raw/
-sbg:project: smgogarten/uw-gac-commit
-sbg:projectName: UW GAC - Commit
-sbg:publisher: UWGAC
-sbg:revision: 2
-sbg:revisionNotes: add categories and toolkit
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/ld-pruning-pipeline/32/raw/
+sbg:project: smgogarten/genesis-relatedness
+sbg:projectName: GENESIS relatedness
+sbg:publisher: sbg
+sbg:revision: 32
+sbg:revisionNotes: document default values
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462720
+  sbg:modifiedOn: 1583955707
   sbg:revision: 0
-  sbg:revisionNotes:
+  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/ld-pruning-pipeline/8
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609462770
+  sbg:modifiedOn: 1588789261
   sbg:revision: 1
-  sbg:revisionNotes: import from pre-build project
+  sbg:revisionNotes: expose selecting RAM for LD pruning at runtime
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1612396010
+  sbg:modifiedOn: 1606284780
   sbg:revision: 2
-  sbg:revisionNotes: add categories and toolkit
+  sbg:revisionNotes: new tool versions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606285701
+  sbg:revision: 3
+  sbg:revisionNotes: fix file types
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606332967
+  sbg:revision: 4
+  sbg:revisionNotes: update scatter to use multiple arrays
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606333145
+  sbg:revision: 5
+  sbg:revisionNotes: update input file type to array
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606334881
+  sbg:revision: 6
+  sbg:revisionNotes: update subset gds
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606339140
+  sbg:revision: 7
+  sbg:revisionNotes: update tools
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606339665
+  sbg:revision: 8
+  sbg:revisionNotes: linked wrong gds file in check
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606344955
+  sbg:revision: 9
+  sbg:revisionNotes: reorder steps in code
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608071735
+  sbg:revision: 10
+  sbg:revisionNotes: add default labels
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608072202
+  sbg:revision: 11
+  sbg:revisionNotes: allow separate sample selection for pruning and output GDS
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608072663
+  sbg:revision: 12
+  sbg:revisionNotes: add more descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608144372
+  sbg:revision: 13
+  sbg:revisionNotes: upddate documentation
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608599215
+  sbg:revision: 14
+  sbg:revisionNotes: add default values
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608709552
+  sbg:revision: 15
+  sbg:revisionNotes: save output file with pruned variant.id
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608712380
+  sbg:revision: 16
+  sbg:revisionNotes: set output prefix for variant id files
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609294665
+  sbg:revision: 17
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609306072
+  sbg:revision: 18
+  sbg:revisionNotes: specify file name requirements
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609306169
+  sbg:revision: 19
+  sbg:revisionNotes: update description
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449531
+  sbg:revision: 20
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609449914
+  sbg:revision: 21
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615931992
+  sbg:revision: 22
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615932296
+  sbg:revision: 23
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: ld-pruning-wf.cwl
+    commit: 730ce42
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615933415
+  sbg:revision: 24
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: ld-pruning-wf.cwl
+    commit: 730ce42
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623194481
+  sbg:revision: 25
+  sbg:revisionNotes: update tools, allow multiple variant_include files
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623195620
+  sbg:revision: 26
+  sbg:revisionNotes: can't scatter on optional input, since scatter arrays must be
+    same length
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623197849
+  sbg:revision: 27
+  sbg:revisionNotes: document default values
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623279666
+  sbg:revision: 28
+  sbg:revisionNotes: update tool, expose autosome_only
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623279799
+  sbg:revision: 29
+  sbg:revisionNotes: document default values
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623281295
+  sbg:revision: 30
+  sbg:revisionNotes: update tool
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623282020
+  sbg:revision: 31
+  sbg:revisionNotes: expose autosome_only
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623282603
+  sbg:revision: 32
+  sbg:revisionNotes: document default values
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

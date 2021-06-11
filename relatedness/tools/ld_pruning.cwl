@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: ld_pruning
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: ld_pruning.config
@@ -19,8 +19,10 @@ requirements:
           
           if(inputs.gds_file)
               cmd_line += "gds_file \"" + inputs.gds_file.path + "\"\n"
-          if(inputs.exclude_pca_corr)
-              cmd_line += "exclude_pca_corr " + inputs.exclude_pca_corr + "\n"
+          if(!inputs.exclude_pca_corr)
+              cmd_line += "exclude_pca_corr FALSE" + "\n"
+          if(!inputs.autosome_only)
+              cmd_line += "autosome_only FALSE" + "\n"
           if(inputs.genome_build)
               cmd_line += "genome_build \"" + inputs.genome_build + "\"\n"
           if(inputs.ld_r_threshold)
@@ -142,6 +144,14 @@ inputs:
     position: 20
     shellQuote: false
   sbg:category: Input Options
+- id: autosome_only
+  label: Autosomes only
+  doc: Only include variants on the autosomes.
+  type:
+  - 'null'
+  - boolean
+  sbg:category: Input options
+  sbg:toolDefaultValue: 'true'
 
 outputs:
 - id: ld_pruning_output
@@ -170,24 +180,30 @@ hints:
   value: ld_pruning.config
 - class: sbg:SaveLogs
   value: job.out.log
-id: smgogarten/genesis-relatedness-pre-build/ld-pruning/1
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/ld-pruning/3/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a94009640f3ecb8fb54da42d25f80f0d167b25bed1275d365a10fb1dd75fe0161
+- v1.2
+sbg:content_hash: a3c7dddbcff09a51cb205ce21ea0b3c20fe719b5bc5df2bef55fe26425c762a16
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609451377
-sbg:id: smgogarten/genesis-relatedness-pre-build/ld-pruning/1
+sbg:id: smgogarten/genesis-relatedness-pre-build/ld-pruning/3
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 3
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609451394
+sbg:modifiedOn: 1623437535
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
+sbg:revision: 3
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: c68ac3f
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609451377
@@ -197,5 +213,23 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1609451394
   sbg:revision: 1
   sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615931141
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623437535
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c68ac3f
 sbg:sbgMaintained: false
 sbg:validationErrors: []

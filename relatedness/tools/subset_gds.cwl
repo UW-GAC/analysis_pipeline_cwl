@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: subset_gds
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: subset_gds.config
@@ -96,25 +96,30 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: subset_gds.config
-id: smgogarten/genesis-relatedness-pre-build/subset-gds/1
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/subset-gds/3/raw/
 sbg:appVersion:
-- v1.1
-sbg:content_hash: aa0b2aa6abf1310455123a9118831711d341a8574919b64b8816b37251094c092
+- v1.2
+sbg:content_hash: a48aaf001b751c2090e07255b525a17c6ff382a64ec284b44cdb5655f84e9c6f9
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1609452021
-sbg:id: smgogarten/genesis-relatedness-pre-build/subset-gds/1
+sbg:id: smgogarten/genesis-relatedness-pre-build/subset-gds/3
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 3
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1609452067
+sbg:modifiedOn: 1623437540
 sbg:project: smgogarten/genesis-relatedness-pre-build
 sbg:projectName: GENESIS relatedness - Pre-build
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: import to pre-build project
-sbg:revisionsInfo:
+sbg:revision: 3
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: c68ac3f
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1609452021
   sbg:revision: 0
@@ -123,5 +128,23 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1609452067
   sbg:revision: 1
   sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615931143
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623437540
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c68ac3f
 sbg:sbgMaintained: false
 sbg:validationErrors: []

@@ -8,12 +8,12 @@ sbpack bdc smgogarten/genesis-relatedness-pre-build/king-robust king-robust-wf.c
 sbpack bdc smgogarten/genesis-relatedness-pre-build/kinship-plots king-robust-wf.cwl.steps/kinship_plots.cwl
 
 # pull tools with new app ids from pre-build
-sbpull bdc smgogarten/genesis-relatedness-pre-build/king-robust king_robust.cwl
-sbpull bdc smgogarten/genesis-relatedness-pre-build/kinship-plots kinship_plots.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/king-robust tools/king_robust.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/kinship-plots tools/kinship_plots.cwl
 
 # copy tools to workflow steps
-cp king_robust.cwl king-robust-wf.cwl.steps/king_robust.cwl
-cp kinship_plots.cwl king-robust-wf.cwl.steps/kinship_plots.cwl
+cp tools/king_robust.cwl king-robust-wf.cwl.steps/king_robust.cwl
+cp tools/kinship_plots.cwl king-robust-wf.cwl.steps/kinship_plots.cwl
 
 # push workflow to pre-build
 sbpack bdc smgogarten/genesis-relatedness-pre-build/king-robust-1 king-robust-wf.cwl

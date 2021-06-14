@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: pca_plots
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-devel:latest
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: pca_plots.config

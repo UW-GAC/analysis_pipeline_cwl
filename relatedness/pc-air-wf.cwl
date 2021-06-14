@@ -1,15 +1,11 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: Workflow
 label: PC-AiR
-doc: |-
-  This workflow uses the PC-AiR algorithm to compute ancestry principal components (PCs) while accounting for kinship.
-
-  Step 1 uses pairwise kinship estimates to assign samples to an unrelated set that is representative of all ancestries in the sample. Step 2 performs Principal Component Analysis (PCA) on the unrelated set, then projects relatives onto the resulting set of PCs. Step 3 plots the PCs, optionally color-coding by a grouping variable. Step 4 calculates the correlation between each PC and variants in the dataset, then plots this correlation to allow screening for PCs that are driven by particular genomic regions.
 $namespaces:
   sbg: https://sevenbridges.com
 
 requirements:
-- class: ScatterFeatureRequirement
+- class: SubworkflowFeatureRequirement
 - class: InlineJavascriptRequirement
 - class: StepInputExpressionRequirement
 
@@ -34,15 +30,8 @@ inputs:
     Input GDS file for PCA. It is recommended to use an LD pruned file with all chromosomes.
   type: File
   sbg:fileTypes: GDS
-  sbg:x: -382.63873291015625
-  sbg:y: 334.4525146484375
-- id: gds_file_full
-  label: Full GDS Files
-  doc: GDS files (one per chromosome) used to calculate PC-variant correlations.
-  type: File[]
-  sbg:fileTypes: GDS
-  sbg:x: -261.1378173828125
-  sbg:y: 589.2774658203125
+  sbg:x: -381.15753173828125
+  sbg:y: 127.77397155761719
 - id: divergence_file
   label: Divergence File
   doc: |-
@@ -75,58 +64,72 @@ inputs:
   sbg:fileTypes: RDATA
   sbg:x: -14.366241455078125
   sbg:y: -274.2578430175781
-- id: pc_corr_variant_file
-  label: PC correlation variant file
-  doc: |-
-    RData file with vector of variant.id to include in PC-variant correlation. These variants will be added to the set of randomly selected variants. It is recommended to provide the set of pruned variants used for PCA.
-  type: File[]?
-  sbg:fileTypes: RDATA
-  sbg:x: -415.7858581542969
-  sbg:y: 489.8268127441406
 - id: kinship_threshold
   label: Kinship threshold
   doc: Minimum kinship estimate to use for identifying relatives.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: divergence_threshold
   label: Divergence threshold
   doc: |-
     Maximum divergence estimate to use for identifying ancestrally divergent pairs of samples.
   type: float?
   sbg:exposed: true
+  sbg:toolDefaultValue: -2^(-9/2)
 - id: n_pairs
   label: Number of PCs
   doc: Number of PCs to include in the pairs plot.
   type: int?
   sbg:exposed: true
+  sbg:toolDefaultValue: '6'
 - id: group
   label: Group
   doc: |-
     Name of column in phenotype_file containing group variable for color-coding plots.
   type: string?
   sbg:exposed: true
+- id: n_pcs
+  label: Number of PCs
+  doc: Number of PCs (Principal Components) to return.
+  type: int?
+  sbg:toolDefaultValue: '32'
+  sbg:x: -427.1446533203125
+  sbg:y: -333.2216796875
+- id: gds_file_full
+  label: Full GDS Files
+  doc: GDS files (one per chromosome) used to calculate PC-variant correlations.
+  type: File[]
+  sbg:fileTypes: GDS
+  sbg:x: -283.20037841796875
+  sbg:y: 376.7168273925781
 - id: n_corr_vars
   label: Number of variants to select
   doc: |-
     Randomly select this number of variants distributed across the entire genome to use for PC-variant correlation. If running on a single chromosome, the variants returned will be scaled by the proportion of that chromosome in the genome.
   type: int?
   sbg:exposed: true
+  sbg:toolDefaultValue: '10e6'
 - id: n_pcs_plot
   label: Number of PCs to plot
   doc: Number of PCs to plot.
   type: int?
   sbg:exposed: true
+  sbg:toolDefaultValue: '20'
 - id: n_perpage
   label: Number of plots per page
   doc: |-
     Number of PC-variant correlation plots to stack in a single page. The number of png files generated will be ceiling(n_pcs_plot/n_perpage).
   type: int?
   sbg:exposed: true
-- id: n_pcs
-  label: Number of PCs
-  doc: Number of PCs (Principal Components) to return.
-  type: int?
-  sbg:exposed: true
+  sbg:toolDefaultValue: '4'
+- id: run_correlation
+  label: Run PC-variant correlation
+  doc: |-
+    For pruned variants as well as a random sample of additional variants, compute correlation between the variants and PCs, and generate plots. This step can be computationally intensive, but is useful for verifying that PCs are not driven by small regions of the genome.
+  type: boolean
+  sbg:x: -405.8658447265625
+  sbg:y: 275.1279296875
 
 outputs:
 - id: out_unrelated_file
@@ -170,10 +173,19 @@ outputs:
   doc: PC-variant correlation plots
   type: File[]?
   outputSource:
-  - pca_corr_plots/pca_corr_plots
+  - pc_variant_correlation/pc_correlation_plots
   sbg:fileTypes: PNG
-  sbg:x: 511.36871337890625
-  sbg:y: 143.69459533691406
+  sbg:x: 332.8373107910156
+  sbg:y: 208.7924346923828
+- id: pca_corr_gds
+  label: PC-variant correlation
+  doc: GDS file with PC-variant correlation results
+  type: File[]?
+  outputSource:
+  - pc_variant_correlation/pca_corr_gds
+  sbg:fileTypes: GDS
+  sbg:x: 285.73321533203125
+  sbg:y: 85.907958984375
 
 steps:
 - id: find_unrelated
@@ -238,108 +250,195 @@ steps:
   - id: pca_plots
   sbg:x: 206.48231506347656
   sbg:y: -174.49720764160156
-- id: pca_corr_vars
-  label: pca_corr_vars
+- id: variant_id_from_gds
+  label: variant id from gds
   in:
   - id: gds_file
-    source: gds_file_full
-  - id: variant_include_file
-    source: pc_corr_variant_file
+    source: gds_file
+  - id: run_correlation
+    source: run_correlation
+  run: pc-air-wf.cwl.steps/variant_id_from_gds.cwl
+  when: $(inputs.run_correlation)
+  out:
+  - id: output_file
+  sbg:x: -172.29623413085938
+  sbg:y: 209.59246826171875
+- id: pc_variant_correlation
+  label: PC-variant correlation
+  in:
   - id: out_prefix
     source: out_prefix
-  - id: n_corr_vars
-    source: n_corr_vars
-  - id: chromosome
-    valueFrom: |-
-      ${
-          if (inputs.gds_file.nameroot.includes('chr')) {
-              var parts = inputs.gds_file.nameroot.split('chr')
-              var chrom = parts[1]
-          } else {
-              var chrom = "NA"
-          }
-          return chrom
-      }
-  scatter:
-  - gds_file
-  - variant_include_file
-  scatterMethod: dotproduct
-  run: pc-air-wf.cwl.steps/pca_corr_vars.cwl
-  out:
-  - id: pca_corr_vars
-  sbg:x: -126.7020492553711
-  sbg:y: 225.0484161376953
-- id: pca_corr
-  label: pca_corr
-  in:
-  - id: gds_file
-    source: gds_file_full
+  - id: gds_file_full
+    source:
+    - gds_file_full
   - id: variant_include_file
-    source: pca_corr_vars/pca_corr_vars
+    source: variant_id_from_gds/output_file
   - id: pca_file
     source: pca_byrel/pcair_output_unrelated
-  - id: out_prefix
-    source: out_prefix
-  scatter:
-  - gds_file
-  - variant_include_file
-  run: pc-air-wf.cwl.steps/pca_corr.cwl
-  out:
-  - id: pca_corr_gds
-  sbg:x: 80.39886474609375
-  sbg:y: 143.5
-- id: pca_corr_plots
-  label: pca_corr_plots
-  in:
+  - id: n_corr_vars
+    source: n_corr_vars
+  - id: n_pcs
+    source: n_pcs
   - id: n_pcs_plot
     source: n_pcs_plot
-  - id: corr_file
-    source:
-    - pca_corr/pca_corr_gds
   - id: n_perpage
     source: n_perpage
-  - id: out_prefix
-    source: out_prefix
-  run: pc-air-wf.cwl.steps/pca_corr_plots.cwl
+  - id: run_correlation
+    source: run_correlation
+  run: pc-air-wf.cwl.steps/pc_variant_correlation.cwl
+  when: $(inputs.run_correlation)
   out:
-  - id: pca_corr_plots
-  sbg:x: 287.39886474609375
-  sbg:y: 70.5
+  - id: pc_correlation_plots
+  - id: pca_corr_gds
+  sbg:x: 85.90345764160156
+  sbg:y: 199.70834350585938
 sbg:appVersion:
-- v1.1
+- v1.2
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: a797c48c4a8a8c4d5b9faff69f139a544ff1028a2eee6d8afa376cacbd7d7322a
+sbg:content_hash: af321deb824c9b35cf44c03c00654771fc666a34afdb00425fa98a687183ddd1c
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1609463976
-sbg:id: smgogarten/uw-gac-commit/pc-air/2
+sbg:createdOn: 1583955835
+sbg:id: smgogarten/genesis-relatedness/pc-air/28
 sbg:image_url:
-sbg:latestRevision: 2
+sbg:latestRevision: 28
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1612396189
+sbg:modifiedOn: 1623704475
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/uw-gac-commit/pc-air/2/raw/
-sbg:project: smgogarten/uw-gac-commit
-sbg:projectName: UW GAC - Commit
-sbg:publisher: UWGAC
-sbg:revision: 2
-sbg:revisionNotes: add categories and toolkit
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-air/28/raw/
+sbg:project: smgogarten/genesis-relatedness
+sbg:projectName: GENESIS relatedness
+sbg:publisher: sbg
+sbg:revision: 28
+sbg:revisionNotes: add tool default values
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609463976
+  sbg:modifiedOn: 1583955835
   sbg:revision: 0
-  sbg:revisionNotes:
+  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pc-air/0
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609463999
+  sbg:modifiedOn: 1588639097
   sbg:revision: 1
-  sbg:revisionNotes: import from pre-build project
+  sbg:revisionNotes: optional divergence matrix, no LD pruning
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1612396189
+  sbg:modifiedOn: 1606343846
   sbg:revision: 2
-  sbg:revisionNotes: add categories and toolkit
+  sbg:revisionNotes: update with new tools
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606344271
+  sbg:revision: 3
+  sbg:revisionNotes: add phenotype file input for plots
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606344722
+  sbg:revision: 4
+  sbg:revisionNotes: remove instance requirement
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606345377
+  sbg:revision: 5
+  sbg:revisionNotes: reorder steps in code
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606354475
+  sbg:revision: 6
+  sbg:revisionNotes: try changing input/output IDs to solve "workflow contains a cycle"
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1606356625
+  sbg:revision: 7
+  sbg:revisionNotes: redo all inputs and outputs
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608622358
+  sbg:revision: 8
+  sbg:revisionNotes: app description and default labels
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608709762
+  sbg:revision: 9
+  sbg:revisionNotes: add step to randomly select variants for correlation
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608709848
+  sbg:revision: 10
+  sbg:revisionNotes: pca_corr needs to scatter on both gds file and variant include
+    file
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608712636
+  sbg:revision: 11
+  sbg:revisionNotes: make pruned variant file an array input
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608745358
+  sbg:revision: 12
+  sbg:revisionNotes: fix chrom input for pca_corr_vars - need to use input name internal
+    to the tool
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1608745834
+  sbg:revision: 13
+  sbg:revisionNotes: fix order of workflow steps in code
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609370912
+  sbg:revision: 14
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609370946
+  sbg:revision: 15
+  sbg:revisionNotes: update output name
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609450203
+  sbg:revision: 16
+  sbg:revisionNotes: update descriptions
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609456529
+  sbg:revision: 17
+  sbg:revisionNotes: add n_pcs_plot as parameter
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609461865
+  sbg:revision: 18
+  sbg:revisionNotes: update pca_byrel
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1615936411
+  sbg:revision: 19
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: (uncommitted file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623389311
+  sbg:revision: 20
+  sbg:revisionNotes: extract pruned variant.ids automatically instead of providing
+    as input
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623456187
+  sbg:revision: 21
+  sbg:revisionNotes: 'bug fix: n_pcs needs to be passed to pca_corr as well as pca_byrel'
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623460383
+  sbg:revision: 22
+  sbg:revisionNotes: replace pc-variant correlation tools with workflow
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623461607
+  sbg:revision: 23
+  sbg:revisionNotes: update pc-variant correlation workflow
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623461845
+  sbg:revision: 24
+  sbg:revisionNotes: add PC-variant correlation file as output
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623462589
+  sbg:revision: 25
+  sbg:revisionNotes: update correlation workflow
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623703491
+  sbg:revision: 26
+  sbg:revisionNotes: add run condition for PC-variant correlation
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623704061
+  sbg:revision: 27
+  sbg:revisionNotes: update name of conditional input
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623704475
+  sbg:revision: 28
+  sbg:revisionNotes: add tool default values
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

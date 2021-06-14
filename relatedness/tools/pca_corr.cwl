@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: pca_corr
 $namespaces:
@@ -6,14 +6,10 @@ $namespaces:
 
 requirements:
 - class: ShellCommandRequirement
-- class: EnvVarRequirement
-  envDef:
-  - envName: NSLOTS
-    envValue: ${ return runtime.cores }
 - class: ResourceRequirement
   coresMin: 4
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: pca_corr.config
@@ -49,6 +45,10 @@ requirements:
               
           return config
       }
+- class: EnvVarRequirement
+  envDef:
+  - envName: NSLOTS
+    envValue: ${ return runtime.cores }
 - class: InlineJavascriptRequirement
 
 inputs:

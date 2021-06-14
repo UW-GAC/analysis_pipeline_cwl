@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: pca_byrel
 $namespaces:
@@ -6,15 +6,11 @@ $namespaces:
 
 requirements:
 - class: ShellCommandRequirement
-- class: EnvVarRequirement
-  envDef:
-  - envName: NSLOTS
-    envValue: ${ return inputs.cpu }
 - class: ResourceRequirement
   coresMin: "${ if(inputs.cpu)\n        return inputs.cpu \n    else \n        return\
     \ 4\n}"
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: pca_byrel.config
@@ -50,6 +46,10 @@ requirements:
           
           return arguments.join("\n")
       }
+- class: EnvVarRequirement
+  envDef:
+  - envName: NSLOTS
+    envValue: ${ return inputs.cpu }
 - class: InlineJavascriptRequirement
 
 inputs:

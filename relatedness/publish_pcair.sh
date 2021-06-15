@@ -37,4 +37,4 @@ sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-variant-correlation pc_va
 sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-air pc-air-wf.cwl
 
 # push workflow to commit
-sbpack smgogarten/uw-gac-commit/pc-air pc-air-wf.cwl
+sbpack bdc smgogarten/uw-gac-commit/pc-air pc-air-wf.cwl

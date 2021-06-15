@@ -25,4 +25,4 @@ cp tools/subset_gds.cwl ld-pruning-wf.cwl.steps/subset_gds.cwl
 sbpack bdc smgogarten/genesis-relatedness-pre-build/ld-pruning-1 ld-pruning-wf.cwl
 
 # push workflow to commit
-sbpack bdc smgogarten/uw-gac-commit/ld-pruning
+sbpack bdc smgogarten/uw-gac-commit/ld-pruning ld-pruning-wf.cwl

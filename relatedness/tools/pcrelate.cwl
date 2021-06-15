@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: pcrelate
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.10.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: pcrelate.config
@@ -39,6 +39,9 @@ requirements:
             
         	if (inputs.n_sample_blocks) 
             config += "n_sample_blocks " + inputs.n_sample_blocks + "\n"
+            
+          if (!inputs.ibd_probs)
+            config += "ibd_probs FALSE" + "\n"
             
           return config
       }
@@ -112,6 +115,13 @@ inputs:
   default: 1
   sbg:category: Input Options
   sbg:toolDefaultValue: '1'
+- id: ibd_probs
+  label: Return IBD probabilities?
+  doc: |-
+    Set this to FALSE to skip computing pairwise IBD probabilities (k0, k1, k2). If FALSE, the plottng step is also skipped, as it requires values for k0.
+  type: boolean?
+  sbg:category: Input Options
+  sbg:toolDefaultValue: 'TRUE'
 
 outputs:
 - id: pcrelate

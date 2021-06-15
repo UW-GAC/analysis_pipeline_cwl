@@ -70,43 +70,33 @@ inputs:
 - id: kinship_plot_threshold
   label: Kinship plotting threshold
   doc: Minimum kinship for a pair to be included in the plot.
-  type:
-  - 'null'
-  - float
+  type: float?
   sbg:category: Input Options
   sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: phenotype_file
   label: Phenotype File
   doc: |-
     RData file with data.frame or AnnotatedDataFrame of phenotypes. Used for plotting kinship estimates separately by group.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: group
   label: Group column name
   doc: |-
     Name of column in phenotype_file containing group variable (e.g., study) for plotting.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
   sbg:toolDefaultValue: NA
 - id: sample_include_file
   label: Sample Include File
   doc: RData file with vector of sample.id to include.
-  type:
-  - 'null'
-  - File
+  type: File?
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type:
-  - 'null'
-  - string
+  type: string?
   sbg:category: Input Options
   sbg:toolDefaultValue: kinship
 
@@ -115,10 +105,7 @@ outputs:
   label: Kinship plots
   doc: |-
     Hexbin plots of estimated kinship coefficients vs. IBS0. If "group" is provided, additional plots will be generated within each group and across groups.
-  type:
-  - 'null'
-  - type: array
-    items: File
+  type: File[]?
   outputBinding:
     glob: '*.pdf'
   sbg:fileTypes: PDF

@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # pull workflow from devel
-sbpull bdc smgogarten/genesis-relatedness/king-robust-1 king-robust-wf.cwl --unpack
+sbpull bdc smgogarten/genesis-relatedness/pc-relate pc-relate-wf.cwl --unpack
 
 # push tools to pre-build
 sbpack bdc smgogarten/genesis-relatedness-pre-build/pcrelate-beta pc-relate-wf.cwl.steps/pcrelate_beta.cwl

@@ -17,6 +17,7 @@ sbpull bdc smgogarten/genesis-relatedness-pre-build/find-unrelated tools/find_un
 sbpull bdc smgogarten/genesis-relatedness-pre-build/pca-byrel tools/pca_byrel.cwl
 sbpull bdc smgogarten/genesis-relatedness-pre-build/pca-plots tools/pca_plots.cwl
 sbpull bdc smgogarten/genesis-relatedness-pre-build/variant_id_from_gds tools/variant_id_from_gds.cwl
+sbpull bdc smgogarten/genesis-relatedness-pre-build/pc-variant-correlation pc_variant_correlation.cwl --unpack
 sbpull bdc smgogarten/genesis-relatedness-pre-build/pca-corr-vars tools/pca_corr_vars.cwl
 sbpull bdc smgogarten/genesis-relatedness-pre-build/pca-corr tools/pca_corr.cwl
 sbpull bdc smgogarten/genesis-relatedness-pre-build/pca-corr-plots tools/pca_corr_plots.cwl
@@ -26,20 +27,13 @@ cp tools/find_unrelated.cwl pc-air-wf.cwl.steps/find_unrelated.cwl
 cp tools/pca_byrel.cwl pc-air-wf.cwl.steps/pca_byrel.cwl
 cp tools/pca_plots.cwl pc-air-wf.cwl.steps/pca_plots.cwl
 cp tools/variant_id_from_gds.cwl pc-air-wf.cwl.steps/variant_id_from_gds.cwl
+cp pc_variant_correlation.cwl pc-air-wf.cwl.steps/pc_variant_correlation.cwl
 cp tools/pca_corr_vars.cwl pc-air-wf.cwl.steps/pc_variant_correlation.cwl.steps/pca_corr_vars.cwl
 cp tools/pca_corr.cwl pc-air-wf.cwl.steps/pc_variant_correlation.cwl.steps/pca_corr.cwl
 cp tools/pca_corr_plots.cwl pc-air-wf.cwl.steps/pc_variant_correlation.cwl.steps/pca_corr_plots.cwl
 
-# push nested workflow to pre-build
-sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-variant-correlation pc-air-wf.cwl.steps/pc_variant_correlation.cwl
-
-# pull nested workflow with new app id from pre-build
-sbpull bdc smgogarten/genesis-relatedness-pre-build/pc-variant-correlation pc_variant_correlation.cwl --unpack
-
-# copy nested workflow to steps
-cp pc_variant_correlation.cwl pc-air-wf.cwl.steps/pc_variant_correlation.cwl
-
 # push workflow to pre-build
+sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-variant-correlation pc_variant_correlation.cwl
 sbpack bdc smgogarten/genesis-relatedness-pre-build/pc-air pc-air-wf.cwl
 
 # push workflow to commit

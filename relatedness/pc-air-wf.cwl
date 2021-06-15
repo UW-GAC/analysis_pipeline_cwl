@@ -1,6 +1,10 @@
 cwlVersion: v1.2
 class: Workflow
 label: PC-AiR
+doc: |-
+  This workflow uses the PC-AiR algorithm to compute ancestry principal components (PCs) while accounting for kinship.
+
+  Step 1 uses pairwise kinship estimates to assign samples to an unrelated set that is representative of all ancestries in the sample. Step 2 performs Principal Component Analysis (PCA) on the unrelated set, then projects relatives onto the resulting set of PCs. Step 3 plots the PCs, optionally color-coding by a grouping variable. Step 4 (optional) calculates the correlation between each PC and variants in the dataset, then plots this correlation to allow screening for PCs that are driven by particular genomic regions.
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -297,23 +301,23 @@ sbg:appVersion:
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: af321deb824c9b35cf44c03c00654771fc666a34afdb00425fa98a687183ddd1c
+sbg:content_hash: ac9fe64bf88acf1ff8cb8876feca7e088c78052763b2ac452735edb90f35c065c
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1583955835
-sbg:id: smgogarten/genesis-relatedness/pc-air/28
+sbg:id: smgogarten/genesis-relatedness/pc-air/29
 sbg:image_url:
-sbg:latestRevision: 28
+sbg:latestRevision: 29
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1623704475
+sbg:modifiedOn: 1623715735
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-air/28/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-air/29/raw/
 sbg:project: smgogarten/genesis-relatedness
 sbg:projectName: GENESIS relatedness
 sbg:publisher: sbg
-sbg:revision: 28
-sbg:revisionNotes: add tool default values
+sbg:revision: 29
+sbg:revisionNotes: restore app description
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1583955835
@@ -439,6 +443,10 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1623704475
   sbg:revision: 28
   sbg:revisionNotes: add tool default values
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623715735
+  sbg:revision: 29
+  sbg:revisionNotes: restore app description
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

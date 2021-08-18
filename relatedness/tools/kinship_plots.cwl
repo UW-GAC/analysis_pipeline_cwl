@@ -27,8 +27,8 @@ requirements:
           }
       }
 
-      if(inputs.kinship_threshold)
-          cmd_line +='kinship_threshold "' + inputs.kinship_threshold + '\n'
+      if(inputs.kinship_plot_threshold)
+          cmd_line +='kinship_threshold "' + inputs.kinship_plot_threshold + '\n'
 
       if(inputs.out_prefix) {
           cmd_line += 'out_file_all "' + inputs.out_prefix + '_all.pdf"\n'

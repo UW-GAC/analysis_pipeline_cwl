@@ -118,6 +118,7 @@ inputs:
   doc: |-
     Exclude variants in genomic regions known to result in high PC-variant correlations when included (HLA, LCT, inversions).
   type: boolean?
+  default: true
   sbg:category: Input options
   sbg:toolDefaultValue: 'true'
 - id: genome_build
@@ -147,9 +148,8 @@ inputs:
 - id: autosome_only
   label: Autosomes only
   doc: Only include variants on the autosomes.
-  type:
-  - 'null'
-  - boolean
+  type: boolean?
+  default: true
   sbg:category: Input options
   sbg:toolDefaultValue: 'true'
 

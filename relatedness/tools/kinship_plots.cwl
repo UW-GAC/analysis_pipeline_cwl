@@ -70,33 +70,43 @@ inputs:
 - id: kinship_plot_threshold
   label: Kinship plotting threshold
   doc: Minimum kinship for a pair to be included in the plot.
-  type: float?
+  type:
+  - 'null'
+  - float
   sbg:category: Input Options
   sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: phenotype_file
   label: Phenotype File
   doc: |-
     RData file with data.frame or AnnotatedDataFrame of phenotypes. Used for plotting kinship estimates separately by group.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Files
   sbg:fileTypes: RDATA
 - id: group
   label: Group column name
   doc: |-
     Name of column in phenotype_file containing group variable (e.g., study) for plotting.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input Options
   sbg:toolDefaultValue: NA
 - id: sample_include_file
   label: Sample Include File
   doc: RData file with vector of sample.id to include.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:category: Input Options
   sbg:fileTypes: RDATA
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:category: Input Options
   sbg:toolDefaultValue: kinship
 
@@ -105,7 +115,10 @@ outputs:
   label: Kinship plots
   doc: |-
     Hexbin plots of estimated kinship coefficients vs. IBS0. If "group" is provided, additional plots will be generated within each group and across groups.
-  type: File[]?
+  type:
+  - 'null'
+  - type: array
+    items: File
   outputBinding:
     glob: '*.pdf'
   sbg:fileTypes: PDF
@@ -128,3 +141,92 @@ hints:
   value: job.out.log
 - class: sbg:SaveLogs
   value: kinship_plots.config
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/kinship-plots/7/raw/
+sbg:appVersion:
+- v1.2
+sbg:content_hash: afdca9f28af72e0a3908f19de3855accf3bc03e7b0c3a886439605c004c137276
+sbg:contributors:
+- smgogarten
+sbg:createdBy: smgogarten
+sbg:createdOn: 1609451320
+sbg:id: smgogarten/genesis-relatedness-pre-build/kinship-plots/7
+sbg:image_url:
+sbg:latestRevision: 7
+sbg:modifiedBy: smgogarten
+sbg:modifiedOn: 1629513122
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
+sbg:publisher: sbg
+sbg:revision: 7
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: relatedness/tools/kinship_plots.cwl
+  commit: f23d6de
+sbg:revisionsInfo:
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609451320
+  sbg:revision: 0
+  sbg:revisionNotes:
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609451341
+  sbg:revision: 1
+  sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444403
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: 878723c
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444726
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445046
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450748
+  sbg:revision: 5
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623740865
+  sbg:revision: 6
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: 6d87792
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1629513122
+  sbg:revision: 7
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: relatedness/tools/kinship_plots.cwl
+    commit: f23d6de
+sbg:sbgMaintained: false
+sbg:validationErrors: []

@@ -10,6 +10,7 @@ requirements:
 - class: ScatterFeatureRequirement
 - class: InlineJavascriptRequirement
 - class: StepInputExpressionRequirement
+- class: SubworkflowFeatureRequirement
 
 inputs:
 - id: pca_file
@@ -31,7 +32,9 @@ inputs:
   label: Sample Include file
   doc: |-
     RData file with vector of sample.id to include. If not provided, all samples in the GDS file are included.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:fileTypes: RDATA
   sbg:x: -175.52853393554688
   sbg:y: -72.8362808227539
@@ -39,7 +42,9 @@ inputs:
   label: Number of PCs
   doc: |-
     Number of PCs (Principal Components) in `pca_file` to use in adjusting for ancestry.
-  type: int?
+  type:
+  - 'null'
+  - int
   sbg:toolDefaultValue: '3'
   sbg:x: -61.75441360473633
   sbg:y: 284.0424499511719
@@ -47,28 +52,36 @@ inputs:
   label: Variant include file
   doc: |-
     RData file with vector of variant.id to include. If not provided, all variants in the GDS file are included.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:fileTypes: RDATA
   sbg:x: -169.77308654785156
   sbg:y: -226.9329071044922
 - id: variant_block_size
   label: Variant block size
   doc: Number of variants to read in a single block.
-  type: int?
+  type:
+  - 'null'
+  - int
   sbg:toolDefaultValue: '1024'
   sbg:x: -60.2248649597168
   sbg:y: -132.0818634033203
 - id: out_prefix
   label: Output prefix
   doc: Prefix for output files.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:x: -65.81759643554688
   sbg:y: 105.9605941772461
 - id: n_sample_blocks
   label: Number of sample blocks
   doc: |-
     Number of blocks to divide samples into for parallel computation. Adjust depending on computer memory and number of samples in the analysis.
-  type: int?
+  type:
+  - 'null'
+  - int
   sbg:toolDefaultValue: '1'
   sbg:x: 49.20663070678711
   sbg:y: -341.2738037109375
@@ -76,34 +89,44 @@ inputs:
   label: Phenotype File
   doc: |-
     RData file with data.frame or AnnotatedDataFrame of phenotypes. Used for plotting kinship estimates separately by group.
-  type: File?
+  type:
+  - 'null'
+  - File
   sbg:fileTypes: RDATA
   sbg:x: 645.658203125
   sbg:y: 169.88719177246094
 - id: kinship_plot_threshold
   label: Kinship plotting threshold
   doc: Minimum kinship for a pair to be included in the plot.
-  type: float?
+  type:
+  - 'null'
+  - float
   sbg:exposed: true
   sbg:toolDefaultValue: 2^(-9/2) (third-degree relatives and closer)
 - id: group
   label: Group column name
   doc: |-
     Name of column in phenotype_file containing group variable (e.g., study) for plotting.
-  type: string?
+  type:
+  - 'null'
+  - string
   sbg:exposed: true
 - id: sparse_threshold
   label: Sparse threshold
   doc: |-
     Threshold for making the output kinship matrix sparse. A block diagonal matrix will be created such that any pair of samples with a kinship estimate greater than the threshold is in the same block; all pairwise estimates within a block are kept, and pairwise estimates between blocks are set to 0.
-  type: float?
+  type:
+  - 'null'
+  - float
   sbg:exposed: true
   sbg:toolDefaultValue: 2^(-11/2) (~0.022, 4th degree)
 - id: ibd_probs
   label: Return IBD probabilities?
   doc: |-
     Set this to FALSE to skip computing pairwise IBD probabilities (k0, k1, k2). If FALSE, the plottng step is also skipped, as it requires values for k0.
-  type: boolean?
+  type:
+  - 'null'
+  - boolean
   default: true
   sbg:x: 210.16744995117188
   sbg:y: 258.3512268066406
@@ -113,7 +136,10 @@ outputs:
   label: Kinship plots
   doc: |-
     Hexbin plots of estimated kinship coefficients vs. IBS0. If "group" is provided, additional plots will be generated within each group and across groups.
-  type: File[]?
+  type:
+  - 'null'
+  - type: array
+    items: File
   outputSource:
   - kinship_plots/kinship_plots
   sbg:fileTypes: PDF
@@ -122,7 +148,9 @@ outputs:
 - id: pcrelate_output
   label: PC-Relate output file
   doc: PC-Relate output file with all samples
-  type: File?
+  type:
+  - 'null'
+  - File
   outputSource:
   - pcrelate_correct/pcrelate_output
   sbg:fileTypes: RDATA
@@ -132,7 +160,9 @@ outputs:
   label: Kinship matrix
   doc: |-
     A block diagonal matrix of pairwise kinship estimates with sparsity set by sparse_threshold. Samples are clustered into blocks of relatives based on `sparse_threshold`; all kinship estimates within a block are kept, and kinship estimates between blocks are set to 0. When `sparse_threshold` is 0, this is a dense matrix with all pairwise kinship estimates.
-  type: File?
+  type:
+  - 'null'
+  - File
   outputSource:
   - pcrelate_correct/pcrelate_matrix
   sbg:fileTypes: RDATA
@@ -251,101 +281,60 @@ sbg:appVersion:
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: a3c667ce3218bb0953c72b46e0c5f4fe40ba00b29c413bd2082d4086b51201ca4
+sbg:content_hash: ab1baee9b749fe1f706dc3ccb7f02c0a6dcf00eddf8f8f431b52ac9b2a74d26e6
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
-sbg:createdOn: 1583955838
-sbg:id: smgogarten/genesis-relatedness/pc-relate/17
-sbg:image_url:
-sbg:latestRevision: 17
+sbg:createdOn: 1609464055
+sbg:id: smgogarten/uw-gac-commit/pc-relate/4
+sbg:image_url: |-
+  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/smgogarten/uw-gac-commit/pc-relate/4.png
+sbg:latestRevision: 4
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1623719892
+sbg:modifiedOn: 1629513252
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-relate/17/raw/
-sbg:project: smgogarten/genesis-relatedness
-sbg:projectName: GENESIS relatedness
-sbg:publisher: sbg
-sbg:revision: 17
-sbg:revisionNotes: set default values
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/uw-gac-commit/pc-relate/4/raw/
+sbg:project: smgogarten/uw-gac-commit
+sbg:projectName: UW GAC - Commit
+sbg:publisher: UWGAC
+sbg:revision: 4
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: relatedness/pc-relate-wf.cwl
+  commit: f23d6de
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1583955838
+  sbg:modifiedOn: 1609464055
   sbg:revision: 0
-  sbg:revisionNotes: Copy of boris_majic/topmed-optimization/pc-relate/0
+  sbg:revisionNotes:
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606800131
+  sbg:modifiedOn: 1609464095
   sbg:revision: 1
-  sbg:revisionNotes: new version of pcrelate
+  sbg:revisionNotes: import from pre-build project
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606801398
+  sbg:modifiedOn: 1612396239
   sbg:revision: 2
-  sbg:revisionNotes: calculate segments from number of sample blocks
+  sbg:revisionNotes: add categories and toolkit
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606840751
+  sbg:modifiedOn: 1623797726
   sbg:revision: 3
-  sbg:revisionNotes: update tool versions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606844136
-  sbg:revision: 4
-  sbg:revisionNotes: segments must be an array for scattering
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606936665
-  sbg:revision: 5
-  sbg:revisionNotes: use a separate tool to convert number of sample blocks to segments
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1606939082
-  sbg:revision: 6
-  sbg:revisionNotes: update tools to match filenames between pcrelate and pcrelate_correct
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608667423
-  sbg:revision: 7
-  sbg:revisionNotes: update descriptions and defaults
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608669249
-  sbg:revision: 8
-  sbg:revisionNotes: update App description
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1608745959
-  sbg:revision: 9
-  sbg:revisionNotes: fix order of workflow steps
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609374329
-  sbg:revision: 10
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609374574
-  sbg:revision: 11
-  sbg:revisionNotes: fix broken link
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1609450276
-  sbg:revision: 12
-  sbg:revisionNotes: update descriptions
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1615937265
-  sbg:revision: 13
   sbg:revisionNotes: |-
     Uploaded using sbpack v2020.10.05. 
     Source: 
     repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
-    file: 
-    commit: (uncommitted file)
+    file: relatedness/pc-relate-wf.cwl
+    commit: 878efb2
 - sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1623277399
-  sbg:revision: 14
-  sbg:revisionNotes: update tools, add pcrelate string to plot filenames
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1623712754
-  sbg:revision: 15
-  sbg:revisionNotes: fix value transform for plot output filenames
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1623718256
-  sbg:revision: 16
-  sbg:revisionNotes: add option to skip IBD probs and plotting
-- sbg:modifiedBy: smgogarten
-  sbg:modifiedOn: 1623719892
-  sbg:revision: 17
-  sbg:revisionNotes: set default values
+  sbg:modifiedOn: 1629513252
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: relatedness/pc-relate-wf.cwl
+    commit: f23d6de
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

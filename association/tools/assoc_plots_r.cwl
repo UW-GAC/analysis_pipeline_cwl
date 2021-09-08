@@ -334,26 +334,28 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-plots-r/20
+- class: sbg:AzureInstanceType
+  value: Standard_D8s_v4;PremiumSSD;512
+id: boris_majic/genesis-toolkit-demo/assoc-plots-r/21
 sbg:appVersion:
 - v1.2
-sbg:content_hash: a82da30efa86852cf30f8281fb890d35b617b19188930e4ef3028caeededad0d3
+sbg:content_hash: ac69853666a83b66464719ab99d0f3422d6986b55831a7556e56b6d8311c6d61b
 sbg:contributors:
+- milan.domazet
 - dajana_panovic
 - boris_majic
-- milan.domazet
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360892
-sbg:id: h-8479d2e5/h-9146a23b/h-deedbeef/0
+sbg:id: h-7f8e6efa/h-f73afcf8/h-7b7e3fe1/0
 sbg:image_url:
-sbg:latestRevision: 20
+sbg:latestRevision: 21
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1620727319
+sbg:modifiedOn: 1622800608
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 20
-sbg:revisionNotes: Labels update
+sbg:revision: 21
+sbg:revisionNotes: Azure instance type
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360892
@@ -439,5 +441,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1620727319
   sbg:revision: 20
   sbg:revisionNotes: Labels update
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1622800608
+  sbg:revision: 21
+  sbg:revisionNotes: Azure instance type
 sbg:sbgMaintained: false
 sbg:validationErrors: []

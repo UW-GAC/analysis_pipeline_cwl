@@ -94,3 +94,65 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
+id: |-
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness-pre-build/plink-make-bed/4/raw/
+sbg:appVersion:
+- v1.2
+sbg:content_hash: addfad77655567300c74ccb994be41549ec8e54a4571c3cc153bfba9c5cfbc61c
+sbg:contributors:
+- smgogarten
+sbg:createdBy: smgogarten
+sbg:createdOn: 1609451922
+sbg:id: smgogarten/genesis-relatedness-pre-build/plink-make-bed/4
+sbg:image_url:
+sbg:latestRevision: 4
+sbg:modifiedBy: smgogarten
+sbg:modifiedOn: 1623450741
+sbg:project: smgogarten/genesis-relatedness-pre-build
+sbg:projectName: GENESIS relatedness - Pre-build
+sbg:publisher: sbg
+sbg:revision: 4
+sbg:revisionNotes: |-
+  Uploaded using sbpack v2020.10.05. 
+  Source: 
+  repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+  file: 
+  commit: c9c8b8d
+sbg:revisionsInfo:
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609451922
+  sbg:revision: 0
+  sbg:revisionNotes:
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1609451941
+  sbg:revision: 1
+  sbg:revisionNotes: import to pre-build project
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623444723
+  sbg:revision: 2
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623445038
+  sbg:revision: 3
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1623450741
+  sbg:revision: 4
+  sbg:revisionNotes: |-
+    Uploaded using sbpack v2020.10.05. 
+    Source: 
+    repo: git@github.com:UW-GAC/analysis_pipeline_cwl.git
+    file: 
+    commit: c9c8b8d
+sbg:sbgMaintained: false
+sbg:validationErrors: []

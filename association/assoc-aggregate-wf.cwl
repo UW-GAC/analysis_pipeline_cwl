@@ -613,22 +613,22 @@ hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
 - class: sbg:AzureInstanceType
-  value: Standard_D8s_v4;StandardSSD;1024
+  value: Standard_D8s_v4;PremiumSSD;1024
 sbg:appVersion:
 - v1.2
 - v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
-sbg:content_hash: ab28d9b5c570f33566a7bca935171b1011ceda973c55a941c3c0474975e0f51b5
+sbg:content_hash: a141fb71bddbf75140b16926ccab3479baf190f1cb9d94d82a5665360334584ec
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727846
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/aggregate-association-testing/27
+sbg:id: admin/sbg-public-data/aggregate-association-testing/30
 sbg:image_url:
-sbg:latestRevision: 27
+sbg:latestRevision: 30
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -642,14 +642,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514962
+sbg:modifiedOn: 1630939196
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/27/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/30/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 27
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 30
+sbg:revisionNotes: chmod -R 777 added to command line
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727846
@@ -763,6 +763,18 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514962
   sbg:revision: 27
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 28
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 29
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1630939196
+  sbg:revision: 30
+  sbg:revisionNotes: chmod -R 777 added to command line
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []

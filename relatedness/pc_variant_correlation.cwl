@@ -8,6 +8,7 @@ requirements:
 - class: ScatterFeatureRequirement
 - class: InlineJavascriptRequirement
 - class: StepInputExpressionRequirement
+- class: SubworkflowFeatureRequirement
 
 inputs:
 - id: out_prefix
@@ -26,8 +27,8 @@ inputs:
 - id: variant_include_file
   label: Variant include file
   doc: |-
-    RData file with vector of variant.id to include. These variants will be added to the set of randomly selected variants. It is recommended to provide the set of pruned variants used for PCA.
-  type: File?
+    RData files (one per chromosome) with vector of variant.id to include. These variants will be added to the set of randomly selected variants. It is recommended to provide the set of pruned variants used for PCA.
+  type: File[]
   sbg:fileTypes: RDATA
   sbg:x: -106
   sbg:y: -85
@@ -107,6 +108,7 @@ steps:
       }
   scatter:
   - gds_file
+  - variant_include_file
   scatterMethod: dotproduct
   run: pc_variant_correlation.cwl.steps/pca_corr_vars.cwl
   out:
@@ -129,6 +131,7 @@ steps:
   scatter:
   - gds_file
   - variant_include_file
+  scatterMethod: dotproduct
   run: pc_variant_correlation.cwl.steps/pca_corr.cwl
   out:
   - id: pca_corr_gds

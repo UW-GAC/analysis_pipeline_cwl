@@ -103,6 +103,13 @@ class Platform(unittest.TestCase):
                 ],
             project=cls.project
         )
+        cls.inputs['pruned_variant_file'] = cls.session.files.query(
+            names=[
+                'unittest_pruned_variants_chr21.RData',
+                'unittest_pruned_variants_chr22.RData'
+                ],
+            project=cls.project
+        )
         cls.inputs['kinship_file'] = cls.session.files.query(
             names=['1KG_king_ibdseg_Matrix.RData'],
             project=cls.project

@@ -107,26 +107,6 @@ inputs:
   sbg:fileTypes: GDS
   sbg:x: -283.20037841796875
   sbg:y: 376.7168273925781
-- id: n_corr_vars
-  label: Number of variants to select
-  doc: |-
-    Randomly select this number of variants distributed across the entire genome to use for PC-variant correlation. If running on a single chromosome, the variants returned will be scaled by the proportion of that chromosome in the genome.
-  type: int?
-  sbg:exposed: true
-  sbg:toolDefaultValue: '10e6'
-- id: n_pcs_plot
-  label: Number of PCs to plot
-  doc: Number of PCs to plot.
-  type: int?
-  sbg:exposed: true
-  sbg:toolDefaultValue: '20'
-- id: n_perpage
-  label: Number of plots per page
-  doc: |-
-    Number of PC-variant correlation plots to stack in a single page. The number of png files generated will be ceiling(n_pcs_plot/n_perpage).
-  type: int?
-  sbg:exposed: true
-  sbg:toolDefaultValue: '4'
 - id: run_correlation
   label: Run PC-variant correlation
   doc: |-
@@ -134,6 +114,31 @@ inputs:
   type: boolean
   sbg:x: -405.8658447265625
   sbg:y: 275.1279296875
+- id: pruned_variant_file
+  label: Pruned variant files
+  doc: |-
+    RData files (one per chromosome) with vector of variant.id produced by the LD pruning workflow. These variants will be added to the set of randomly selected variants.
+  type: File[]
+  sbg:fileTypes: RDATA
+  sbg:x: -241.30958557128906
+  sbg:y: 195.14608764648438
+- id: n_corr_vars
+  label: Number of variants to select
+  doc: |-
+    Randomly select this number of variants distributed across the entire genome to use for PC-variant correlation. If running on a single chromosome, the variants returned will be scaled by the proportion of that chromosome in the genome.
+  type: int?
+  sbg:exposed: true
+- id: n_pcs_plot
+  label: Number of PCs to plot
+  doc: Number of PCs to plot.
+  type: int?
+  sbg:exposed: true
+- id: n_perpage
+  label: Number of plots per page
+  doc: |-
+    Number of PC-variant correlation plots to stack in a single page. The number of png files generated will be ceiling(n_pcs_plot/n_perpage).
+  type: int?
+  sbg:exposed: true
 
 outputs:
 - id: out_unrelated_file
@@ -254,19 +259,6 @@ steps:
   - id: pca_plots
   sbg:x: 206.48231506347656
   sbg:y: -174.49720764160156
-- id: variant_id_from_gds
-  label: variant id from gds
-  in:
-  - id: gds_file
-    source: gds_file
-  - id: run_correlation
-    source: run_correlation
-  run: pc-air-wf.cwl.steps/variant_id_from_gds.cwl
-  when: $(inputs.run_correlation)
-  out:
-  - id: output_file
-  sbg:x: -172.29623413085938
-  sbg:y: 209.59246826171875
 - id: pc_variant_correlation
   label: PC-variant correlation
   in:
@@ -276,7 +268,8 @@ steps:
     source:
     - gds_file_full
   - id: variant_include_file
-    source: variant_id_from_gds/output_file
+    source:
+    - pruned_variant_file
   - id: pca_file
     source: pca_byrel/pcair_output_unrelated
   - id: n_corr_vars
@@ -301,23 +294,24 @@ sbg:appVersion:
 sbg:categories:
 - GWAS
 - Ancestry and Relatedness
-sbg:content_hash: ac9fe64bf88acf1ff8cb8876feca7e088c78052763b2ac452735edb90f35c065c
+sbg:content_hash: a695b186523b78bafe4eb7fbedc92ffb0852a92480f4251e23444ac5fc462b0bb
 sbg:contributors:
 - smgogarten
 sbg:createdBy: smgogarten
 sbg:createdOn: 1583955835
-sbg:id: smgogarten/genesis-relatedness/pc-air/29
-sbg:image_url:
-sbg:latestRevision: 29
+sbg:id: smgogarten/genesis-relatedness/pc-air/32
+sbg:image_url: |-
+  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/smgogarten/genesis-relatedness/pc-air/32.png
+sbg:latestRevision: 32
 sbg:modifiedBy: smgogarten
-sbg:modifiedOn: 1623715735
+sbg:modifiedOn: 1637103217
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-air/29/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/smgogarten/genesis-relatedness/pc-air/32/raw/
 sbg:project: smgogarten/genesis-relatedness
 sbg:projectName: GENESIS relatedness
 sbg:publisher: sbg
-sbg:revision: 29
-sbg:revisionNotes: restore app description
+sbg:revision: 32
+sbg:revisionNotes: change singular to plural in description
 sbg:revisionsInfo:
 - sbg:modifiedBy: smgogarten
   sbg:modifiedOn: 1583955835
@@ -447,6 +441,20 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1623715735
   sbg:revision: 29
   sbg:revisionNotes: restore app description
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1636503583
+  sbg:revision: 30
+  sbg:revisionNotes: |-
+    can't get variant id from pruned GDS file as they have been re-numbered 1:n in merge process
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1637090157
+  sbg:revision: 31
+  sbg:revisionNotes: make pruned variant file a required array (to scatter with full
+    gds file)
+- sbg:modifiedBy: smgogarten
+  sbg:modifiedOn: 1637103217
+  sbg:revision: 32
+  sbg:revisionNotes: change singular to plural in description
 sbg:sbgMaintained: false
 sbg:toolkit: UW-GAC Ancestry and Relatedness
 sbg:validationErrors: []

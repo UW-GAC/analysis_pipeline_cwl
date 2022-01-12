@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: assoc_single.R
 $namespaces:
@@ -17,7 +17,7 @@ requirements:
             return 8*1024
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: assoc_single.config
@@ -84,7 +84,9 @@ requirements:
               if(inputs.genome_build){
                   argument.push('genome_build ' + inputs.genome_build);
               }
-              
+              if(inputs.genotype_coding){
+                  argument.push('genotype_coding ' + inputs.genotype_coding);
+              }
               argument.push('');
               return argument.join('\n');
           }
@@ -256,6 +258,19 @@ inputs:
     - hg19
     - hg38
   default: hg38
+- id: genotype_coding
+  label: Genetic model
+  doc: 'Genetic model can be one of: additive, recessive, dominant.'
+  type:
+  - 'null'
+  - name: genotype_coding
+    type: enum
+    symbols:
+    - additive
+    - recessive
+    - dominant
+  default: additive
+  sbg:toolDefaultValue: additive
 
 outputs:
 - id: configs
@@ -327,25 +342,25 @@ hints:
   value: r4.8xlarge;ebs-gp2;500
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-single-r/9
+id: boris_majic/genesis-toolkit-demo/assoc-single-r/10
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a94935ca3d553186c6d4ba57c35b4ad86ea00b2a2aeda3c3d3186763f473f4aa8
+- v1.2
+sbg:content_hash: a2f4118b92dbecd7610d0f6e07d9cf3bd6afa91c3f1ed54bbb86ba31043ed130b
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360947
-sbg:id: h-5abb9d84/h-c557d745/h-c1293baa/0
+sbg:id: h-bdc9627e/h-05376477/h-e980d70a/0
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 10
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1616077397
+sbg:modifiedOn: 1632131339
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 9
-sbg:revisionNotes: Docker updated to v2.10.0 and BinomiRare test added
+sbg:revision: 10
+sbg:revisionNotes: uwgac/topmed-master:2.12.0 and genotype model change
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360947
@@ -387,5 +402,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1616077397
   sbg:revision: 9
   sbg:revisionNotes: Docker updated to v2.10.0 and BinomiRare test added
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131339
+  sbg:revision: 10
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0 and genotype model change
 sbg:sbgMaintained: false
 sbg:validationErrors: []

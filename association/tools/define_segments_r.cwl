@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: define_segments.R
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: define_segments.config
@@ -96,25 +96,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/define-segments-r/6
+id: boris_majic/genesis-toolkit-demo/define-segments-r/7
 sbg:appVersion:
-- v1.1
-sbg:content_hash: abcb7884a4e9f96eab06afefcfd6ac9a971605d3a26b810578009f05e0f63455d
+- v1.2
+sbg:content_hash: acce8a3b6351d82391e7e163aba0839d8153e2eae320685bc9069f3ee7c9af891
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360777
-sbg:id: h-694d1b5f/h-1a5343c2/h-bf2a9372/0
+sbg:id: h-9619b981/h-7b667ac4/h-599335e4/0
 sbg:image_url:
-sbg:latestRevision: 6
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1616077263
+sbg:modifiedOn: 1632131557
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 6
-sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+sbg:revision: 7
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360777
@@ -144,5 +144,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1616077263
   sbg:revision: 6
   sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131557
+  sbg:revision: 7
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

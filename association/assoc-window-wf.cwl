@@ -22,6 +22,9 @@ doc: |-
   There are no changes introduced by Seven Bridges.
 
   ### Common Issues and Important Notes:
+  * The null model input file should be created using GENESIS Null model. Please ensure that you use a Null model file and not one of Null model report only files also available in outputs. 
+  * The phenotype input file should be created using GENESIS Null model workflow. It is listed in the Null model Phenotypes file output field. 
+
 
   * This workflow expects **GDS** files split by chromosome, and will not work otherwise. If provided, **variant include** files must also be split in the same way. Also GDS and Variant include files should be properly named. It is expected that chromosome is included in the filename in following format: chr## , where ## is the name of the chromosome (1-24 or X, Y). Chromosome can be included at any part of the filename. Examples for GDS: data_subset_chr1.gds, data_chr1_subset.gds. Examples for Variant include files: variant_include_chr1.RData, chr1_variant_include.RData.
 
@@ -33,87 +36,78 @@ doc: |-
 
   | Samples &nbsp; &nbsp; |  | Rel. matrix &nbsp; &nbsp;| Test   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Parallel instances &nbsp; &nbsp;| Instance type &nbsp; &nbsp; &nbsp;  | Instance   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;   | CPU &nbsp; &nbsp; | RAM (GB) &nbsp; &nbsp; | Time  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; &nbsp;&nbsp; &nbsp;   | Cost |
   | ------- | -------- | -------------------- | ------ | --------------------- | ---------------- | ------------- | --- | -------- | ----------- | ---- |
-  | 10K     |          | w/o                  | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 8        | 1 h, 11 min | $16  |
-  | 10K     |          | Sparse               | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 8        | 1 h, 10min  | $17  |
-  | 10K     |          | Dense                | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 8        | 1 h, 12 min | $16  |
-  | 36K     |          | w/o                  | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 8        | 1 h, 46 min | $28  |
-  | 36K     |          | Sparse               | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 9        | 1 h, 50 min | $31  |
-  | 36K     |          | Dense                | Burden | 8                     | On Dm            | r5.12xlarge   | 4   | 36       | 2h, 59 min  | $66  |
-  | 50K     |          | w/o                  | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 8        | 2 h, 28 min | $40  |
-  | 50K     |          | Sparse               | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 9        | 2 h, 11 min | $43  |
-  | 50K     |          | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 4 h, 47 min | $208 |
-  | 50K     |          | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 4 h, 30 min | $218 |
-  | 50K     |          | Dense                | Burden | 8                     | On Dm            | r5.24xlarge   | 8   | 70       | 9 h         | $218 |
-  | 10K     |          | w/o                  | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 1 h, 55 min | $16  |
-  | 10K     |          | Sparse               | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 2 h         | $17  |
-  | 10K     |          | Dense                | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 2 h, 40 min | $16  |
-  | 36K     |         | w/o                  | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 2 h, 17 min | $30  |
-  | 36K     |         | Sparse               | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 9        | 2 h, 30 min | $30  |
-  | 36K     |         | Dense                | Burden | 8                     | On Dm            | n1-highmem-32 | 4   | 36       | 6 h         | $91  |
-  | 50K     |         | w/o                  | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 8        | 5 h, 50 min | $43  |
-  | 50K     |         | Sparse               | Burden | 8                     | On Dm            | n1-highmem-32 | 1   | 9        | 5 h, 50 min | $40  |
-  | 50K     |         | Dense                | Burden | 8                     | On Dm            | n1-highmem-96 | 8   | 70       | 6 h         | $270 |
-  | 10K     |          | w/o    | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 15 min | $16  |
-  | 10K     |          | Sparse | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 15 min | $17  |
-  | 10K     |          | Dense  | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 17 min | $17  |
-  | 36K     |          | w/o    | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 47 min | $27  |
-  | 36K     |            | Sparse | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 1 h, 50 min | $31  |
-  | 36K     |          | Dense  | SKAT | 8 | On Dm | r5.12xlarge   | 6  | 48  | 5 h, 5 min  | $110 |
-  | 50K     |        | w/o    | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 2 h, 27 min | $40  |
-  | 50K |            | Sparse | SKAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 2 h, 23 min | $44  |
-  | 50K |           | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 13 | 100 | 11 h, 2 min | $500 |
-  | 50K |        | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 9 h         | $435 |
-  | 50K |        | Dense  | SKAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 18 h        | $435 |
-  | 10K |        | w/o    | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h, 50 min | $17  |
-  | 10K |        | Sparse | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h         | $16  |
-  | 10K |       | Dense  | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 50 min | $17  |
-  | 36K |           | w/o    | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 45 min | $30  |
-  | 36K |         | Sparse | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 9   | 2 h, 20 min | $30  |
-  | 36K |           | Dense  | SKAT | 8 | On Dm | n1-highmem-32 | 6  | 48  | 12 h        | $162 |
-  | 50K |          | w/o    | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 5 h         | $45  |
-  | 50K |           | Sparse | SKAT | 8 | On Dm | n1-highmem-32 | 1  | 9   | 5 h         | $45  |
-  | 50K |           | Dense  | SKAT | 8 | On Dm | n1-highmem-96 | 13 | 100 | 14 h        | $620 |
-  | 50K |      | Dense  | SKAT | 8 | On Dm | n1-highmem-96 | 12 | 90  | 14 h        | $620 |
-  | 10K |  | w/o    | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 15 min  | $16  |
-  | 10K |  | Sparse | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 16 min  | $16  |
-  | 10K |  | Dense  | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 18 min  | $17  |
-  | 36K | | w/o    | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 45 min  | $28  |
-  | 36K |  | Sparse | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 1 h, 48 min  | $32  |
-  | 36K |  | Dense  | SMMAT | 8 | On Dm | r5.12xlarge   | 6  | 48  | 5h           | $111 |
-  | 50K |  | w/o    | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 2 h, 30 min  | $40  |
-  | 50K |  | Sparse | SMMAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 2 h, 47 min  | $44  |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 13 | 100 | 11 h, 30 min | $500 |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 9 h          | $435 |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 18 h         | $435 |
-  | 10K |  | w/o    | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h 30 min   | $15  |
-  | 10K |  | Sparse | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h          | $16  |
-  | 10K |  | Dense  | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 50 min  | $17  |
-  | 36K |  | w/o    | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 43 min  | $30  |
-  | 36K |  | Sparse | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 9   | 2 h, 25 min  | $30  |
-  | 36K |  | Dense  | SMMAT | 8 | On Dm | n1-highmem-32 | 6  | 48  | 12 h         | $160 |
-  | 50K |  | w/o    | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 5 h          | $42  |
-  | 50K |  | Sparse | SMMAT | 8 | On Dm | n1-highmem-32 | 1  | 9   | 5 h          | $50  |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | n1-highmem-96 | 13 | 100 | 14 h         | $620 |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | n1-highmem-96 | 12 | 90  | 14 h         | $620 |
-  | 50K |  | Dense  | SMMAT | 8 | On Dm | r5.24xlarge   | 12 | 90  | 18 h         | $435 |
-  | 10K |  | w/o    | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 14 min  | $16  |
-  | 10K |  | Sparse | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 15 min  | $16  |
-  | 10K |  | Dense  | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 17 min  | $17  |
-  | 36K |  | w/o    | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 8   | 1 h, 50 min  | $28  |
-  | 36K |  | Sparse | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 9   | 1 h, 40 min  | $34  |
-  | 36K |  | Dense  | Fast SKAT | 8 | On Dm | r5.12xlarge   | 6  | 50  | 5 h, 30 min  | $135 |
-  | 50K |  | w/o    | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 10  | 1 h, 30 min  | $40  |
-  | 50K | | Sparse | Fast SKAT | 8 | On Dm | r5.12xlarge   | 1  | 10  | 1 h, 30 min  | $43  |
-  | 50K |  | Dense  | Fast SKAT | 8 | On Dm | r5.24xlarge   | 13 | 100 | 11 h, 41 min | $501 |
-  | 10K |  | w/o    | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h, 30 min  | $16  |
-  | 10K |  | Sparse | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 1 h, 30 min  | $16  |
-  | 10K |  | Dense  | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 2 h, 50 min  | $17  |
-  | 36K |  | w/o    | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 8   | 3 h          | $30  |
-  | 36K |  | Sparse | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 9   | 4 h, 30min   | $32  |
-  | 36K |  | Dense  | Fast SKAT | 8 | On Dm | n1-highmem-32 | 6  | 50  | 11 h         | $160 |
-  | 50K |  | w/o    | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 10  | 3 h          | $45  |
-  | 50K |  | Sparse | Fast SKAT | 8 | On Dm | n1-highmem-32 | 1  | 10  | 3 h          | $45  |
-  | 50K |  | Dense  | Fast SKAT | 8 | On Dm | n1-highmem-96 | 13 | 100 | 14 h         | $650 |
+  | 10K     |          | w/o                  | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 5       | 4 h, 30 min | $50  |
+  | 10K     |          | Sparse               | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 5        | 4 h, 30min  | $50  |
+  | 10K     |          | Dense                | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 5        | 4 h, 30 min | $50  |
+  | 36K     |          | w/o                  | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 5        | 9 h, 15 min | $115  |
+  | 36K     |          | Sparse               | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 5        | 9 h, 15 min | $115  |
+  | 36K     |          | Dense                | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 50       | 1 d | $500  |
+  | 50K     |          | w/o                  | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 20        | 2 d, 5 h | $650  |
+  | 50K     |          | Sparse               | Burden | 8                     | On Dm            | c5.9xlarge   | 1   | 20        | 2 d, 5 h | $650  |
+  | 50K     |          | Dense                | Burden | 8                     | On Dm            | r5.12xlarge   | 1   | 100       | 2 d | $1400 |
+  | 10K     |          | w/o                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 10K     |          | Sparse                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 10K     |          | Dense                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 36K     |          | w/o                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Sparse                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Dense                | SKAT | 8                     | On Dm            | r5.12xlarge   | 1   | 50       | 11 d | $6300  |
+  | 50K     |          | w/o                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 36   | 72        | 12 d | $3300  |
+  | 50K     |          | Sparse                  | SKAT | 8                     | On Dm            | c5.9xlarge   | 36   | 72        | 12 d | $3300  |
+  | 50K     |          | Dense                | SKAT | 8                     | On Dm            | r5.12xlarge   | 6   | 100       | 8 d | $4700 |
+  | 10K     |          | w/o                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 10K     |          | Sparse                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 10K     |          | Dense                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5       | 20 h | $250  |
+  | 36K     |          | w/o                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5        | 5 d | $1100  |
+  | 36K     |          | Sparse                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 12   | 5        | 5 d | $1100  |
+  | 36K     |          | Dense                | SMMAT | 8                     | On Dm            | r5.12xlarge   | 1   | 50       | 11 d | $6300  |
+  | 50K     |          | w/o                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 36   | 72        | 13 d | $4000  |
+  | 50K     |          | Sparse                  | SMMAT | 8                     | On Dm            | c5.9xlarge   | 36   | 72        | 13 d | $4000  |
+  | 50K     |          | Dense                | SMMAT | 8                     | On Dm            | r5.12xlarge   | 6   | 100       | 7 d | $4000 |
+  | 10K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | c5.9xlarge   | 5   | 5       | 14 h  | $110  |
+  | 10K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | c5.9xlarge   | 5   | 5       | 14 h  | $110  |
+  | 10K     |          | Dense                | Fast-SKAT | 8                     | On Dm            | c5.9xlarge   | 12   | 10        | 20 h   | $240  |
+  | 36K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | c5.9xlarge   | 18   | 36        | 3 d, 12 h | $1050  |
+  | 36K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | c5.9xlarge   | 18   | 36        | 3 d, 12 h | $1050  |
+  | 36K     |          | Dense                | Fast-SKAT | 8                     | On Dm            | r5.12xlarge   | 1   | 50       | 2 d | $1000  |
+  | 50K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | r5.12xlarge   | 18   | 36        | 4 d | $2600  |
+  | 50K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | r5.12xlarge   | 18   | 36        | 4 d, 12 h | $2600  |
+  | 50K     |          | Dense                | Fast-SKAT | 8                     | On Dm            | r5.12xlarge   | 1   | 186       | 12 d | $7000 |
+  | 10K     |          | w/o                  | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 5       | 3 h | $40  |
+  | 10K     |          | Sparse               | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 5        | 3 h  | $40  |
+  | 10K     |          | Dense                | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 5        | 3 h | $40  |
+  | 36K     |          | w/o                  | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 5        | 7 h | $100  |
+  | 36K     |          | Sparse               | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 5        | 8 h | $110  |
+  | 36K     |          | Dense                | Burden | 8                     | On Dm            | n1-standard-96   | 1   | 50       | 1 d, 6 h | $100  |
+  | 50K     |          | w/o                  | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 20        | 2 d | $500  |
+  | 50K     |          | Sparse                  | Burden | 8                     | On Dm            | n1-standard-32   | 1   | 20        | 2 d | $500  |
+  | 50K     |          | Dense                | Burden | 8                     | On Dm            | n1-standard-96   | 1   | 100       | 3 d | $2600 |
+  | 10K     |          | w/o                  | SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 1 d, 12 h | $400  |
+  | 10K     |          | Sparse                  | SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 1 d, 12 h | $400  |
+  | 10K     |          | Dense                  | SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 1 d, 12 h | $400  |
+  | 36K     |          | w/o                  | SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Sparse                  | SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Dense                | SKAT | 8                     | On Dm            | n1-standard-96   | 1   | 50       | 6 d | $5100  |
+  | 50K     |          | w/o                  | SKAT | 8                     | On Dm            | n1-standard-64   | 36   | 72        | 14 d | $8000  |
+  | 50K     |          | Sparse                  | SKAT | 8                     | On Dm            | n1-standard-32   | 18   | 36        | 15 d | $4500  |
+  | 50K     |          | Dense                | SKAT | 8                     | On Dm            | n1-standard-96   | 6   | 100       | 9 d | $8300 |
+  | 10K     |          | w/o                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 2 d | $560  |
+  | 10K     |          | Sparse                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 2 d | $560  |
+  | 10K     |          | Dense                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 2 d | $560  |
+  | 36K     |          | w/o                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Sparse                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 12   | 5        | 5 d | $1400  |
+  | 36K     |          | Dense                | SMMAT | 8                     | On Dm            | n1-standard-96   | 1   | 50       | 6 d | $5100  |
+  | 50K     |          | w/o                  | SMMAT | 8                     | On Dm            | n1-standard-64   | 36   | 72        | 14 d | $8000  |
+  | 50K     |          | Sparse                  | SMMAT | 8                     | On Dm            | n1-standard-32   | 18   | 36        | 17 d | $5000  |
+  | 50K     |          | Dense                | SMMAT | 8                     | On Dm            | n1-standard-96   | 6   | 100       | 13 d | $11500 |
+  | 10K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | n1-standard-32   | 5   | 5       | 16 h | $200  |
+  | 10K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | n1-standard-32   | 5   | 5       | 16 h | $200  |
+  | 10K     |          | Dense                  | Fast-SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5       | 2 d | $560  |
+  | 36K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | n1-standard-32   | 18   | 36        | 8 d | $2400  |
+  | 36K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | n1-standard-32   | 12   | 5        | 8 d | $2400  |
+  | 36K     |          | Dense                | Fast-SKAT | 8                     | On Dm            | n1-standard-96   | 1   | 50       | 2 d, 12 h | $2100  |
+  | 50K     |          | w/o                  | Fast-SKAT | 8                     | On Dm            | n1-standard-96   | 1   | 100        | 5 d | $4700  |
+  | 50K     |          | Sparse                  | Fast-SKAT | 8                     | On Dm            | n1-standard-96   | 1   | 100        | 5 d | $4700  |
+  | 50K     |          | Dense                | Fast-SKAT | 8                     | On Dm            | n1-standard-96   | 1   | 100       | 30 d | $26300 |
 
   In tests performed we used **1000G** (tasks with 2.5k participants) and **TOPMed freeze5** datasets (tasks with 10k or more participants). All these tests are done with applied **MAF < 1% filter, window size 50kb** and **window step 20kb**. The number of variants that have been tested in **1000G** dataset is **175 mio (140k windows, 1k variants/window)**. The number of variants tested in **TOPMed freeze 5** is **1bio variants (140k windows, 7k variants/window)**.
 
@@ -144,11 +138,11 @@ doc: |-
 
 
   ### References
-  [1] [SKAT](https://dx.doi.org/10.1016%2Fj.ajhg.2011.05.029)  
-  [2] [fastSKAT](https://doi.org/10.1002/gepi.22136)  
-  [3] [SMMAT](https://doi.org/10.1016/j.ajhg.2018.12.012)  
-  [4] [SKAT-O](https://doi.org/10.1093/biostatistics/kxs014)  
-  [5] [GENESIS](https://f4c.sbgenomics.com/u/boris_majic/genesis-pipelines-dev/apps/doi.org/10.1093/bioinformatics/btz567)
+   - [1] [SKAT](https://dx.doi.org/10.1016%2Fj.ajhg.2011.05.029)  
+   - [2] [fastSKAT](https://doi.org/10.1002/gepi.22136)  
+   - [3] [SMMAT](https://doi.org/10.1016/j.ajhg.2018.12.012)  
+   - [4] [SKAT-O](https://doi.org/10.1093/biostatistics/kxs014)  
+   - [5] [GENESIS](https://f4c.sbgenomics.com/u/boris_majic/genesis-pipelines-dev/apps/doi.org/10.1093/bioinformatics/btz567)
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -266,7 +260,7 @@ inputs:
 - id: null_model_file
   label: Null model file
   doc: |-
-    RData file containing a null model object. Run the GENESIS Null Model app to create this file.
+    RData file containing a null model object. Run the GENESIS Null Model app to create this file. Please make sure to use the null model output instead of the null model report only output.
   type: File
   sbg:fileTypes: RDATA
   sbg:x: 91
@@ -576,23 +570,22 @@ hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
 - class: sbg:AzureInstanceType
-  value: Standard_D8s_v4;StandardSSD;1024
+  value: Standard_D8s_v4;PremiumSSD;1024
 sbg:appVersion:
 - v1.2
-- v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: abbc5c4c459cc573bb7f42fe14a7f6a1639edcd9508b8e6e228da59a051c5563d
+sbg:content_hash: ac546dbb211a9a389a7c874e0db032f9a5000df283356dc15433b31b36536651c
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727849
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/sliding-window-association-testing/24
+sbg:id: admin/sbg-public-data/sliding-window-association-testing/32
 sbg:image_url:
-sbg:latestRevision: 24
+sbg:latestRevision: 32
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -606,14 +599,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514961
+sbg:modifiedOn: 1635438711
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/24/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/sliding-window-association-testing/32/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 24
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 32
+sbg:revisionNotes: Benchmarking updated
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727849
@@ -715,6 +708,39 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514961
   sbg:revision: 24
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 25
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 26
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1630939196
+  sbg:revision: 27
+  sbg:revisionNotes: chmod -R 777 added to command line
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333810
+  sbg:revision: 28
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333810
+  sbg:revision: 29
+  sbg:revisionNotes: Assoc plot computational requirements adjusted
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333810
+  sbg:revision: 30
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1635438711
+  sbg:revision: 31
+  sbg:revisionNotes: thin_nbins assoc plot updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1635438711
+  sbg:revision: 32
+  sbg:revisionNotes: Benchmarking updated
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL

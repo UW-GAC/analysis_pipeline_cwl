@@ -1,6 +1,6 @@
 cwlVersion: v1.2
 class: Workflow
-label: Null Model
+label: GENESIS Null Model
 doc: |-
   **Null Model** workflow fits the regression or mixed effects model under the null hypothesis of no genotype effects. i.e., The outcome variable is regressed on the specified fixed effect covariates and random effects. The output of this null model is then used in the association tests.
 
@@ -30,6 +30,8 @@ doc: |-
 
 
   ### Common issues and important notes:
+  * The null model report only output files are used to generate diagnostic reports to examine the null model fit. They are smaller versions of the full null model file and do not contain all elements necessary for association testing.
+
   * If **PCA File** is not provided, the **Number of PCs to include as covariates** parameter **must** be set to 0.
 
   * **PCA File** must be an RData object output from the *pcair* function in the GENESIS package.
@@ -40,24 +42,35 @@ doc: |-
 
   In the following table you can find estimates of running time and cost on spot instances. 
         
+  | Samples &nbsp; &nbsp;| Relatedness matrix &nbsp; &nbsp; | Instance type &nbsp; &nbsp;| Instance &nbsp;  &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; &nbsp;&nbsp; &nbsp;| Time   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Cost  |
+  | ------- | --------------------- | ---------------- | -------------- | ----------- | ----- |
+  | 2.5K    | w/o                   | Spot             | c4xlarge       | 5 min       | 0.01$ |
+  | 10K     | w/o                   | Spot             | r4.8xlarge     | 6 min       | 0.06$ |
+  | 36K     | w/o                   | Spot             | r4.8xlarge     | 7 min       | 0.06$ |
+  | 50K     | w/o                   | Spot             | r4.8xlarge     | 7 min       | 0.07$ |
+  | 2.5K    | Sparse                | Spot             | c4xlarge       | 5 min       | 0.01$ |
+  | 10K     | Sparse                | Spot             | r4.8xlarge     | 8 min       | 0.06$ |
+  | 36K     | Sparse                | Spot             | r4.8xlarge     | 40 min      | 0.40$ |
+  | 50K     | Sparse                | Spot             | r4.8xlarge     | 50 min      | 0.50$ |
+  | 2.5K    | Dense                 | Spot             | c4.xlarge      | 5 min       | 0.01$ |
+  | 10K     | Dense                 | Spot             | c4.2xlarge     | 13 min      | 0.06$ |
+  | 36K     | Dense                 | Spot             | r4.4xlarge     | 55 min      | 0.45$ |
+  | 50K     | Dense                 | Spot             | r4.8xlarge     | 2 h         | 1.50$ |
+  | 2.5K    | w/o                   | Preemtible       | n1-standard-4  | 5 min       | 0.01$ |
+  | 10K     | w/o                   | Preemtible       | n1-standard-32 | 6 min       | 0.05$ |
+  | 36K     | w/o                   | Preemtible       | n1-hihgmem-32  | 8 min       | 0.06$ |
+  | 50K     | w/o                   | Preemtible       | n1-hihgmem-32  | 7 min       | 0.06$ |
+  | 2.5K    | Sparse                | Preemtible       | n1-standard-4  | 5 min       | 0.01$ |
+  | 10K     | Sparse                | Preemtible       | n1-hihgmem-32  | 7 min       | 0.06$ |
+  | 36K     | Sparse                | Preemtible       | n1-hihgmem-32  | 40 min      | 0.30$ |
+  | 50K     | Sparse                | Preemtible       | n1-hihgmem-32  | 50 min      | 0.45$ |
+  | 2.5K    | Dense                 | Preemtible       | n1-highcpu-8   | 10 min      | 0.01$ |
+  | 10K     | Dense                 | Preemtible       | n1-highcpu-16  | 12 min      | 0.04$ |
+  | 36K     | Dense                 | Preemtible       | n1-standard-32 | 43 min      | 1$    |
+  | 50K     | Dense                 | Preemtible       | n1-standard-96 | 2 h, 30 min | 12$   |
 
-  | Sample Count | Relatedness matrix   | Duration   | Cost - spot ($)  |  Instance (AWS)  |
-  |--------------------|----------------------------|-------------|---------------------|------------------------|
-  | 2.5k samples  |                 | 4 min                 | $0.01   |   1x c4.xlarge |
-  | 2.5k samples  | sparse     | 5 min                 | $0.01   |   1x c4.xlarge |
-  | 2.5k samples  | dense      | 5 min                 | $0.01   |   1x c4.xlarge |
-  | 10k samples   |                 | 6 min                 | $0.06   |   1x r4.8xlarge |
-  | 10k samples   | sparse     | 7 min                 | $0.07   |   1x r4.8xlarge |
-  | 10k samples   | dense      | 16 min               | $0.13    |   1x r4.8xlarge |
-  | 36k samples  |                 | 7 min                 | $0.06    |   1x r4.8xlarge |
-  | 36k samples  | sparse     | 24 min               | $0.27    |   1x r4.8xlarge |
-  | 36k samples  | dense      | 52 min               | $0.56    |   1x r4.8xlarge |
-  | 54k samples  |                 | 7 min                 | $0.07     |   1x r4.8xlarge |
-  | 54k samples  | sparse     | 32 min               | $0.36    |   1x r4.8xlarge |
-  | 54k samples  | dense      | 2 h                     | $1.5       | 1x r4.8xlarge |
 
-
-  *Cost shown here were obtained with **spot instances** enabled. Visit the [Knowledge Center](https://docs.sevenbridges.com/docs/about-spot-instances) for more details.*
+  *Cost shown here were obtained with **spot/preemptible instances** enabled. Visit the [Knowledge Center](https://docs.sevenbridges.com/docs/about-spot-instances) for more details.*
 $namespaces:
   sbg: https://sevenbridges.com
 
@@ -253,6 +266,14 @@ outputs:
   - null_model_r/null_model_output
   sbg:x: 501.5128173828125
   sbg:y: 291.2054138183594
+- id: null_model_report_files
+  label: Null model report only files
+  doc: Null model report only files
+  type: File[]?
+  outputSource:
+  - null_model_report/null_model_report_files
+  sbg:x: 1025.738525390625
+  sbg:y: -209.47576904296875
 
 steps:
 - id: null_model_r
@@ -294,7 +315,6 @@ steps:
     source: norm_bygroup
   run: null-model-wf.cwl.steps/null_model_r.cwl
   out:
-  - id: configs
   - id: null_model_phenotypes
   - id: null_model_files
   - id: null_model_params
@@ -334,7 +354,7 @@ steps:
   out:
   - id: html_reports
   - id: rmd_files
-  - id: null_model_report_config
+  - id: null_model_report_files
   sbg:x: 537
   sbg:y: -212.5
 
@@ -342,23 +362,22 @@ hints:
 - class: sbg:AWSInstanceType
   value: c5.2xlarge;ebs-gp2;512
 - class: sbg:AzureInstanceType
-  value: Standard_D8s_v4;StandardSSD;512
+  value: Standard_D8s_v4;PremiumSSD;512
 sbg:appVersion:
 - v1.2
-- v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a1dc9d835be8bb1e302904d745c216d46912115df07bcf84c6e4ac0a7f14a88c0
+sbg:content_hash: a4537a469a51aa3777dc8f2fea6d9558932faf3de172c96bd1894e2c33697ba0e
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727845
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/null-model/22
+sbg:id: admin/sbg-public-data/null-model/26
 sbg:image_url:
-sbg:latestRevision: 22
+sbg:latestRevision: 26
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -371,14 +390,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514962
+sbg:modifiedOn: 1632333811
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/null-model/22/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/null-model/26/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 22
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 26
+sbg:revisionNotes: Description updated
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727845
@@ -472,6 +491,23 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514962
   sbg:revision: 22
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624462992
+  sbg:revision: 23
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1628157771
+  sbg:revision: 24
+  sbg:revisionNotes: GENESIS added in app name
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 25
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 26
+  sbg:revisionNotes: Description updated
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL

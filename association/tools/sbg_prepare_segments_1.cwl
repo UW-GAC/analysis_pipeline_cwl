@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: SBG Prepare Segments
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -306,24 +306,24 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: sevenbridges/sbgtools-cwl1-0-demo/sbg-prepare-segments/1
+id: sevenbridges/sbgtools-cwl1-0-demo/sbg-prepare-segments/2
 sbg:appVersion:
-- v1.1
-sbg:content_hash: af5431cfdc789d53445974b82b534a1ba1c6df2ac79d7b39af88dce65def8cb34
+- v1.2
+sbg:content_hash: a6fd741f47dd785e70dc8305a73a7e9cb4229d91124870e008713cfd9784c5d9d
 sbg:contributors:
 - dajana_panovic
 sbg:createdBy: dajana_panovic
 sbg:createdOn: 1608907510
-sbg:id: h-ae747e88/h-9feb5ac4/h-9ff1f472/0
+sbg:id: h-533c4246/h-cb701c9d/h-9c094c84/0
 sbg:image_url:
-sbg:latestRevision: 1
+sbg:latestRevision: 2
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1608907520
+sbg:modifiedOn: 1632131635
 sbg:project: sevenbridges/sbgtools-cwl1-0-demo
-sbg:projectName: SBGTools - CWL1.0 - Demo
+sbg:projectName: SBGTools - CWL1.x - Demo
 sbg:publisher: sbg
-sbg:revision: 1
-sbg:revisionNotes: CWLtool prep
+sbg:revision: 2
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: dajana_panovic
   sbg:modifiedOn: 1608907510
@@ -333,5 +333,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1608907520
   sbg:revision: 1
   sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131635
+  sbg:revision: 2
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

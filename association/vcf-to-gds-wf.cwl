@@ -190,23 +190,22 @@ hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '5'
 - class: sbg:AzureInstanceType
-  value: Standard_F64s_v2;StandardSSD;1024
+  value: Standard_F64s_v2;PremiumSSD;1024
 sbg:appVersion:
 - v1.2
-- v1.1
 sbg:categories:
 - GWAS
 - VCF Processing
 - CWL1.0
-sbg:content_hash: afa1b913ac482d8b2dc7283c5c00ebca8ab4c3836eeb8e2a6219077bdb646f53f
+sbg:content_hash: a54d80656c76a4e8eb4f163eb486c4ddc1eb77a51708313c7710f8966bc231a25
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727847
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/vcf-to-gds/17
+sbg:id: admin/sbg-public-data/vcf-to-gds/19
 sbg:image_url:
-sbg:latestRevision: 17
+sbg:latestRevision: 19
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -220,14 +219,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514961
+sbg:modifiedOn: 1632333810
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/17/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/vcf-to-gds/19/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 17
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 19
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727847
@@ -301,6 +300,15 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514961
   sbg:revision: 17
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 18
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333810
+  sbg:revision: 19
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL

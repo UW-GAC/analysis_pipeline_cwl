@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: null_model.R
 $namespaces:
@@ -17,7 +17,7 @@ requirements:
         }
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: null_model.config
@@ -292,12 +292,6 @@ inputs:
   sbg:toolDefaultValue: 'FALSE'
 
 outputs:
-- id: configs
-  label: Config files
-  doc: Config files.
-  type: File[]?
-  outputBinding:
-    glob: '*.config*'
 - id: null_model_phenotypes
   label: Null model Phenotypes file
   doc: Phenotypes file
@@ -305,13 +299,13 @@ outputs:
   outputBinding:
     glob: |-
       ${
-          if(inputs.null_model_file)
+          if(inputs.output_prefix)
           {
-              return inputs.phenotype_file.basename
+              return "*"+inputs.output_prefix+"_phenotypes.RData"
           }
           else
           {
-              return "*phenotypes.RData"
+              return "phenotypes.RData"
           }
       }
     outputEval: $(inheritMetadata(self, inputs.phenotype_file))
@@ -405,25 +399,25 @@ hints:
   value: r4.8xlarge;ebs-gp2;500
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/null-model-r/9
+id: boris_majic/genesis-toolkit-demo/null-model-r/10
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a29ebdb2dd77dd3a1b21a60950dc736723d2cd50f33c9702ef7ea9b21de79e471
+- v1.2
+sbg:content_hash: a795cfe6f1e0f5883d3c19ce65169e709a572a4e3c1c3ad23a31eee214b94ad33
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577361146
-sbg:id: h-178c81a2/h-cb880df9/h-c1a64057/0
+sbg:id: h-6caa3a23/h-0bbb93db/h-ad244603/0
 sbg:image_url:
-sbg:latestRevision: 9
+sbg:latestRevision: 10
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1616077473
+sbg:modifiedOn: 1632131397
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 9
-sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+sbg:revision: 10
+sbg:revisionNotes: uwgac/topmed-master:2.12.0 and report only files
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577361146
@@ -465,5 +459,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1616077473
   sbg:revision: 9
   sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131397
+  sbg:revision: 10
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0 and report only files
 sbg:sbgMaintained: false
 sbg:validationErrors: []

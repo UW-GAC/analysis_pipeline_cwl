@@ -27,9 +27,9 @@ requirements:
 - class: ShellCommandRequirement
 - class: ResourceRequirement
   coresMin: 1
-  ramMin: 64000
+  ramMin: 1000
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: assoc_file.config
@@ -109,7 +109,7 @@ requirements:
           }
           if(inputs.thin_npoints)
               argument.push('thin_npoints ' + inputs.thin_npoints)
-          if(inputs.thin_npoints)
+          if(inputs.thin_nbins)
               argument.push('thin_nbins ' + inputs.thin_nbins)
           if(inputs.known_hits_file)
               argument.push('known_hits_file "' + inputs.known_hits_file.path + '"')
@@ -334,26 +334,28 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/assoc-plots-r/20
+- class: sbg:AzureInstanceType
+  value: Standard_F64s_v2;PremiumSSD;1024
+id: boris_majic/genesis-toolkit-demo/assoc-plots-r/24
 sbg:appVersion:
 - v1.2
-sbg:content_hash: a82da30efa86852cf30f8281fb890d35b617b19188930e4ef3028caeededad0d3
+sbg:content_hash: a16adf1307af3645bd3b7993fd5c3753ac0fe5b8acb4fa7afd7531d4e6759e00b
 sbg:contributors:
 - dajana_panovic
-- boris_majic
 - milan.domazet
+- boris_majic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360892
-sbg:id: h-8479d2e5/h-9146a23b/h-deedbeef/0
+sbg:id: h-66c7235f/h-11e5f82c/h-cd11c53e/0
 sbg:image_url:
-sbg:latestRevision: 20
+sbg:latestRevision: 24
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1620727319
+sbg:modifiedOn: 1635413230
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 20
-sbg:revisionNotes: Labels update
+sbg:revision: 24
+sbg:revisionNotes: thin_nbins updated
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360892
@@ -439,5 +441,21 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1620727319
   sbg:revision: 20
   sbg:revisionNotes: Labels update
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1622800608
+  sbg:revision: 21
+  sbg:revisionNotes: Azure instance type
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131466
+  sbg:revision: 22
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632135093
+  sbg:revision: 23
+  sbg:revisionNotes: Computational requirements adjusted
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1635413230
+  sbg:revision: 24
+  sbg:revisionNotes: thin_nbins updated
 sbg:sbgMaintained: false
 sbg:validationErrors: []

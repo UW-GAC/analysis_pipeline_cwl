@@ -9,7 +9,7 @@ requirements:
 - class: ResourceRequirement
   ramMin: 10000
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: check_gds.config
@@ -111,25 +111,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/check-gds/6
+id: boris_majic/genesis-toolkit-demo/check-gds/7
 sbg:appVersion:
 - v1.2
-sbg:content_hash: a0f8fb5077a1f63517c237ca9746172dea43c3245a8457d18b0497f7d816c49ca
+sbg:content_hash: a09ff33348281e661a17f1324bc60c66f3f62187f71732d1a08bce7749a623281
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360376
-sbg:id: h-a41368da/h-62c02495/h-152428bb/0
+sbg:id: h-b511138d/h-2ea62d4d/h-d5720fc6/0
 sbg:image_url:
-sbg:latestRevision: 6
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1620721871
+sbg:modifiedOn: 1632131496
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 6
-sbg:revisionNotes: Min job memory corrected
+sbg:revision: 7
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360376
@@ -159,5 +159,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1620721871
   sbg:revision: 6
   sbg:revisionNotes: Min job memory corrected
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131496
+  sbg:revision: 7
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

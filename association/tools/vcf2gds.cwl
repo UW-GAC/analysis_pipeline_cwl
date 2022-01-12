@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: vcf2gds
 $namespaces:
@@ -17,7 +17,7 @@ requirements:
             return 4*1024.0
     }
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: vcf2gds.config
@@ -145,25 +145,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/vcf2gds/6
+id: boris_majic/genesis-toolkit-demo/vcf2gds/7
 sbg:appVersion:
-- v1.1
-sbg:content_hash: aad1edf7ff5abb76730038fa3909aa8c03cc35c59b954113e5c79dd53333feee6
+- v1.2
+sbg:content_hash: af6578aee66a537003d697a8d54c5ddd84129526a6e999f7a384fa19211471415
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577360497
-sbg:id: h-09f6988b/h-e197fb1f/h-d3211b56/0
+sbg:id: h-d2735346/h-30c77122/h-bcc85133/0
 sbg:image_url:
-sbg:latestRevision: 6
+sbg:latestRevision: 7
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1616077524
+sbg:modifiedOn: 1632131504
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 6
-sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+sbg:revision: 7
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577360497
@@ -193,5 +193,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1616077524
   sbg:revision: 6
   sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131504
+  sbg:revision: 7
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

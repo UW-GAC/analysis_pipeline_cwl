@@ -18,6 +18,9 @@ doc: |-
 
 
   ### Common Issues and important notes:
+  * The null model input file should be created using GENESIS Null model. Please ensure that you use a Null model file and not one of Null model report only files also available in outputs. 
+  * The phenotype input file should be created using GENESIS Null model workflow. It is listed in the Null model Phenotypes file output field.  
+
   * This pipeline expects that **GDS Files**, **Variant Include Files**, and **Variant group files** are separated per chromosome, and that files are properly named. It is expected that chromosome is included in the filename in following format: chr## , where ## is the name of the chromosome (1-24 or X, Y). Chromosome can be included at any part of the filename.  Examples: data_subset_chr1.vcf,  data_chr1_subset.vcf, chr1_data_subset.vcf.
 
   * If **Weight Beta** parameter is set, it needs to follow proper convention, two space-delimited floating point numbers.
@@ -279,7 +282,7 @@ inputs:
 - id: null_model_file
   label: Null model file
   doc: |-
-    RData file containing a null model object. Run the GENESIS Null Model app to create this file.
+    RData file containing a null model object. Run the GENESIS Null Model app to create this file. Please make sure to use the null model output instead of the null model report only output.
   type: File
   sbg:fileTypes: RDATA
   sbg:x: 95.42857360839844
@@ -613,22 +616,21 @@ hints:
 - class: sbg:maxNumberOfParallelInstances
   value: '8'
 - class: sbg:AzureInstanceType
-  value: Standard_D8s_v4;StandardSSD;1024
+  value: Standard_D8s_v4;PremiumSSD;1024
 sbg:appVersion:
 - v1.2
-- v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
-sbg:content_hash: ab28d9b5c570f33566a7bca935171b1011ceda973c55a941c3c0474975e0f51b5
+sbg:content_hash: a3fd61e6b6475b7259f65100df8cb701b5ace99bd556be0792e407fd807d710fb
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727846
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/aggregate-association-testing/27
+sbg:id: admin/sbg-public-data/aggregate-association-testing/35
 sbg:image_url:
-sbg:latestRevision: 27
+sbg:latestRevision: 35
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -642,14 +644,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514962
+sbg:modifiedOn: 1635438711
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/27/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/aggregate-association-testing/35/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 27
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 35
+sbg:revisionNotes: thin_nbins updated in assoc plot
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727846
@@ -763,6 +765,39 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514962
   sbg:revision: 27
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 28
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 29
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1630939196
+  sbg:revision: 30
+  sbg:revisionNotes: chmod -R 777 added to command line
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 31
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 32
+  sbg:revisionNotes: Assoc plot computational requirements adjusted
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 33
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333811
+  sbg:revision: 34
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1635438711
+  sbg:revision: 35
+  sbg:revisionNotes: thin_nbins updated in assoc plot
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL

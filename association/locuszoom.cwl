@@ -463,4 +463,5 @@ sbg:sbgMaintained: false
 sbg:toolAuthor: TopMed DCC
 sbg:toolkit: LocusZoom Standalone
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL
 sbg:wrapperAuthor: SBG

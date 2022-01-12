@@ -4,7 +4,7 @@ label: GENESIS Single Variant Association Testing
 doc: |-
   **Single Variant workflow** runs single-variant association tests. It consists of several steps. Define Segments divides genome into segments, either by a number of segments, or by a segment length. Note that number of segments refers to whole genome, not a number of segments per chromosome. Association test is then performed for each segment in parallel, before combining results on chromosome level. Final step produces QQ and Manhattan plots.
 
-  This workflow uses the output from a model fit using the null model workflow to perform score tests for all variants individually. The reported effect estimate is for the alternate allele, and multiple alternate alleles for a single variant are tested separately.
+  This workflow uses the output from a model fit using the null model workflow to perform tests for all variants individually. The reported effect estimate is for the alternate allele, and multiple alternate alleles for a single variant are tested separately. 
 
   When testing a binary outcome, the saddlepoint approximation (SPA) for p-values [1][2] can be used by specifying **Test type** = ‘score.spa’; this is generally recommended. SPA will provide better calibrated p-values, particularly for rarer variants in samples with case-control imbalance. 
 
@@ -24,6 +24,9 @@ doc: |-
 
 
   ### Common issues and important notes
+  * The null model input file should be created using GENESIS Null model/GENESIS Update Null Model for Fast Score Test. Please ensure that you use a Null model file and not one of Null model report only files also available in outputs. 
+  * The phenotype input file should be created using GENESIS Null model workflow. It is listed in the Null model Phenotypes file output field.  
+
   * Association Testing - Single job can be very memory demanding, depending on number of samples and null model used. We suggest running with at least 5GB of memory allocated for small studies, and to use approximation of 0.5GB per thousand samples for larger studies (with more than 10k samples), but this again depends on complexity of null model. If a run fails with *error 137*, and with message killed, most likely cause is lack of memory. Memory can be allocated using the **memory GB** parameter.
 
   * This workflow expects **GDS** files split by chromosome, and will not work otherwise. If provided, **variant include** files must also be split in the same way. Also GDS and Variant include files should be properly named. It is expected that chromosome is included in the filename in following format: chr## , where ## is the name of the chromosome (1-24 or X, Y). Chromosome can be included at any part of the filename. Examples for GDS: data_subset_chr1.gds, data_chr1_subset.gds. Examples for Variant include files: variant_include_chr1.RData, chr1_variant_include.RData.
@@ -190,7 +193,7 @@ inputs:
 - id: null_model_file
   label: Null model file
   doc: |-
-    RData file containing a null model object. Run the GENESIS Null Model app to create this file. A null model object created with the GENESIS Update Null Model for Fast Score Test app can also be used.
+    RData file containing a null model object. Run the GENESIS Null Model app to create this file. A null model object created with the GENESIS Update Null Model for Fast Score Test app can also be used. Please make sure to use the null model output instead of the null model report only output.
   type: File
   sbg:fileTypes: RDATA
   sbg:x: 60
@@ -289,6 +292,19 @@ inputs:
   sbg:fileTypes: RData
   sbg:x: 13.8739652633667
   sbg:y: -437.260498046875
+- id: genotype_coding
+  label: Genetic model
+  doc: 'Genetic model can be one of: additive, recessive, dominant.'
+  type:
+  - 'null'
+  - name: genotype_coding
+    type: enum
+    symbols:
+    - additive
+    - recessive
+    - dominant
+  sbg:x: 54.60008239746094
+  sbg:y: 642.9005126953125
 
 outputs:
 - id: assoc_combined
@@ -363,7 +379,7 @@ steps:
     - sbg_prepare_segments_1/segments
     linkMerge: merge_flattened
   - id: memory_gb
-    default: 80
+    default: 8
     source: memory_gb
   - id: cpu
     source: cpu
@@ -373,6 +389,8 @@ steps:
     source: out_prefix
   - id: genome_build
     source: genome_build
+  - id: genotype_coding
+    source: genotype_coding
   scatter:
   - gds_file
   - variant_include_file
@@ -505,24 +523,22 @@ hints:
 - class: sbg:AWSInstanceType
   value: c5.2xlarge;ebs-gp2;1024
 - class: sbg:AzureInstanceType
-  value: Standard_D8s_v4;StandardSSD;1024
+  value: Standard_D8s_v4;PremiumSSD;1024
 sbg:appVersion:
 - v1.2
-- v1.1
 sbg:categories:
 - GWAS
 - CWL1.0
 - Genomics
-sbg:content_hash: a3da4ba17d9d322883300bab38c792198f39585158bd7415d672d4c9bac332153
+sbg:content_hash: a7600e4ae9214a89d7042d41d41d0d1f061f84fd6fb68ab0f313cfff33e7be655
 sbg:contributors:
 - admin
 sbg:createdBy: admin
 sbg:createdOn: 1577727843
 sbg:expand_workflow: false
-sbg:id: admin/sbg-public-data/single-variant-association-testing/28
-sbg:image_url: |-
-  https://platform.sb.biodatacatalyst.nhlbi.nih.gov/ns/brood/images/admin/sbg-public-data/single-variant-association-testing/28.png
-sbg:latestRevision: 28
+sbg:id: admin/sbg-public-data/single-variant-association-testing/37
+sbg:image_url:
+sbg:latestRevision: 37
 sbg:license: MIT
 sbg:links:
 - id: https://github.com/UW-GAC/analysis_pipeline
@@ -536,14 +552,14 @@ sbg:links:
 - id: https://bioconductor.org/packages/devel/bioc/manuals/GENESIS/man/GENESIS.pdf
   label: Documentation
 sbg:modifiedBy: admin
-sbg:modifiedOn: 1621514816
+sbg:modifiedOn: 1635438711
 sbg:original_source: |-
-  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/28/raw/
+  https://api.sb.biodatacatalyst.nhlbi.nih.gov/v2/apps/admin/sbg-public-data/single-variant-association-testing/37/raw/
 sbg:project: admin/sbg-public-data
 sbg:projectName: SBG Public Data
 sbg:publisher: sbg
-sbg:revision: 28
-sbg:revisionNotes: Azure instance hint added
+sbg:revision: 37
+sbg:revisionNotes: thin_npoints updated in assoc plot
 sbg:revisionsInfo:
 - sbg:modifiedBy: admin
   sbg:modifiedOn: 1577727843
@@ -661,6 +677,43 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1621514816
   sbg:revision: 28
   sbg:revisionNotes: Azure instance hint added
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 29
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1624463206
+  sbg:revision: 30
+  sbg:revisionNotes: Azure hint change
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1628157771
+  sbg:revision: 31
+  sbg:revisionNotes: Memory per job - Assoc single 8GB
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1630939197
+  sbg:revision: 32
+  sbg:revisionNotes: chmod -R 777 added to command line
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333812
+  sbg:revision: 33
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333812
+  sbg:revision: 34
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0 and genetic model
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333812
+  sbg:revision: 35
+  sbg:revisionNotes: Assoc plot computational requirements adjusted
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1632333812
+  sbg:revision: 36
+  sbg:revisionNotes: Description updated
+- sbg:modifiedBy: admin
+  sbg:modifiedOn: 1635438711
+  sbg:revision: 37
+  sbg:revisionNotes: thin_npoints updated in assoc plot
 sbg:sbgMaintained: false
 sbg:toolAuthor: TOPMed DCC
 sbg:validationErrors: []
+sbg:workflowLanguage: CWL

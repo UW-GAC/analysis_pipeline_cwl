@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: null_model_report
 $namespaces:
@@ -7,7 +7,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.10.0
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - entryname: null_model_report.config
@@ -155,12 +155,12 @@ outputs:
   outputBinding:
     glob: '*.Rmd'
   sbg:fileTypes: Rmd
-- id: null_model_report_config
+- id: null_model_report_files
   label: Null model report config
   doc: Null model report config
   type: File?
   outputBinding:
-    glob: '*config'
+    glob: '*reportonly.RData'
 
 baseCommand: []
 arguments:
@@ -179,25 +179,25 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: boris_majic/genesis-toolkit-demo/null-model-report/7
+id: boris_majic/genesis-toolkit-demo/null-model-report/8
 sbg:appVersion:
-- v1.1
-sbg:content_hash: a50b396a1895f88f2ab57b95903db3710b39e88c9789447c03220746cff82936f
+- v1.2
+sbg:content_hash: af9ab353b4944f0061e715098cea155a42bb19f344bfd4fadfd55e07d155ee725
 sbg:contributors:
-- dajana_panovic
 - boris_majic
+- dajana_panovic
 sbg:createdBy: boris_majic
 sbg:createdOn: 1577361077
-sbg:id: h-2d9495e0/h-25d15646/h-cd0b8d49/0
+sbg:id: h-f8e24f8d/h-e34c26f5/h-231b3aa1/0
 sbg:image_url:
-sbg:latestRevision: 7
+sbg:latestRevision: 8
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1616077454
+sbg:modifiedOn: 1632131441
 sbg:project: boris_majic/genesis-toolkit-demo
 sbg:projectName: GENESIS Toolkit - DEMO
 sbg:publisher: sbg
-sbg:revision: 7
-sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+sbg:revision: 8
+sbg:revisionNotes: uwgac/topmed-master:2.12.0 and report only files
 sbg:revisionsInfo:
 - sbg:modifiedBy: boris_majic
   sbg:modifiedOn: 1577361077
@@ -231,5 +231,9 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1616077454
   sbg:revision: 7
   sbg:revisionNotes: Docker updated to uwgac/topmed-master:2.10.0
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131441
+  sbg:revision: 8
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0 and report only files
 sbg:sbgMaintained: false
 sbg:validationErrors: []

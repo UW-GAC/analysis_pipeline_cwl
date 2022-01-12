@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: SBG GDS renamer
 doc: |-
@@ -10,7 +10,7 @@ $namespaces:
 requirements:
 - class: ShellCommandRequirement
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InlineJavascriptRequirement
 
 inputs:
@@ -70,30 +70,30 @@ arguments:
   shellQuote: false
 - prefix: ''
   position: 100
-  valueFrom: "${\n    return ' >> job.out.log'   \n}"
+  valueFrom: "${\n    return ' >> job.out.log && chmod -R 777 .' \n}"
   shellQuote: false
 
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: sevenbridges/sbgtools-cwl1-0-demo/sbg-gds-renamer/3
+id: sevenbridges/sbgtools-cwl1-0-demo/sbg-gds-renamer/5
 sbg:appVersion:
-- v1.1
-sbg:content_hash: ab721cbd39c33d272c5c42693fb02e02e43d95a3f421f40615cbf79ed023c35cc
+- v1.2
+sbg:content_hash: a68b94f896356977fe45cb623215659008916591aa1860776445016e7fa1f0935
 sbg:contributors:
 - dajana_panovic
 sbg:createdBy: dajana_panovic
 sbg:createdOn: 1584358811
-sbg:id: h-dab060b5/h-741a14f7/h-284eaa42/0
+sbg:id: h-d47a8993/h-2cbb8e0d/h-d7b7882f/0
 sbg:image_url:
-sbg:latestRevision: 3
+sbg:latestRevision: 5
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1608907259
+sbg:modifiedOn: 1632131643
 sbg:project: sevenbridges/sbgtools-cwl1-0-demo
-sbg:projectName: SBGTools - CWL1.0 - Demo
+sbg:projectName: SBGTools - CWL1.x - Demo
 sbg:publisher: sbg
-sbg:revision: 3
-sbg:revisionNotes: CWLtool prep
+sbg:revision: 5
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: dajana_panovic
   sbg:modifiedOn: 1584358811
@@ -111,5 +111,13 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1608907259
   sbg:revision: 3
   sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1630916163
+  sbg:revision: 4
+  sbg:revisionNotes: chmod -R 777 added to command line
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131643
+  sbg:revision: 5
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:validationErrors: []

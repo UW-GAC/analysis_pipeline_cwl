@@ -1,4 +1,4 @@
-cwlVersion: v1.1
+cwlVersion: v1.2
 class: CommandLineTool
 label: SBG FlattenLists
 doc: |-
@@ -26,7 +26,7 @@ requirements:
   coresMin: 1
   ramMin: 1000
 - class: DockerRequirement
-  dockerPull: uwgac/topmed-master:2.8.1
+  dockerPull: uwgac/topmed-master:2.12.0
 - class: InitialWorkDirRequirement
   listing:
   - $(inputs.input_list)
@@ -182,29 +182,29 @@ arguments:
 hints:
 - class: sbg:SaveLogs
   value: job.out.log
-id: sevenbridges/sbgtools-cwl1-0-demo/sbg-flatten-lists/3
+id: sevenbridges/sbgtools-cwl1-0-demo/sbg-flatten-lists/4
 sbg:appVersion:
-- v1.1
+- v1.2
 sbg:categories:
 - Other
 sbg:cmdPreview: echo "Output is now a single list"
-sbg:content_hash: a8ab04a2a11a3f02f5cb29025dbeebbe3bb71cc8f1eb7caafb6e2140373cc62f3
+sbg:content_hash: a89938311354159c824932aa406a7cac35d7b6df9ce9a9211eff72111980932c4
 sbg:contributors:
-- dajana_panovic
 - nens
+- dajana_panovic
 sbg:createdBy: nens
 sbg:createdOn: 1566552375
-sbg:id: h-7cd6fb73/h-5d673563/h-96acf002/0
+sbg:id: h-9e68b192/h-a81acc4c/h-fa743100/0
 sbg:image_url:
-sbg:latestRevision: 3
+sbg:latestRevision: 4
 sbg:license: Apache License 2.0
 sbg:modifiedBy: dajana_panovic
-sbg:modifiedOn: 1608907303
+sbg:modifiedOn: 1632131628
 sbg:project: sevenbridges/sbgtools-cwl1-0-demo
-sbg:projectName: SBGTools - CWL1.0 - Demo
+sbg:projectName: SBGTools - CWL1.x - Demo
 sbg:publisher: sbg
-sbg:revision: 3
-sbg:revisionNotes: CWLtool prep
+sbg:revision: 4
+sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:revisionsInfo:
 - sbg:modifiedBy: nens
   sbg:modifiedOn: 1566552375
@@ -222,6 +222,10 @@ sbg:revisionsInfo:
   sbg:modifiedOn: 1608907303
   sbg:revision: 3
   sbg:revisionNotes: CWLtool prep
+- sbg:modifiedBy: dajana_panovic
+  sbg:modifiedOn: 1632131628
+  sbg:revision: 4
+  sbg:revisionNotes: uwgac/topmed-master:2.12.0
 sbg:sbgMaintained: false
 sbg:toolAuthor: Seven Bridges
 sbg:toolkit: SBGTools
